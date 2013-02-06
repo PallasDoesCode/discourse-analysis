@@ -10,7 +10,7 @@ class Login
 	{
 		$this->userName = $uName;
 		$this->password = hash('sha256',$pWord);
-		return;
+		return true;
 	}
 	
 };
@@ -38,7 +38,7 @@ if (isset($_POST['username']))
 }
 	
 ?>		
-<form class="loginForm" name="TestForm" method="post" action="">
+<form class="loginForm" name="LoginForm" method="post" action="">
 	<p class="field">
 		<input type="text" name="username"  placeholder="Username" />
 	</p>

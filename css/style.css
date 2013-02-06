@@ -1,0 +1,45 @@
+body 
+{
+	background: #CC7966;
+}
+
+.loginForm
+{
+	background: #E3CDA4;
+
+	border-style: solid;
+	border-radius: 5px;
+	border-color: #2F343B;
+
+	width: 300px;
+	margin: 60px auto 30px;
+	padding: 10px;
+	position: relative;
+	
+	
+}
+
+.loginForm .field 
+{
+	position: releative;
+}
+
+.loginForm input[type=text],
+.loginForm input[type=password] 
+{
+	font-size: 13px;
+	width: 75%;
+	margin: 0px;
+	
+}
+
+.loginForm .submit
+{
+	width: 65px;
+	height: 65px;
+	position: absolute;
+	top: 17px;
+	right: 0px;
+	padding: 10px;
+	z-index: 2;
+}

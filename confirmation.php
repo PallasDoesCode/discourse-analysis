@@ -14,8 +14,8 @@ if(isset($_GET["registrationId"]))
     $result = $regMod->ConfirmUser($_GET["registrationId"]);    
 }
 ?>
-
-<?php if($result){ echo "Successfully registered";}else{echo "Invalid registration key";}?>
-
+<div class="container">
+    <center><?php if($result){ echo "Successfully registered";}else{echo "Invalid registration key";}?></center>
+</div>
 
 <?php include 'footer.php'; ?>

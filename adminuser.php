@@ -64,10 +64,11 @@
                         echo '<td class="usernamecell" width=300>';
                         echo '<a href="#" onclick="window.open(\'editUserName.php?uname='.$user['Username'].'\', \'_blank\', \'width=200, height=200, resizable=no\' )">'.$user['Username'].'</a>';
                         echo '</td>';
-                        echo '<td class="emailcell" width=200><a href="#" onclick="window.open( \'editUserName.php?uname='.$user['Username'].'\', \'_blank\', \'width=200, height=200, resizable=no\'  )" > '.$user['Email'].'</a></td>';
+                        echo '<td class="emailcell" width=200><a href="#" onclick="window.open( \'editUserEmail.php?uname='.$user['Username'].'\', \'_blank\', \'width=200, height=200, resizable=no\'  )" > '.$user['Email'].'</a></td>';
                         echo '<td class="namecell" width=200><a href="#" onclick="window.open( \'editUserRName.php?uname='.$user['Username'].'\', \'_blank\', \'width=200, height=200, resizable=no\'  )" > '.$user['Name'].'</a></td>';
                         echo '<td class="passwordcell" width=120><button type="pwchange" onclick="window.open( \'editUserPassword.php?uname='.$user['Username'].'\', \'_blank\', \'width=200, height=200, resizable=no\'  )">Change Password</td>'; 
-                        echo '</tr>';
+                        echo '<td class="sessioncell" width=150>'.$user['Session'].'</td>';
+						echo '</tr>';
                         
                     }			
                 }

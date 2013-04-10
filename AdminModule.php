@@ -296,13 +296,37 @@ class AdminUserModule
 			
 			while( $stmt->fetch() )
 			{
+			
 				$tempRow['Username'] = $r_uname;
 				$tempRow['Email'] = $r_email;
 				$tempRow['Name'] = $r_name;
 				
+				/*
+				$lastTime = '';
 				
+				## Note for Future Users ##
+				The query is incorrect
+				
+				if( $getSession = $this->dbConnect->prepare("SELECT startTime as startTime FROM session WHERE userName = ? ORDER BY startTime ASC"))
+				{
+						$getSession->bind_param("i", $r_uname);
+						$getSession->execute();
+						$getSession->bind_result($lastTime);
+						
+						$getSession->close();
+						echo $lastTime;
+						
+				}
+				else
+				{
+					echo 'Query is wrong';
+				}
+				$tempRow['Session'] = $lastTime;
+				*/
 				
 				$row[] = $tempRow;
+				
+				
 			}
 			
 			$stmt->close();

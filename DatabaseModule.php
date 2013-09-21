@@ -18,7 +18,7 @@ class DatabaseModule
 	{
 		$this->host = "localhost";
 		$this->username = "root";
-		$this->password = "password goes here";
+		$this->password = "";
 		$this->db_name = "discourseanalysis";
 		$this->currLink = new mysqli();
 	}

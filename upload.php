@@ -12,7 +12,7 @@
 		<table align="center" width="40%" border=2 cellpadding=2 cellspacing=4 style="page-break-before: always">
 		<tr>
 			<td width=40% bgcolor="#ffffff">
-			<form id="uploadarea">
+			<form id="uploadarea" action="fileUpload.php" method="post">
 				File Name: <input type="text" name="filename"><br><br>
 				File Location: <name="file" method="post" enctype="multipart/form-data">
 				<input type="file" name="fileaddress" size="40"><br><br>

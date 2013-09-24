@@ -35,7 +35,6 @@
 		function validUserName($userName) {
 			if($stmt = $this->dbConnection->prepare("SELECT COUNT(Username)
 													FROM usersinfo
-													WHERE Username = ?");
 			$stmt->bind_param("s", $userName);
 			$stmt->execute();
 			$stmt->bind_result($userNameCount);

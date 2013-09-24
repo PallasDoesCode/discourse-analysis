@@ -13,7 +13,10 @@
 		
 		//upload a file based on username
 		function upload($userName, $fileName, $file, $public) {
-			
+			$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?");
+			$stmt->bind_param("ssss", $userName, $fileName, $file, $public);
+			$stmt->execute();
+			$stmt0>close();
 		}
 		
 		//get files' information based on username, return array
@@ -35,7 +38,7 @@
 		function validUserName($userName) {
 			if($stmt = $this->dbConnection->prepare("SELECT COUNT(Username)
 													FROM usersinfo
-													WHERE Username = ?");
+													WHERE Username = ?"));
 			$stmt->bind_param("s", $userName);
 			$stmt->execute();
 			$stmt->bind_result($userNameCount);
@@ -51,7 +54,7 @@
 		function fileExists($userName, $fileName) {
 			if($stmt = $this->dbConnection->prepare("SELECT COUNT(fileName)
 													FROM files
-													WHERE Owner = ? AND fileName = ?");
+													WHERE Owner = ? AND fileName = ?"));
 			$stmt->bind_param("ss", $userName, $fileName);
 			$stmt->execute();
 			$stmt->bind_result($fileCount);

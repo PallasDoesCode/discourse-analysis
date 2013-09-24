@@ -13,7 +13,10 @@
 		
 		//upload a file based on username
 		function upload($userName, $fileName, $file, $public) {
-			
+			$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?)");
+			$stmt->bind_param("ssss", $userName, $fileName, $file, $public);
+			$stmt->execute();
+			$stmt->close();
 		}
 		
 		//get files' information based on username, return array

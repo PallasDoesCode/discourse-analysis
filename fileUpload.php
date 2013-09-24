@@ -4,7 +4,7 @@
 	
 	$fileName = $_REQUEST['filename'];
 	$fileAddress = $_REQUEST['fileaddress'];
-	echo file_get_contents($fileAddress);
+	$fileContents = file_get_contents($fileAddress);
 	$publicOption = isset($_REQUEST['public']);
 	$userName = $userMod->getUserName();
 

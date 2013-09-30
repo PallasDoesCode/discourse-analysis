@@ -15,6 +15,7 @@
 			<form id="uploadarea" action="fileUpload.php" method="post" enctype="multipart/form-data">
 				File Name: <input type="text" name="filename"><br><br>
 				File Location: 
+
 				<input type="file" name="fileaddress" size="40"><br><br>
 				Make this file public: <input type="checkbox" name="public"><br><br>
 				<center><input type="submit" name="submit"></center>

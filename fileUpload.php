@@ -23,9 +23,8 @@
 	include 'fileModule.php';
 	
 	$fileMod = new FileModule($connection); //$connection comes from the header.php
-	//$fileMod->upload($userName, $fileName, $fileContents, $publicOption);
-	
-	
+	$fileMod->upload($userName, $fileName, $fileContents, $publicOption);
+		
 	//we can redirect the page or give a confirmation message
 ?>
 

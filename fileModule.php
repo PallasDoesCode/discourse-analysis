@@ -4,6 +4,7 @@
 	class FileModule
 	{
 		private $dbConnection;
+		
 
 		
 		function FileModule($connection)
@@ -13,8 +14,9 @@
 		
 		//upload a file based on username
 		function upload($userName, $fileName, $file, $public) {
-			$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?)");
-			$stmt->bind_param("ssss", $userName, $fileName, $file, $public);
+			$datetime = date("Y-m-d H:i:s");
+			$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?, ?)");
+			$stmt->bind_param("sssss", $userName, $fileName, $file, $public, $datetime);
 			$stmt->execute();
 			$stmt->close();
 		}

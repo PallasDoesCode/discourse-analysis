@@ -14,7 +14,7 @@
 	
 	$fileName = $_REQUEST['filename'];
 
-	echo getFile('fileaddress', "Noooo");
+	$fileContents = getFile('fileaddress', "Noooo");
 	
 	$publicOption = isset($_REQUEST['public']);
 	$userName = $userMod->getUserName();

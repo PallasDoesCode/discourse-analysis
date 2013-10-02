@@ -56,9 +56,38 @@
 		//returns a string of pconj's in xml format
 		function getPconjList() {
 			//use $this->pconjList
+			String $pconjXml = '<pconj>';
+			for($i = 1; $i < $pconjList.length(); $i++) {
+			
+				if($pconjXml.length() < 8) {
+				
+					$pconjXml = $pconjXml + $pconjList[i].explode() + '</pconj>';
+					
+				}
+				else {
+				
+					$pconjXml = $pconjXml + '<pconj>' + $pconjList[i].explode() + '</pconj>';
+				
+				}
+			
+			}
+			
+			return $pconjXml;
 			
 		}
 		
+		function setPconjList($inputText) {
+		
+			//receive a custom conjunction list
+		
+		}
+		
+		function setPconjList() {
+		
+			//use the default conjunction list
+			$pconjList = new array['WHEN','WHENEVER','WHILE','AS','AS LONG AS','AS SOON AS','SINCE','UNTIL','JUST AS','AT THE SAME TIME AS','WHERE','WHEREVER','THEREFORE','AS A RESULT','FOR THIS REASON','CONSEQUENTLY','HENCE','ACCORDINGLY','THUS','SO','BECAUSE','FOR','SINCE','IN AS MUCH AS','IN ORDER THAT','SO THAT','THAT','TO THE END THAT','FOR THE PURPOSE THAT','LEST','THUS','IN THIS MANNER','IN THAT MANNER','BY THIS MEANS','BY THAT MEANS','SUCH THAT','IF','ONLY IF','UNLESS','EXCEPT THAT','EXCEPT IF' ,'ALTHOUGH','THOUGH','EVEN THOUGH','EVEN IF','X','AND','NOW','BUT','ALSO','OR','WHETHER','TILL','THEN','NEVERTHELESS','YET','STILL','ONLY','ON THE OTHER HAND','CONVERSELY','ON THE CONTRARY','INSTEAD','NOTWITHSTANDING','NOR','LIKEWISE','EITHER','ELSE','OR ELSE','MOREOVER','NEITHER','THAN','INDEED','OTHERWISE','INASMUCH AS'];
+		
+		}
 		
 	
 	}

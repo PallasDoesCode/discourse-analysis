@@ -20,6 +20,12 @@
 		}
 		
 		//parse unformatted text
+		/*
+		    - There is no format required for the parsing of unformatted text
+		    
+		    - The applet will display the entirety of the inputted text file in a single
+		      node, where the user can then choose his or her own breaks, logical or not.
+		*/
 		function parseUnformattedText($inputText) {
 			//create book, clause, text nodes
 			$book = new SimpleXmlElement("<book></book>");
@@ -42,9 +48,35 @@
 		
 		//parse formatted text
 		/*
-			Give the text format here for documentation
-		
-		
+			- The format for the inputted text file is as follows:
+			
+			  <chapter>:<verse> <conjunction>
+			  <clause>
+			  <conjunction>
+			  <clause>
+			  ...
+			  ..
+	          .
+			
+            **********
+			- An example of the above format being used in a real input file:
+			
+			  1:1 X
+			  It seemed good to me also
+			  X
+			  having had perfect understanding of all things from the very first to write
+			  you an orderly account, [most] excellent Theophilius
+			  
+			**********  
+			- !!NOTE!!
+			
+			  ~ That <chapter> and <verse> are OPTIONAL; if left out, then blanks: " "
+			    will be inserted in their place and the colon will be left out, too
+			    
+			  ~ The conjunction X signifies that the conjunction is logically implied,
+			    thus suggesting a logical break, unless it is the X at the very beginning
+			    of the text, following the first <chapter> and <verse>.  This X signifies
+			    the beginning of the text itself
 		*/
 		function parseFormattedText() {
 		

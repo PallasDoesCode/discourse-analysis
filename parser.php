@@ -70,8 +70,36 @@
 			**********  
 			- !!NOTE!!
 			
-			  ~ That <chapter> and <verse> are OPTIONAL; if left out, then blanks: " "
+			  ~ That <chapter> and <verse> are OPTIONAL; if omitted, then blanks: " "
 			    will be inserted in their place and the colon will be left out, too
+			    
+			  ~ If the <chapter> and <verse> are stated once, the remaining conjunction lines will hold the same <chapter> and <verse> until the <chapter> and <verse> are specified.
+			  			Ex.  1:1 X
+			  				It seemed good to me also
+			 				X
+			 				having had perfect understanding of all things 
+			  				1:2 X
+			  				from the very first to write
+			  				
+			  				--Is the same as--
+			  				
+			  				1:1 X
+			  				It seemed good to me also
+			 			-->	1:1 X
+			 				having had perfect understanding of all things 
+			  				1:2 X
+			  				from the very first to write
+			    
+			  ~ If two clauses are next to each other on separate lines, the conjunction X will be placed between the two clauses.
+			  			Ex.
+			  			It seemed good to me also
+			 			having had perfect understanding of all things 
+			  			
+			  			--Is the same as--
+			  			It seemed good to me also
+			  			X
+			 			having had perfect understanding of all things 
+			  			
 			    
 			  ~ The conjunction X signifies that the conjunction is logically implied,
 			    thus suggesting a logical break, unless it is the X at the very beginning

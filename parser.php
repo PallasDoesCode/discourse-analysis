@@ -132,7 +132,7 @@
 				$line = $inputTextArray[$i];
 			
 				//1:1 X
-				if($this->newChapterVerse($line) && !$nextIsClause) {
+				if($this->newChapterVerse($line) == 1 && !$nextIsClause) {
 			
 					$nextIsClause = True;
 					$conjunctionAvailable = True;

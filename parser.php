@@ -131,15 +131,15 @@
 			
 				$line = $inputTextArray[$i];
 			
-				//1:1 X (if)
-				if(&& !$nextIsClause) {
+				//1:1 X
+				if($this->newChapterVerse($line) && !$nextIsClause) {
 			
 					$nextIsClause = True;
 					$conjunctionAvailable = True;
 			
 				}
 			
-				//X (else if)
+				//X
 				else if($this->isLineConjunction($line) && !$nextIsClause) {
 			
 					//add <conj> and </conj> tags
@@ -150,7 +150,7 @@
 			
 				}
 			
-				//clause (else)
+				//clause
 				else {
 			
 					$nextIsClause = False;
@@ -167,6 +167,13 @@
 		function isLineConjunction($line) {
 		
 			return(array_search($line, $this->pconjList) !== False);
+		
+		}
+		
+		//Parses the line passed to it to determine if it is the start of a new chapter or verse
+		function newChapterVerse($line) {
+		
+			return(preg_match('#[0-999]#', $line);
 		
 		}
 

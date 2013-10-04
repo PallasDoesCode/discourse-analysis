@@ -112,7 +112,61 @@
 			    of the text, following the first <chapter> and <verse>.  This X signifies
 			    the beginning of the text itself
 		*/
-		function parseFormattedText() {
+		function parseFormattedText($inputText, $bookName = "") {
+			
+			//Get the line of $inputText
+			$inputTextArray = explode("\n", $inputText);
+			
+			//Create root node
+			$book = new SimpleXmlElement("<book></book>");
+			
+			/*$nextIsClause is used to flag that the next line will be declared as a
+			  clause*/
+			$nextIsClause = False;
+			
+			
+			$conjunctionAvailable = False;
+			
+			for($i = 0; $i < count($inputTextArray); $i++) {
+			
+				$line = $inputTextArray[$i];
+			
+				//1:1 X (if)
+				if(&& !$nextIsClause) {
+			
+					$nextIsClause = True;
+					$conjunctionAvailable = True;
+			
+				}
+			
+				//X (else if)
+				else if($this->isLineConjunction($line) && !$nextIsClause) {
+			
+					//add <conj> and </conj> tags
+					
+					
+					$nextIsClause = True;
+					$conjunctionAvailable = True;
+			
+				}
+			
+				//clause (else)
+				else {
+			
+					$nextIsClause = False;
+					$conjunctionAvailable = False;
+			
+				}
+				
+			}
+			
+		}
+		
+		
+		//Parses the line passed to it to determine if it is a solitare conjunction; returns T or F
+		function isLineConjunction($line) {
+		
+			return(array_search($line, $this->pconjList) !== False);
 		
 		}
 

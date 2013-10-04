@@ -26,13 +26,19 @@
 		    - The applet will display the entirety of the inputted text file in a single
 		      node, where the user can then choose his or her own breaks, logical or not.
 		*/
-		function parseUnformattedText($inputText) {
+		function parseUnformattedText($inputText, $bookName = "") {
 			//create book, clause, text nodes
 			$book = new SimpleXmlElement("<book></book>");
+			$book->addAttribute("bookName", $bookName);
+			
+			$conj = $book->addChild("conj", "X");
+			
 			$clause = $book->addChild("clause");
-			$text = $clause->addChild("text", $inputText);
-			$text->addAttribute("chapter", 1);
-			$text->addAttribute("verse", 1);
+			
+			$trimmedText = $this->trimNewLines($inputText);
+			$text = $clause->addChild("text", $trimmedText);
+			$text->addAttribute("chapter", "");
+			$text->addAttribute("verse", "");
 			
 			//make list of pconj's for beginning of file
 			$pconjs = $this->getPconjList();
@@ -123,7 +129,10 @@
 			
 		}
 		
-
+		//removes all new line characters [\n]
+		function trimNewLines($text) {
+			return str_replace("\n", " ", $text);
+		}
 		
 	
 	}

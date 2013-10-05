@@ -37,8 +37,7 @@
 			
 			$trimmedText = $this->trimNewLines($inputText);
 			$text = $clause->addChild("text", $trimmedText);
-			$text->addAttribute("chapter", "");
-			$text->addAttribute("verse", "");
+			$this->addChapterVerse($text, "", "");
 			
 			//make list of pconj's for beginning of file
 			$pconjs = $this->getPconjList();
@@ -126,6 +125,10 @@
 			
 			
 			$conjunctionAvailable = False;
+			$currentChapter = "";
+			$currentVerse = "";
+			$currentClause = null;
+			
 			
 			for($i = 0; $i < count($inputTextArray); $i++) {
 			
@@ -133,7 +136,19 @@
 			
 				//1:1 X
 				if($this->newChapterVerse($line) == 1 && !$nextIsClause) {
-			
+					//store chapter, verse, and conj into variables
+					
+					
+					//set the chapter and verse to the current chapter and verse
+					$currentChapter = $chapter;
+					$currentVerse = $verse;
+					
+					//create a new clause for the conj
+					$currentClause = $book->addChild("clause");
+					
+					//add conj to current clause
+					$currentClause->addChild("conj", $conj);
+					
 					$nextIsClause = True;
 					$conjunctionAvailable = True;
 			
@@ -142,8 +157,12 @@
 				//X
 				else if($this->isLineConjunction($line) && !$nextIsClause) {
 			
-					//add <conj> and </conj> tags
+					//add <conj> and </conj> tags into new clause
 					
+					$currentClause = $book->addChild("clause");
+					
+					//add conj to current clause
+					$currentClause->addChild("conj", $line);
 					
 					$nextIsClause = True;
 					$conjunctionAvailable = True;
@@ -152,13 +171,30 @@
 			
 				//clause
 				else {
-			
+					if(!$conjunctionAvailable) {
+						//if there is no conjunction available, insert conj X in new clause
+						$currentClause = $book->addChild("clause");
+						$currentClause->addChild("conj", "X");
+					}
+				
+					//add text to the current clause
+					$text = $currentClause->addChild("text", $line);
+					//set chapter and verse to the current chapter and verse
+					$this->addChapterVerse($text, $currentChapter, $currentVerse);
+					
+					
 					$nextIsClause = False;
 					$conjunctionAvailable = False;
 			
 				}
 				
 			}
+			
+			//after looping through the file, get the xml string
+			$xml = $book->asXml();
+			$pconjs = $this->getPconjList();
+			
+			return "$pconjs\n$xml";
 			
 		}
 		
@@ -176,7 +212,13 @@
 			return(preg_match('#[0-999]#', $line);
 		
 		}
-
+		
+		
+		//adds chapter and verse to the simpleXmlElement
+		function addChapterVerse($node, $chapter, $verse) {
+			$node->addAttribute("chapter", $chapter);
+			$node->addAttribute("verse", $verse);
+		}
 		
 		//make the list of pconj's for the beginning of file
 		//returns a string of pconj's in xml format

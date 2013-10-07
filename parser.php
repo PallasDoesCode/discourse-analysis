@@ -247,10 +247,20 @@
 				/*
 					Split the inputted $line into an array using the space character [\s]
 					as the delimiter, giving you the chapter and verse in position 0 and
-					the conjunction in position 1
+					the conjunction in positions 1 - end (if the conjunction is a
+					multi-word conjunction.
+					
+					Then, create a new sub array to incorporate multi-word arrays; this
+					sub array is created from $lineArray starting at 1 since position 0
+					contains chapter:verse.
+					
+					After creating this sub array consisting solely of parts of the
+					conjunction, implode it to a single string.
 				*/
 				
 				$lineArray = preg_split('[\s]', $line);
+
+
 				
 				/*
 					Explode the string at lineArray position 0 (which holds the

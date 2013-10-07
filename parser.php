@@ -5,11 +5,7 @@
 	{
 		private $pconjList;
 		private $defaultPconjList = array('WHEN','WHENEVER','WHILE','AS','AS LONG AS','AS SOON AS','SINCE','UNTIL','JUST AS','AT THE SAME TIME AS','WHERE','WHEREVER','THEREFORE','AS A RESULT','FOR THIS REASON','CONSEQUENTLY','HENCE','ACCORDINGLY','THUS','SO','BECAUSE','FOR','SINCE','IN AS MUCH AS','IN ORDER THAT','SO THAT','THAT','TO THE END THAT','FOR THE PURPOSE THAT','LEST','THUS','IN THIS MANNER','IN THAT MANNER','BY THIS MEANS','BY THAT MEANS','SUCH THAT','IF','ONLY IF','UNLESS','EXCEPT THAT','EXCEPT IF' ,'ALTHOUGH','THOUGH','EVEN THOUGH','EVEN IF','X','AND','NOW','BUT','ALSO','OR','WHETHER','TILL','THEN','NEVERTHELESS','YET','STILL','ONLY','ON THE OTHER HAND','CONVERSELY','ON THE CONTRARY','INSTEAD','NOTWITHSTANDING','NOR','LIKEWISE','EITHER','ELSE','OR ELSE','MOREOVER','NEITHER','THAN','INDEED','OTHERWISE','INASMUCH AS');
-		
-		private $chapter;
-		private $verse;
-		private $conj;
-				
+
 				
 				
 		// !We need to consider how to receive the list of pconj's (potential conjunctions) --> (array, string, csv, etc)
@@ -210,19 +206,39 @@
 		//Parses the line passed to it to determine if it is a solitare conjunction; returns T or F
 		function isLineConjunction($line) {
 		
-			return(array_search($line, $this->pconjList) !== False);
+			return(array_search(strtolower($line), array_map('strtolower', $this->pconjList)) !== False);
 		
 		}
 		
 		//Parses the line passed to it to determine if it is the start of a new chapter or verse
 		function newChapterVerse($line) {
 		
-			$this->getChapterVerseConj($line);
-			return ((int)$this->chapter && (int)$this->verse);
+			$chapterVerseConj = $this->getChapterVerseConj($line);
+			$chapterCheck = $this->validChapterVerse($chapterVerseConj['chapter']);
+			$verseCheck = $this->validChapterVerse($chapterVerseConj['verse']);
+			$conjCheck = $this->isLineConjunction($chapterVerseConj['conj']);
+			
+			return ($chapterCheck && $verseCheck && $conjCheck);
 			
 		}
 		
+		//checks if chapter of verse is valid
+		function validChapterVerse($chapterOrVerse) {
+			if(is_numeric($chapterOrVerse)) {
+				if ((int)$chapterOrVerse >= 0 && (int)$chapterOrVerse < 1000) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+		
 		//This function splits the given line into 3 variables: $chapter, $verse, $conj
+		//Returns an associative array for chapter, verse, and conj
 		function getChapterVerseConj($line) {
 		
 			$colonPos = strpos($line, ":");
@@ -235,7 +251,6 @@
 				*/
 				
 				$lineArray = preg_split('[\s]', $line);
-				$this->conj = $lineArray[1];
 				
 				/*
 					Explode the string at lineArray position 0 (which holds the
@@ -245,9 +260,12 @@
 				*/
 				
 				$chapterVerse = explode(':', $lineArray[0]);
-				$this->chapter = $chapterVerse[0];
-				$this->verse = $chapterVerse[1];
-				
+				return array("chapter"=>$chapterVerse[0],
+							"verse"=>$chapterVerse[1],
+							"conj"=>$lineArray[1]);
+			}
+			else {
+				return false; //colon did not exist
 			}
 		
 		}

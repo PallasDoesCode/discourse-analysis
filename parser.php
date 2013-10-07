@@ -5,6 +5,10 @@
 	{
 		private $pconjList;
 		private $defaultPconjList = array('WHEN','WHENEVER','WHILE','AS','AS LONG AS','AS SOON AS','SINCE','UNTIL','JUST AS','AT THE SAME TIME AS','WHERE','WHEREVER','THEREFORE','AS A RESULT','FOR THIS REASON','CONSEQUENTLY','HENCE','ACCORDINGLY','THUS','SO','BECAUSE','FOR','SINCE','IN AS MUCH AS','IN ORDER THAT','SO THAT','THAT','TO THE END THAT','FOR THE PURPOSE THAT','LEST','THUS','IN THIS MANNER','IN THAT MANNER','BY THIS MEANS','BY THAT MEANS','SUCH THAT','IF','ONLY IF','UNLESS','EXCEPT THAT','EXCEPT IF' ,'ALTHOUGH','THOUGH','EVEN THOUGH','EVEN IF','X','AND','NOW','BUT','ALSO','OR','WHETHER','TILL','THEN','NEVERTHELESS','YET','STILL','ONLY','ON THE OTHER HAND','CONVERSELY','ON THE CONTRARY','INSTEAD','NOTWITHSTANDING','NOR','LIKEWISE','EITHER','ELSE','OR ELSE','MOREOVER','NEITHER','THAN','INDEED','OTHERWISE','INASMUCH AS');
+		
+		private $chapter;
+		private $verse;
+		private $conj;
 				
 				
 				
@@ -138,6 +142,10 @@
 				if($this->newChapterVerse($line) == 1 && !$nextIsClause) {
 					//store chapter, verse, and conj into variables
 					
+					/*
+						!! I added this functionality in a function called
+						getChapterVerseConj !!
+					*/
 					
 					//set the chapter and verse to the current chapter and verse
 					$currentChapter = $chapter;
@@ -209,10 +217,40 @@
 		//Parses the line passed to it to determine if it is the start of a new chapter or verse
 		function newChapterVerse($line) {
 		
-			return(preg_match('#[0-999]#', $line);
-		
+			$this->getChapterVerseConj($line);
+			return ((int)$this->chapter && (int)$this->verse);
+			
 		}
 		
+		//This function splits the given line into 3 variables: $chapter, $verse, $conj
+		function getChapterVerseConj($line) {
+		
+			$colonPos = strpos($line, ":");
+			if ($colonPos !== false) {
+				
+				/*
+					Split the inputted $line into an array using the space character [\s]
+					as the delimiter, giving you the chapter and verse in position 0 and
+					the conjunction in position 1
+				*/
+				
+				$lineArray = preg_split('[\s]', $line);
+				$this->conj = $lineArray[1];
+				
+				/*
+					Explode the string at lineArray position 0 (which holds the
+					chapter/verse, using the colon character as the delimiter; store the
+					array result in $chapterVerse, which gives you the chapter at position
+					0 and the verse at position 1
+				*/
+				
+				$chapterVerse = explode(':', $lineArray[0]);
+				$this->chapter = $chapterVerse[0];
+				$this->verse = $chapterVerse[1];
+				
+			}
+		
+		}
 		
 		//adds chapter and verse to the simpleXmlElement
 		function addChapterVerse($node, $chapter, $verse) {

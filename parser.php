@@ -137,11 +137,10 @@
 				//1:1 X
 				if($this->newChapterVerse($line) == 1 && !$nextIsClause) {
 					//store chapter, verse, and conj into variables
-					
-					/*
-						!! I added this functionality in a function called
-						getChapterVerseConj !!
-					*/
+					$chapterVerseConj = $this->getChapterVerseConj();
+					$chapter = $chapterVerseConj['chapter'];
+					$verse = $chapterVerseConj['verse'];
+					$conj = $chapterVerseConj['conj'];
 					
 					//set the chapter and verse to the current chapter and verse
 					$currentChapter = $chapter;

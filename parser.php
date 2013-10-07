@@ -137,7 +137,7 @@
 				//1:1 X
 				if($this->newChapterVerse($line) == 1 && !$nextIsClause) {
 					//store chapter, verse, and conj into variables
-					$chapterVerseConj = $this->getChapterVerseConj();
+					$chapterVerseConj = $this->getChapterVerseConj($line);
 					$chapter = $chapterVerseConj['chapter'];
 					$verse = $chapterVerseConj['verse'];
 					$conj = $chapterVerseConj['conj'];

@@ -258,7 +258,8 @@
 				*/
 				
 				$lineArray = preg_split('[\s]', $line);
-
+				$conjArray = array_slice($lineArray, 1);
+				$conj = implode(" ", $conjArray);
 
 				
 				/*
@@ -271,7 +272,7 @@
 				$chapterVerse = explode(':', $lineArray[0]);
 				return array("chapter"=>$chapterVerse[0],
 							"verse"=>$chapterVerse[1],
-							"conj"=>$lineArray[1]);
+							"conj"=>$conj);
 			}
 			else {
 				return false; //colon did not exist

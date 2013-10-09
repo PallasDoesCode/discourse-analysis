@@ -113,16 +113,14 @@
 		*/
 		function parseFormattedText($inputText, $bookName = "") {
 			
+			//Trim the carriage return characters in the input text
+			$inputText = $this->trimCarriageReturns($inputText);
+			
 			//Get the line of $inputText
 			$inputTextArray = explode("\n", $inputText);
 			
 			//Create root node
 			$book = new SimpleXmlElement("<book></book>");
-			
-			/*$nextIsClause is used to flag that the next line will be declared as a
-			  clause*/
-			$nextIsClause = False;
-			
 			
 			$conjunctionAvailable = False;
 			$currentChapter = "";
@@ -133,9 +131,10 @@
 			for($i = 0; $i < count($inputTextArray); $i++) {
 			
 				$line = $inputTextArray[$i];
+				
 			
 				//1:1 X
-				if($this->newChapterVerse($line) == 1 && !$nextIsClause) {
+				if($this->newChapterVerse($line) == 1 && !$conjunctionAvailable) {
 					//store chapter, verse, and conj into variables
 					$chapterVerseConj = $this->getChapterVerseConj($line);
 					$chapter = $chapterVerseConj['chapter'];
@@ -152,13 +151,12 @@
 					//add conj to current clause
 					$currentClause->addChild("conj", $conj);
 					
-					$nextIsClause = True;
 					$conjunctionAvailable = True;
 			
 				}
 			
 				//X
-				else if($this->isLineConjunction($line) && !$nextIsClause) {
+				else if($this->isLineConjunction($line) && !$conjunctionAvailable) {
 			
 					//add <conj> and </conj> tags into new clause
 					
@@ -167,7 +165,6 @@
 					//add conj to current clause
 					$currentClause->addChild("conj", $line);
 					
-					$nextIsClause = True;
 					$conjunctionAvailable = True;
 			
 				}
@@ -185,8 +182,6 @@
 					//set chapter and verse to the current chapter and verse
 					$this->addChapterVerse($text, $currentChapter, $currentVerse);
 					
-					
-					$nextIsClause = False;
 					$conjunctionAvailable = False;
 			
 				}
@@ -289,7 +284,6 @@
 		//make the list of pconj's for the beginning of file
 		//returns a string of pconj's in xml format
 		function getPconjList() {
-			//use $this->pconjList
 			
 			$pconjXml = '<pconj>';
 			$xmlInside = implode("</pconj>\n<pconj>", $this->pconjList);
@@ -300,7 +294,20 @@
 		
 		//removes all new line characters [\n]
 		function trimNewLines($text) {
-			return str_replace("\n", " ", $text);
+		
+			$textOut = str_replace("\r", "\n", $text);
+			$textOut = str_replace("\n", " ", $text);
+			return $textOut;
+			
+		}
+		
+		//remove all \r carriage returns
+		function trimCarriageReturns($text) {
+		
+			$textOut = str_replace("\r", "\n", $text);
+			$textOut = str_replace("\n\n", "\n", $textOut);
+			return $textOut;
+		
 		}
 		
 	

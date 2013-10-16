@@ -23,12 +23,17 @@
 	include 'fileModule.php';
 	
 	$fileMod = new FileModule($connection); //$connection comes from the header.php
-	$fileMod->upload($userName, $fileName, $fileContents, $publicOption);
+	echo "<div class='container'>";
+	
+	if($fileMod->upload($userName, $fileName, $fileContents, $publicOption)) {
+		echo "<p>Your upload was successful!</p>";
+	}
+	else {
+		echo "<p>Upload was unsuccessful</p>";
+	}
+	echo "</div>";
+	
 		
 	//we can redirect the page or give a confirmation message
 ?>
 
-<div class="container">
-	<p>Your upload was successful!</p>
-	
-</div>

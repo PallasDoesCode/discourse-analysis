@@ -44,9 +44,9 @@
 			$stmt->bind_result($fileName, $public, $lastUpdate);
 			$filesArray = array();
 			for($i = 0; $stmt->fetch(); $i++) {
-				$filesArray[i] = array[ "fileName" => $fileName,
+				$filesArray[$i] = array( "fileName" => $fileName,
 				                        "public" => $public,
-				                        "lastUpdate" => $lastUpdate ];
+				                        "lastUpdate" => $lastUpdate );
 			}
 			$stmt->close();
 			return $filesArray;

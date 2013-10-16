@@ -14,21 +14,43 @@
 		
 		//upload a file based on username
 		function upload($userName, $fileName, $file, $public) {
-			$datetime = date("Y-m-d H:i:s");
-			$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?, ?)");
-			$stmt->bind_param("sssss", $userName, $fileName, $file, $public, $datetime);
-			$stmt->execute();
-			$stmt->close();
+			if(!$this->fileExists($userName, $fileName)) {
+				$datetime = date("Y-m-d H:i:s");
+				$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?, ?)");
+				$stmt->bind_param("sssss", $userName, $fileName, $file, $public, $datetime);
+				$stmt->execute();
+				$stmt->close();
+				return true;
+			}
+			return false;
 		}
 		
 		//get files' information based on username, return array
-		function getFilesInfo($username) {
-		
+		//to access the data in this array, you have to specify the row number first,
+		//followed by the associated name of the variable that you wish to access
+		//
+		//ex. $filesArray[0]["fileName"] returns the first row's fileName field, whereas
+		//    $filesArray[0]["lastUpdate"] returns the first row's lastUpdate field
+		function getFilesInfo($userName) {
+			$stmt = $this->dbConnection->prepare("SELECT fileName, public, lastUpdate
+			                                      FROM files
+			                                      WHERE Owner = ?");
+			$stmt->bind_param("s", $userName);
+			$stmt->execute();
+			$stmt->bind_result($fileName, $public, $lastUpdate);
+			$filesArray = array();
+			for($i = 0; $stmt->fetch(); $i++) {
+				$filesArray[i] = array[ "fileName" => $fileName,
+				                        "public" => $public,
+				                        "lastUpdate" => $lastUpdate ];
+			}
+			$stmt->close();
+			return $filesArray;
 		}
 		
 		//get public files' information
 		function getPublicFilesInfo() {
-		
+			//owner name, file name, last updated
 		}
 		
 		//get file contents based on username and filename
@@ -36,7 +58,7 @@
 		
 		}
 		
-		//internal function, check if username is valid
+		//internal function, check if username is valid; not yet used
 		function validUserName($userName) {
 			if($stmt = $this->dbConnection->prepare("SELECT COUNT(Username)
 													FROM usersinfo

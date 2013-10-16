@@ -25,12 +25,16 @@
 			return false;
 		}
 		
-		//get files' information based on username, return array
-		//to access the data in this array, you have to specify the row number first,
-		//followed by the associated name of the variable that you wish to access
-		//
-		//ex. $filesArray[0]["fileName"] returns the first row's fileName field, whereas
-		//    $filesArray[0]["lastUpdate"] returns the first row's lastUpdate field
+		/*
+			This function gets files' information based on username and stores it in a
+			2d array, which it then returns.  To access the data in this array, you have
+			to specify the row number first, followed by the associated name of the
+			variable that you wish to access.
+			
+			Ex: $filesArray[0]["fileName"] returns the first row's fileName field,
+				  whereas $filesArray[0]["lastUpdate"] returns the first row's lastUpdate
+				  field
+		*/
 		function getFilesInfo($userName) {
 			$stmt = $this->dbConnection->prepare("SELECT fileName, public, lastUpdate
 			                                      FROM files

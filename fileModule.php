@@ -18,8 +18,13 @@
 				$datetime = date("Y-m-d H:i:s");
 				$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?, ?)");
 				$stmt->bind_param("sssss", $userName, $fileName, $file, $public, $datetime);
-				$stmt->execute();
-				$stmt->close();
+				if(!$stmt->execute()) {
+					$stmt->close();
+					return false;
+				}
+				else {
+					$stmt->close();
+				}
 				return true;
 			}
 			return false;

@@ -36,6 +36,7 @@
 				  field
 		*/
 		function getFilesInfo($userName) {
+			//file name, public, last updated
 			$stmt = $this->dbConnection->prepare("SELECT fileName, public, lastUpdate
 			                                      FROM files
 			                                      WHERE Owner = ?");

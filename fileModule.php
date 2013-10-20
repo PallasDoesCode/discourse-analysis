@@ -53,14 +53,43 @@
 			return $filesArray;
 		}
 		
-		//get public files' information
+		/*
+			This function gets the public files' information and stores it in a
+			2d array, which it then returns.  To access the data in this array, you have
+			to specify the row number first, followed by the associated name of the
+			variable that you wish to access.
+			
+			Ex: $filesArray[0]["Owner"] returns the first row's Owner field,
+				  whereas $filesArray[0]["fileName"] returns the first row's fileName
+				  field
+		*/
 		function getPublicFilesInfo() {
-			//owner name, file name, last updated
+			$stmt = $this->dbConnection->prepare("SELECT Owner, fileName, lastUpdate
+			                                      FROM files
+			                                      WHERE public = 1");
+		    $stmt->execute();
+		    $stmt->bind_result($Owner, $fileName, $lastUpdate);
+		    $filesArray = array();
+		    for($i = 0; $stmt->fetch(); $i++) {
+		    	$filesArray[i] = array( "Owner" => $Owner,
+		    	                        "fileName" => $fileName,
+		    	                        "lastUpdate" => $lastUpdate);
+		    }
+		    $stmt->close();
+		    return $filesArray;
 		}
 		
-		//get file contents based on username and filename
-		function getFileContents($userName, $fileName) {
-		
+		//get file contents based on the file's owner and filename
+		function getFileContents($Owner, $fileName) {
+			$stmt = $this->dbConnection->prepare("SELECT file
+			                                      FROM files
+			                                      WHERE Owner = ? AND fileName = ?");
+			$stmt->bind_param("ss", $Owner, $fileName);
+			$stmt->execute();
+			$stmt->bind_result($file);
+			$stmt->fetch();
+			$stmt->close();
+			return $file;
 		}
 		
 		//internal function, check if username is valid; not yet used

@@ -19,6 +19,7 @@
 				$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?, ?)");
 				$stmt->bind_param("sssss", $userName, $fileName, $file, $public, $datetime);
 				if(!$stmt->execute()) {
+					echo($stmt->error);
 					$stmt->close();
 					return false;
 				}
@@ -68,6 +69,7 @@
 				  whereas $filesArray[0]["fileName"] returns the first row's fileName
 				  field
 		*/
+		//TEST
 		function getPublicFilesInfo() {
 			$stmt = $this->dbConnection->prepare("SELECT Owner, fileName, lastUpdate
 			                                      FROM files
@@ -85,6 +87,7 @@
 		}
 		
 		//get file contents based on the file's owner and filename
+		//TEST
 		function getFileContents($Owner, $fileName) {
 			$stmt = $this->dbConnection->prepare("SELECT file
 			                                      FROM files
@@ -95,6 +98,24 @@
 			$stmt->fetch();
 			$stmt->close();
 			return $file;
+		}
+		
+		//This function deletes a file from the database
+		//TEST
+		function deleteFile($Owner, $fileName) {
+		
+			$stmt = $this->dbConnection->prepare("DELETE FROM files
+			                                      WHERE fileName = ? AND Owner = ?");
+		    $stmt->bind_param("ss", $fileName, $Owner);
+		    if($stmt->execute()) {
+		    	$stmt->close();
+		    	return true;
+			}
+			else {
+				$stmt->close();
+				return false;
+			}
+		
 		}
 		
 		//internal function, check if username is valid; not yet used

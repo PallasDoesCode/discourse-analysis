@@ -16,7 +16,7 @@
 
 	$fileContents = getFile('fileaddress', "Noooo");
 	
-	$publicOption = isset($_REQUEST['public']);
+	$publicOption = (int)isset($_REQUEST['public']);
 	$userName = $userMod->getUserName();
 
 	//use the fileModule.php to upload files

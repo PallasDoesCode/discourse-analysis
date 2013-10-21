@@ -49,7 +49,8 @@ class UserModule
 			$stmt->fetch();
 			$stmt->close();			
 			$pwdHasher = new PasswordHash(8, FALSE);
-			if($pwdHasher->CheckPassword($password, $hashedPassword))
+			//if($pwdHasher->CheckPassword($password, $hashedPassword)) 	//uncomment this line and comment next line to add hashing security
+			if($password == $hashedPassword)
 			{
 				$_SESSION['username'] = $userName;
 				return true;

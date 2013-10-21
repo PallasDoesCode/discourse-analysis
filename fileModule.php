@@ -69,7 +69,6 @@
 				  whereas $filesArray[0]["fileName"] returns the first row's fileName
 				  field
 		*/
-		//TEST
 		function getPublicFilesInfo() {
 			$stmt = $this->dbConnection->prepare("SELECT Owner, fileName, lastUpdate
 			                                      FROM files
@@ -87,9 +86,8 @@
 		}
 		
 		//get file contents based on the file's owner and filename
-		//TEST
 		function getFileContents($Owner, $fileName) {
-			$stmt = $this->dbConnection->prepare("SELECT file
+			$stmt = $this->dbConnection->prepare("SELECT fileLocation
 			                                      FROM files
 			                                      WHERE Owner = ? AND fileName = ?");
 			$stmt->bind_param("ss", $Owner, $fileName);

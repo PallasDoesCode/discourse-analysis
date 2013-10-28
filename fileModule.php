@@ -87,7 +87,7 @@
 		
 		//get file contents based on the file's owner and filename
 		function getFileContents($Owner, $fileName) {
-			$stmt = $this->dbConnection->prepare("SELECT fileLocation
+			$stmt = $this->dbConnection->prepare("SELECT fileContents
 			                                      FROM files
 			                                      WHERE Owner = ? AND fileName = ?");
 			$stmt->bind_param("ss", $Owner, $fileName);

@@ -265,8 +265,14 @@
 				*/
 				
 				$chapterVerse = explode(':', $lineArray[0]);
+				if (!isset($chapterVerse[1])) {
+					$verse = null;
+				}
+				else {
+					$verse = $chapterVerse[1];
+				}
 				return array("chapter"=>$chapterVerse[0],
-							"verse"=>$chapterVerse[1],
+							"verse"=>$verse,
 							"conj"=>$conj);
 			}
 			else {

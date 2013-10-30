@@ -41,7 +41,7 @@ class UserModule
 	 **/
 	function LoginUser($userName, $password)
 	{
-		if($stmt = $this->dbConnect->prepare("SELECT Password FROM usersinfo WHERE username=?"))
+		if($stmt = $this->dbConnect->prepare("SELECT password FROM usersinfo WHERE username=?"))
 		{
 			$stmt->bind_param("s", $userName);
 			$stmt->execute();
@@ -96,7 +96,7 @@ class UserModule
 	{
 		if(isset($_SESSION['username']))
 		{
-			if($stmt = $this->dbConnect->prepare("SELECT Admin FROM usersinfo WHERE username= ?"))
+			if($stmt = $this->dbConnect->prepare("SELECT admin FROM usersinfo WHERE username= ?"))
 			{
 				$stmt->bind_param("s", $_SESSION['username']);
 				$stmt->execute();

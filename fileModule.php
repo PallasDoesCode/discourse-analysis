@@ -44,7 +44,7 @@
 			//file name, public, last updated
 			$stmt = $this->dbConnection->prepare("SELECT fileName, public, lastUpdate
 			                                      FROM files
-			                                      WHERE Owner = ?");
+			                                      WHERE owner = ?");
 			$stmt->bind_param("s", $userName);
 			$stmt->execute();
 			$stmt->bind_result($fileName, $public, $lastUpdate);
@@ -69,14 +69,14 @@
 				  field
 		*/
 		function getPublicFilesInfo() {
-			$stmt = $this->dbConnection->prepare("SELECT Owner, fileName, lastUpdate
+			$stmt = $this->dbConnection->prepare("SELECT owner, fileName, lastUpdate
 			                                      FROM files
 			                                      WHERE public = 1");
 		    $stmt->execute();
-		    $stmt->bind_result($Owner, $fileName, $lastUpdate);
+		    $stmt->bind_result($owner, $fileName, $lastUpdate);
 		    $filesArray = array();
 		    for($i = 0; $stmt->fetch(); $i++) {
-		    	$filesArray[i] = array( "Owner" => $Owner,
+		    	$filesArray[i] = array( "owner" => $owner,
 		    	                        "fileName" => $fileName,
 		    	                        "lastUpdate" => $lastUpdate);
 		    }
@@ -85,11 +85,11 @@
 		}
 		
 		//get file contents based on the file's owner and filename
-		function getFileContents($Owner, $fileName) {
-			$stmt = $this->dbConnection->prepare("SELECT file
+		function getFileContents($owner, $fileName) {
+			$stmt = $this->dbConnection->prepare("SELECT fileContents
 			                                      FROM files
-			                                      WHERE Owner = ? AND fileName = ?");
-			$stmt->bind_param("ss", $Owner, $fileName);
+			                                      WHERE owner = ? AND fileName = ?");
+			$stmt->bind_param("ss", $owner, $fileName);
 			$stmt->execute();
 			$stmt->bind_result($file);
 			$stmt->fetch();
@@ -99,9 +99,9 @@
 		
 		//internal function, check if username is valid; not yet used
 		function validUserName($userName) {
-			if($stmt = $this->dbConnection->prepare("SELECT COUNT(Username)
+			if($stmt = $this->dbConnection->prepare("SELECT COUNT(username)
 													FROM usersinfo
-													WHERE Username = ?"));
+													WHERE username = ?"));
 			$stmt->bind_param("s", $userName);
 			$stmt->execute();
 			$stmt->bind_result($userNameCount);
@@ -117,7 +117,7 @@
 		function fileExists($userName, $fileName) {
 			if($stmt = $this->dbConnection->prepare("SELECT COUNT(fileName)
 													FROM files
-													WHERE Owner = ? AND fileName = ?"));
+													WHERE owner = ? AND fileName = ?"));
 			$stmt->bind_param("ss", $userName, $fileName);
 			$stmt->execute();
 			$stmt->bind_result($fileCount);

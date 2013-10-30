@@ -53,7 +53,7 @@ class RegistrationModule
         }
         else
 		{
-			if($stmt = $this->dbConnect->prepare("SELECT COUNT(Username) AS UsernameCount FROM ((SELECT tempusersinfo.Username FROM tempusersinfo) UNION (SELECT usersinfo.Username FROM usersinfo)) AS usernamestable WHERE Username = ?"))
+			if($stmt = $this->dbConnect->prepare("SELECT COUNT(username) AS UsernameCount FROM ((SELECT tempusersinfo.username FROM tempusersinfo) UNION (SELECT usersinfo.username FROM usersinfo)) AS usernamestable WHERE username = ?"))
 			{
 				$stmt->bind_param("s", $username);
 				$stmt->execute();
@@ -121,7 +121,7 @@ class RegistrationModule
 		if(strlen($this->username) > 0 && strlen($this->password) > 0 && strlen($this->email) > 0 && strlen($this->realName) > 0)
 		{
 			$confirm_code=md5(uniqid(rand()));
-			if($stmt = $this->dbConnect->prepare("INSERT INTO tempusersinfo(confirm_code, Username, Password, Email, Name)VALUES( ?, ?, ?, ?, ?)"))
+			if($stmt = $this->dbConnect->prepare("INSERT INTO tempusersinfo(confirm_code, username, password, email, name)VALUES( ?, ?, ?, ?, ?)"))
 				{
 					$stmt->bind_param("sssss", $confirm_code, $this->username, $this->password, $this->email, $this->realName);
 					$result = $stmt->execute();
@@ -166,14 +166,14 @@ class RegistrationModule
             $stmt->close();
             if($count > 0)
             {
-                if($stmt = $this->dbConnect->prepare("SELECT Username, Email, Password, Name FROM tempusersinfo WHERE confirm_code= ? "))
+                if($stmt = $this->dbConnect->prepare("SELECT username, email, password, name FROM tempusersinfo WHERE confirm_code= ? "))
                 {
                     $stmt->bind_param("s", $key);
                     $stmt->execute();
                     $stmt->bind_result($username, $email, $password, $name);
                     $stmt->fetch();
                     $stmt->close();
-                    if($stmt = $this->dbConnect->prepare("INSERT INTO usersinfo(Username, Password, Email, Name)VALUES(?, ?, ?, ?)"))
+                    if($stmt = $this->dbConnect->prepare("INSERT INTO usersinfo(username, password, email, name)VALUES(?, ?, ?, ?)"))
                     {
                         $stmt->bind_param("ssss", $username, $password, $email, $name);
                         $stmt->execute();

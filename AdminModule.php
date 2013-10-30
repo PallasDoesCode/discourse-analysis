@@ -33,7 +33,7 @@ class AdminUserModule
 		if ( strlen($newUsername) > 3)
 		{
 			// Check if Old Username exist. Our interface should always have the correct old User name
-			if ($stmt = $this->dbConnect->prepare("SELECT COUNT(Username) AS UsernameCount FROM SELECT (usersinfo.Username FROM usersinfo) AS usernamestable WHERE Username = ?") )
+			if ($stmt = $this->dbConnect->prepare("SELECT COUNT(username) AS UsernameCount FROM SELECT (usersinfo.username FROM usersinfo) AS usernamestable WHERE username = ?") )
 			{
 				$stmt->bind_param("s", $oldUsername);
 				$stmt->execute();
@@ -46,7 +46,7 @@ class AdminUserModule
 				}
 			}
 			// Checks temp user table and the user table for copys of users that already exist.
-			if ($stmt = $this->dbConnect->prepare("SELECT COUNT(Username) AS UsernameCount FROM ((SELECT tempusersinfo.Username FROM tempusersinfo) UNION (SELECT usersinfo.Username FROM usersinfo)) AS usernamestable WHERE Username = ?") )
+			if ($stmt = $this->dbConnect->prepare("SELECT COUNT(username) AS UsernameCount FROM ((SELECT tempusersinfo.username FROM tempusersinfo) UNION (SELECT usersinfo.username FROM usersinfo)) AS usernamestable WHERE username = ?") )
 			{
 				$stmt->bind_param("s", $newUsername);
 				$stmt->execute();
@@ -59,7 +59,7 @@ class AdminUserModule
 				}
 			}
 			// Updates the username
-			if ($stmt = $this->dbConnect->prepare("UPDATE usersinfo SET Username = ? WHERE Username = ?") )
+			if ($stmt = $this->dbConnect->prepare("UPDATE usersinfo SET username = ? WHERE username = ?") )
 			{
 				$stmt->bind_param("ss", $newUsername, $oldUsername);
 				$stmt->execute();
@@ -87,7 +87,7 @@ class AdminUserModule
 	 */
 	function ChangePassword($username, $newPassword)
 	{
-		if ( $stmt = $this->dbConnect->prepare("SELECT COUNT(Username) AS UsernameCount FROM SELECT (usersinfo.Username FROM userinfo) AS usernamestable WHERE Username = ?")) 
+		if ( $stmt = $this->dbConnect->prepare("SELECT COUNT(username) AS UsernameCount FROM SELECT (usersinfo.username FROM userinfo) AS usernamestable WHERE username = ?")) 
 		{
 			$stmt->bind_param("s", $username);
 			$stmt->execute();
@@ -100,7 +100,7 @@ class AdminUserModule
 			}
 			else
 			{
-				if ( $stmt = $this->dbConnect->prepare("UPDATE userinfo SET Password = ? WHERE Username = ? ") )
+				if ( $stmt = $this->dbConnect->prepare("UPDATE userinfo SET password = ? WHERE username = ? ") )
 				{
 					$stmt->bind_param("ss", $newPassword, $username);
 					$stmt->execute();
@@ -125,7 +125,7 @@ class AdminUserModule
 	function ChangeEmail($username, $newEmail)
 	{
 		$oldEmail = '';
-		if ( $stmt = $this->dbConnect->prepare("SELECT COUNT(Username) AS UsernameCount FROM SELECT (usersinfo.Username FROM userinfo) AS usernamestable WHERE Username = ?") )
+		if ( $stmt = $this->dbConnect->prepare("SELECT COUNT(username) AS UsernameCount FROM SELECT (usersinfo.username FROM userinfo) AS usernamestable WHERE username = ?") )
 		{
 
 			$stmt->bind_param("s", $username);
@@ -175,7 +175,7 @@ class AdminUserModule
 	 
 	function ChangeName($username, $newName)
 	{
-		if ( $stmt = $this->dbConnect->prepare("SELECT COUNT(Username) AS UsernameCount FROM SELECT (usersinfo.Username FROM userinfo) AS usernamestable WHERE Username = ?") )
+		if ( $stmt = $this->dbConnect->prepare("SELECT COUNT(username) AS UsernameCount FROM SELECT (usersinfo.username FROM userinfo) AS usernamestable WHERE username = ?") )
 		{
 			$stmt->bind_param("s", $username);
 			$stmt->execute();
@@ -189,7 +189,7 @@ class AdminUserModule
 			}
 			else 
 			{
-				if ( $stmt == $this->dbConect->prepare("UPDATE userinfo SET Email = ? WHERE Username = ?" ) )
+				if ( $stmt == $this->dbConect->prepare("UPDATE userinfo SET email = ? WHERE username = ?" ) )
 				{
 					$stmt->bind_param("ss", $newName, $username);
 					$stmt->exectute();
@@ -219,7 +219,7 @@ class AdminUserModule
 	 */
 	function ViewUser($user)
 	{
-		if( $stmt = $this->dbConnect->prepare( "SELECT Username, Email, Name FROM usersinfo WHERE Username = ? " ) )
+		if( $stmt = $this->dbConnect->prepare( "SELECT username, email, name FROM usersinfo WHERE username = ? " ) )
 		{
 			$stmt->bind_param("s", $user);
 			if(!$stmt->execute() )
@@ -230,9 +230,9 @@ class AdminUserModule
 			$stmt->bind_result($r_uname, $r_email, $r_name);
 			$stmt->fetch();
 			
-			$row['Username'] = $r_uname;
-			$row['Email'] = $r_email;
-			$row['Name'] = $r_name;
+			$row['username'] = $r_uname;
+			$row['email'] = $r_email;
+			$row['name'] = $r_name;
 			
 			
 			$stmt->close();
@@ -249,7 +249,7 @@ class AdminUserModule
 	function TotalNumberOfUsers()
 	{
 		
-			if ($result = $this->dbConnect->query( "SELECT COUNT(Username) AS UsernameCount FROM usersinfo" ) )
+			if ($result = $this->dbConnect->query( "SELECT COUNT(username) AS UsernameCount FROM usersinfo" ) )
 			{
 				
 				$row = $result->fetch_assoc();
@@ -285,7 +285,7 @@ class AdminUserModule
 		{
 			$startRange = 0;
 		}
-		if ($stmt = $this->dbConnect->prepare(" SELECT Username, Email, Name FROM usersinfo LIMIT ? , ? ") )
+		if ($stmt = $this->dbConnect->prepare(" SELECT username, email, name FROM usersinfo LIMIT ? , ? ") )
 		{
 		
 			$stmt->bind_param("ii", $startRange, $endRange);
@@ -297,9 +297,9 @@ class AdminUserModule
 			while( $stmt->fetch() )
 			{
 			
-				$tempRow['Username'] = $r_uname;
-				$tempRow['Email'] = $r_email;
-				$tempRow['Name'] = $r_name;
+				$tempRow['username'] = $r_uname;
+				$tempRow['email'] = $r_email;
+				$tempRow['name'] = $r_name;
 				
 				/*
 				$lastTime = '';

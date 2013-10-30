@@ -65,6 +65,7 @@
     	
     		echo "<table align='center' id='myFileTable'>
     					<tr>
+    						<th></th>
     						<th>File Name</th>
     						<th>Public</th>
     						<th>Last Update</th>
@@ -86,7 +87,8 @@
     			}
     			
     			echo "<tr $class>";
-    			echo "<td>$fileName</td>
+    			echo "<td><input type='checkbox' id='$fileName'></td>
+    				  <td>$fileName</td>
     				  <td>$public</td>
     				  <td>$lastUpdate</td>";
     		 	echo "</tr>";

@@ -13,12 +13,27 @@
 		<tr>
 			<td width=40% bgcolor="#ffffff">
 			<form id="uploadarea" action="fileUpload.php" method="post" enctype="multipart/form-data">
-				File Name: <input type="text" name="filename"><br><br>
-				File Location: 
-
-				<input type="file" name="fileaddress" size="40"><br><br>
-				Make this file public: <input type="checkbox" name="public"><br><br>
-				<center><input type="submit" name="submit"></center>
+				<table>
+					<tr>
+					<td>File Name: </td><td><input type="text" name="filename"><br><br></td>
+					</tr>
+					<tr>
+					<td>File Location: </td><td><input type="file" name="fileaddress" size="40"><br><br></td>
+					</tr>
+					<tr>
+					<td>Make this file public? </td><td><input type="checkbox" name="public"><br><br></td>
+					</tr>
+					<tr>
+					<td>Use default conjunction list? </td><td><input type="checkbox" name="useDefault" checked><br><br></td>
+					</tr>
+					<tr>
+					<td>Is your text file formatted? </td><td><input type="checkbox" name="isFormatted"><br><br></td>
+					</tr>
+					<tr>
+					<td></td>
+					<td><center><input type="submit" name="submit"></center></td>
+					</tr>
+				</table>
 			</form>
 			</td>
 		</tr>

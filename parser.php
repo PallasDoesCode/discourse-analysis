@@ -36,6 +36,7 @@
 			$clause = $book->addChild("clause");
 			
 			$trimmedText = $this->trimNewLines($inputText);
+			$trimmedText = $this->trimSpaces($inputText);
 			$text = $clause->addChild("text", $trimmedText);
 			$this->addChapterVerse($text, "", "");
 			
@@ -131,6 +132,7 @@
 			for($i = 0; $i < count($inputTextArray); $i++) {
 			
 				$line = $inputTextArray[$i];
+				$line = $this->trimSpaces($line);
 				
 			
 				//1:1 X
@@ -313,6 +315,21 @@
 			$textOut = str_replace("\r", "\n", $text);
 			$textOut = str_replace("\n\n", "\n", $textOut);
 			return $textOut;
+		
+		}
+		
+		//trim multiple consecutive spaces down to 1
+		function trimSpaces($text) {
+		
+			$position = strpos($text, "  ");
+			while($position !== false) {
+			
+				$text = str_replace("  ", " ", $text);
+				$position = strpos($text, "  ");
+			
+			}
+			
+			return $text;
 		
 		}
 		

@@ -8,7 +8,7 @@
 
 				
 				
-		// !We need to consider how to receive the list of pconj's (potential conjunctions) --> (array, string, csv, etc)
+
 		function Parser($listOfPconj = "useDefault") { //this uses a default parameter -> it does not have to be used
 												// ex. $myParser = new Parser(); OR $myParser = new Parser($myArray);
 			if($listOfPconj == "useDefault") {

@@ -17,9 +17,10 @@
 	$fileName = $_REQUEST['filename'];
 
 	$fileContents = getFile('fileaddress', "Noooo");
-	
-	$publicOption = isset($_REQUEST['public']);
+
 	$formattedOption = isset($_REQUEST['isFormatted']);
+	$publicOption = (int)isset($_REQUEST['public']);
+
 	$userName = $userMod->getUserName();
 	
 	if($formattedOption) {

@@ -99,7 +99,7 @@
     </div>
     <div class="leftButtonPanel">
         <ul>
-            <li><a class="navButton" href="" >Edit in workspace</a></li>
+            <li><a class="navButton" href="applet.html" target="_blank">Edit in workspace</a></li>
             <li><a class="navButton" href="" >View in workspace</a></li>
             <li><a class="navButton" href="" >Delete File</a></li>
         </ul>

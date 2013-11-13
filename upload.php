@@ -15,10 +15,10 @@
 			<form id="uploadarea" action="fileUpload.php" method="post" enctype="multipart/form-data">
 				<table>
 					<tr>
-					<td>File Name: </td><td><input type="text" name="filename"><br><br></td>
+					<td>File Name: </td><td><input type="text" name="filename" required><br><br></td>
 					</tr>
 					<tr>
-					<td>File Location: </td><td><input type="file" name="fileaddress" size="40"><br><br></td>
+					<td>File Location: </td><td><input type="file" name="fileaddress" size="40" required><br><br></td>
 					</tr>
 					<tr>
 					<td>Make this file public? </td><td><input type="checkbox" name="public"><br><br></td>

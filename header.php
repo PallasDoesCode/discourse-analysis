@@ -49,7 +49,7 @@ require('DatabaseModule.php');
                     </ul>
                 </li>
                 <li>
-                    <a class="navButton" href="">Login / Register</a>
+                    <a class="navButton" href="register.php">Login / Register</a>
                     <ul>
                         <li><a class="navButton" href="login.php">Login</a></li>
                         <li><a class="navButton" href="register.php">Register</a></li>

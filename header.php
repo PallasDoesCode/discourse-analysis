@@ -1,31 +1,41 @@
 <?php
-require('UserModule.php');
-require('DatabaseModule.php');
+	require('UserModule.php');
+	require('DatabaseModule.php');
+	
     $loginBar;
     $loginError = "";
     $dbMod = new DatabaseModule();
     $connection = $dbMod->connect();
     $userMod = new UserModule($connection);
     
-    if(isset($_POST['action'])){
-        if ($_POST['action'] == "logout"){
+    if(isset($_POST['action']))
+	{
+        if ($_POST['action'] == "logout")
+		{
             $userMod->LogoutUser();
         }
     }
-    if((isset($_GET['action']))){
-        if($_GET['action'] == "loginError"){
+    if((isset($_GET['action'])))
+	{
+        if($_GET['action'] == "loginError")
+		{
             $loginError = "You must be logged in to access that page";
         }
     }
     
-    if($userMod->IsUserLoggedIn()){
+    if($userMod->IsUserLoggedIn())
+	{
         $loginBar = "<span style='padding: 5px;'><b>Welcome, ". $userMod->GetUserName()." ! <a href='#' onclick='document.logout.submit();'>(logout)</a></b></span>";
     }
-    else{
+	
+    else
+	{
         $loginBar = "";
     }
+	
 	date_default_timezone_set("US/Central"); 
 ?>
+
 <html>
 <head>
     <title>Discourse Analysis - Welcome!</title>
@@ -49,7 +59,7 @@ require('DatabaseModule.php');
                     </ul>
                 </li>
                 <li>
-                    <a class="navButton" href="register.php">Login / Register</a>
+                    <a class="navButton" href="">Login / Register</a>
                     <ul>
                         <li><a class="navButton" href="login.php">Login</a></li>
                         <li><a class="navButton" href="register.php">Register</a></li>

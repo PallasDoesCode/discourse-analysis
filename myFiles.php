@@ -1,7 +1,8 @@
 <?php 
     include 'header.php';
     //if the user is not logged in then it will redirect them to the login page
-    if(!$userMod->IsUserLoggedIn()){
+    if(!$userMod->IsUserLoggedIn())
+	{
         header("location: login.php?action=loginError");
     }
     include 'fileModule.php';
@@ -79,10 +80,13 @@
     			
     			$lastUpdate = $row['lastUpdate'];
     			
-    			if ($i%2 == 0) { //if even row, then set row's class
+    			if ($i%2 == 0)
+				{
+					//if even row, then set row's class
     				$class = "class='evenTableRow'";
     			}
-    			else {
+    			else
+				{
 					$class = "";
     			}
     			
@@ -104,12 +108,6 @@
             <li><a class="navButton" href="" >Delete File</a></li>
         </ul>
     </div>
-
-
-
-
-
-
 </div>
 <?php include 'footer.php';?>
 

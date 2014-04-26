@@ -13,9 +13,9 @@ class UserModule
 {
 	var $dbConnect;
 	
-	/**
+	/*
 	 * Default constructor, requires a active mysqli connection.
-	 **/
+	 */
 	function UserModule($dbConnect)
 	{
 		$this->dbConnect = $dbConnect;
@@ -49,13 +49,25 @@ class UserModule
 			$stmt->fetch();
 			$stmt->close();			
 			$pwdHasher = new PasswordHash(8, FALSE);
-			if($pwdHasher->CheckPassword($password, $hashedPassword)) 	//uncomment this line and comment next line to add hashing security
-			if(password_verify($password, $hashedPassword))
+			$hashString = $pwdHasher->HashPassword($password);
+			
+			// Tests to determine if hashing is the issue with the login problem.
+			/*
+				$hashString = $pwdHasher->HashPassword($password);
+				echo "The password entered is " . $password . "<br />";
+				echo "The hashed string is " . $hashString . "<br />";
+				echo "The hashed password to compare against is " . $hashedPassword;
+			*/
+			
+			//if($pwdHasher->CheckPassword($password, $hashedPassword))
+			if($pwdHasher->CheckPassword($hashString, $hashedPassword));
 			{
+				echo $userName;
 				$_SESSION['username'] = $userName;
 				return true;
 			}
 		}
+		
 		return false;
 	}
 	

@@ -7,11 +7,11 @@
 	$connection = $dbMod->connect();
 	$adminUserMod = new AdminUserModule($connection);
     //if the user is not logged in then it will redirect them to the login page
-	/*
+	
     if(!$userMod->IsUserLoggedIn()){
         header("location: login.php?action=loginError");
     }
-	*/
+	
 ?>
 <div class="container">
     
@@ -38,17 +38,19 @@
        <!--User Information-->
     <table border="5" cellpadding="4" cellspacing="3" align="center">
             <tr>
-                    <th colspan="6"><br><h2>User Information </h2>
-                    </th>
+				<th colspan="6">
+					<br />
+					<h2>User Information </h2>
+				</th>
             </tr>
             <tr>
-            <th>Username</th>
-            <th>Email</th>
-			<th>Full Name</th>
-			<th>Password</th> 
-            <th>Last Logged In</th>
-            <th># of Files Uploaded</th>
-            <th>Permission</th>
+				<th>Username</th>
+				<th>Email</th>
+				<th>Full Name</th>
+				<th>Password</th> 
+				<th>Last Logged In</th>
+				<th># of Files Uploaded</th>
+				<th>Permission</th>
             </tr>
 			
 			<?php

@@ -1,22 +1,26 @@
 <?php
     include 'header.php';
-	include 'Registrationmodule.php';
+	include 'RegistrationModule.php';
 
-//
-$message = "";
-$username;
-$password;
+	$message = "";
+	$username;
+	$password;
 
-if (isset($_POST['username']) && isset($_POST['password'])){
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $loggedIn = $userMod->LoginUser($username,$password);
-    if($loggedIn == true){
-        header("location:  myFiles.php");
-    }else{
-            $message = "<p>Invalid Username or password</p>";
-    }
-}
+	if (isset($_POST['username']) && isset($_POST['password']))
+	{
+		$username = $_POST['username'];
+		$password = $_POST['password'];		
+		$loggedIn = $userMod->LoginUser($username,$password);
+		
+		if($loggedIn == true)
+		{
+			header("location:  myFiles.php");
+		}
+		else
+		{
+			$message = "<p>Invalid username or password</p>";
+		}
+	}
 
 ?>	
 <div class="container">
@@ -31,13 +35,13 @@ if (isset($_POST['username']) && isset($_POST['password'])){
      
     <form class="loginForm" name="LoginForm" method="post" action="">
         <p>
-        <input type="text" name="username" placeholder="Username" />
+			<input type="text" name="username" placeholder="Username" />
         </p>
         <p>
-        <input type="password" name="password" placeholder="Password" />
+			<input type="password" name="password" placeholder="Password" />
         </p>
         <p>
-        <input type="submit" name="button" id="button" value="Submit" />
+			<input type="submit" name="button" id="button" value="Submit" />
         </p>
     </form>
 </div>

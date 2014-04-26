@@ -85,24 +85,30 @@ include_once dirname(__FILE__).'/secureimage/securimage.php';
     <script type="text/javascript">
         var formError = Array();
         formError[false, false, false];
-        $(document).ready(function(){
+        $(document).ready(function()
+		{
             $('#button').click(function(){
-                if($('#username').val() == ""){
-                    if(!formError[0]){
+                if($('#username').val() == "")
+				{
+                    if(!formError[0])
+					{
                         $("#username").after("<span><img src='Images/red-x.gif' alt='X'/></span>");
                     }
                     formError[0] = true;
                     return false;
                 }
-                if($("#password").val() != $("#passwordAgain").val() || $("#password").val() == "" || $("#passwordAgain").val() == ""){
-                    if(!formError[1]){
+                if($("#password").val() != $("#passwordAgain").val() || $("#password").val() == "" || $("#passwordAgain").val() == "")
+				{
+                    if(!formError[1])
+					{
                         $("#password").after("<span><img src='Images/red-x.gif' alt='X'/></span>");
                         $("#passwordAgain").after("<span><img src='Images/red-x.gif' alt='X'/><div style='color:red'>Passwords must match</div></span>");
                     }
                     formError[1] = true;
                     return false;
                 }
-                if($('#email').val() == ""){
+                if($('#email').val() == "")
+				{
                     if(!formError[2]){
                         $("#email").after("<span><img src='Images/red-x.gif' alt='X'/></span>");
                     }
@@ -110,7 +116,8 @@ include_once dirname(__FILE__).'/secureimage/securimage.php';
                     return false;
                 }
             });
-            $('#refreshLink').click(function(){
+            $('#refreshLink').click(function()
+			{
                 $('#captcha').attr("src","secureimage/securimage_show.php?num=" + Math.floor(Math.random()*11));
                 return false;
             })

@@ -11,10 +11,10 @@
             <TR>
                 <TD WIDTH=754 VALIGN=TOP BGCOLOR="#0099ff">
                         <P ALIGN=CENTER STYLE="text-decoration: none"><FONT COLOR="#ffffff"><FONT FACE="Thorndale, serif"><FONT SIZE=5><I><B>JSU
-                         CS491 Discourse Analysis </B></I></FONT></FONT></FONT>
+                         CS 499 Discourse Analysis </B></I></FONT></FONT></FONT>
                         </P>
-                        <P ALIGN=CENTER STYLE="text-decoration: none"><FONT COLOR="#ffffff"><FONT FACE="Thorndale, serif"><FONT SIZE=5><I><B>Spring
-                        2013</B></I></FONT></FONT></FONT></P>
+                        <P ALIGN=CENTER STYLE="text-decoration: none"><FONT COLOR="#ffffff"><FONT FACE="Thorndale, serif"><FONT SIZE=5><I><B>Fall
+                        2014</B></I></FONT></FONT></FONT></P>
                 </TD>
             </TR>
             <TR>
@@ -68,7 +68,7 @@
             <TR>
                 <TD WIDTH=754 VALIGN=TOP BGCOLOR="#ffffff">
                         <P align="center" STYLE="font-style: normal; font-weight: normal; text-decoration: none">
-                        <FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Last Updated: Spring 2013</FONT></FONT></FONT></P>
+                        <FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Last Updated: Fall 2014</FONT></FONT></FONT></P>
                 </TD>
             </TR>
     </TABLE>

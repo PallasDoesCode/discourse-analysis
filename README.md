@@ -1,6 +1,6 @@
-##JSU CS 499 Fall 2014
+#JSU CS499 Fall 2014
 ##Discourse Analysis Project
-
+<br />
 
 > ###Project Description
 

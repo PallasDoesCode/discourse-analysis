@@ -1,6 +1,8 @@
 <?php
 	require('UserModule.php');
 	require('DatabaseModule.php');
+	require('UserModule.php');
+	require('DatabaseModule.php');
 	
     $loginBar;
     $loginError = "";

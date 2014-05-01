@@ -13,23 +13,25 @@ class RegistrationModule
 	private $username = "";
 	private $password = "";
 	private $email = "";
-	private $realName = "";
-	
+	private $name = "";
+
 	/**
 	 *
 	 **/
+	
 	function RegistrationModule($dbConnect)
 	{
 		$this->dbConnect = $dbConnect;
+
 	}
-	
+
 	/**
 	 *
 	 **/
 	function InputName($name)
 	{
 		if (!empty($name)) {
-			$this->realName = $name;
+			$this->name = $name;
 			return true;
 		}
 		else
@@ -37,7 +39,7 @@ class RegistrationModule
 			return "Your name can not be empty.";
 		}
 	}
-	
+
 	/**
 	 *
 	 **/
@@ -69,7 +71,7 @@ class RegistrationModule
             return "The entered username already exists";
 		}
 	}
-	
+
 	/**
 	 *
 	 **/
@@ -91,7 +93,7 @@ class RegistrationModule
 			return true;
 		}
 	}
-	
+
 	/**
 	 *
 	 **/
@@ -112,46 +114,49 @@ class RegistrationModule
 		}
 		return false;
 	}
-	
+
 	/**
 	 *
 	 **/
 	function RequestConfirmation()
 	{
-		if(strlen($this->username) > 0 && strlen($this->password) > 0 && strlen($this->email) > 0 && strlen($this->realName) > 0)
+		if(strlen($this->username) > 0 && strlen($this->password) > 0 && strlen($this->email) > 0 && strlen($this->name) > 0)
 		{
 			$confirm_code=md5(uniqid(rand()));
 			if($stmt = $this->dbConnect->prepare("INSERT INTO tempusersinfo(confirm_code, username, password, email, name)VALUES( ?, ?, ?, ?, ?)"))
 				{
-					$stmt->bind_param("sssss", $confirm_code, $this->username, $this->password, $this->email, $this->realName);
+					$stmt->bind_param("sssss", $confirm_code, $this->username, $this->password, $this->email, $this->name);
 					$result = $stmt->execute();
 					$stmt->close();
 					if($result)
 					{
+					
 						$to=$this->email;
 
 						// Your subject
-						$subject="Your confirmation link here";
+						$subject="Your Discourse Analysis confirmation link here";
 
 						// From
-						$header="from: your name <your email>";
+						$header="From: CS 491 Discourse Analysis Project <jsu.edu>";
 
 						// Your message
-						$message="Your Comfirmation link \r\n";
+						$message="Dear user, thank you for registering for Discourse Analysis \r\n";
 						$message.="Click on this link to activate your account \r\n";
-						$message.="http://trc202.com/confirmation.php?registrationId=$confirm_code";
-
+						//$message.="http://trc202.com/confirmation.php?registrationId=$confirm_code";
+						$message.="http:/localhost/website2014/testlandingpage.php";
 
 						// send email
-						$sentmail = mail($to,$subject,$message,$header);
+						mail($to,$subject,$message,$header);
+						
+						
 						return true;
-					}	
+					}
 				}
 		}
 		return false;
 	}
-	
-	
+
+
 	/**
 	 *
 	 **/
@@ -166,31 +171,32 @@ class RegistrationModule
             $stmt->close();
             if($count > 0)
             {
-                if($stmt = $this->dbConnect->prepare("SELECT username, email, password, name FROM tempusersinfo WHERE confirm_code= ? "))
-                {
-                    $stmt->bind_param("s", $key);
-                    $stmt->execute();
-                    $stmt->bind_result($username, $email, $password, $name);
-                    $stmt->fetch();
-                    $stmt->close();
-                    if($stmt = $this->dbConnect->prepare("INSERT INTO usersinfo(username, password, email, name)VALUES(?, ?, ?, ?)"))
-                    {
-                        $stmt->bind_param("ssss", $username, $password, $email, $name);
-                        $stmt->execute();
-                        $stmt->close();
-                        if($stmt = $this->dbConnect->prepare("DELETE FROM tempusersinfo WHERE confirm_code = ?"))
-                        {
-                            $stmt->bind_param("s", $key);
-                            $stmt->execute();
-                            $stmt->close();
-                        }
-                        return true;
-                    }
-                    
-                }
-            }
-        } 
-        return false;
+				if($stmt = $this->dbConnect->prepare("SELECT username, email, password, name FROM tempusersinfo WHERE confirm_code= ? "))
+				{
+					$stmt->bind_param("s", $key);
+					$stmt->execute();
+					$stmt->bind_result($username, $email, $password, $name);
+					$stmt->fetch();
+					$stmt->close();
+					if($stmt = $this->dbConnect->prepare("INSERT INTO usersinfo(username, password, email, name)VALUES(?, ?, ?, ?)"))
+					{
+						$stmt->bind_param("ssss", $this->username, $this->password, $this->email, $this->name);
+						$stmt->execute();
+						$stmt->close();
+						if($stmt = $this->dbConnect->prepare("DELETE FROM tempusersinfo WHERE confirm_code = ?"))
+						{
+							$stmt->bind_param("s", $key);
+							$stmt->execute();
+							$stmt->close();
+							
+						}
+						return true;
+					}
+
+				} 
+				return false;
+			}
+		}
 	}
 }
 ?>

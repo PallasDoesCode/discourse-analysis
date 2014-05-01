@@ -1,6 +1,6 @@
 <?php
     include 'header.php';
-
+	include 'Registrationmodule.php';
 
 //
 $message = "";
@@ -10,7 +10,6 @@ $password;
 if (isset($_POST['username']) && isset($_POST['password'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
-
     $loggedIn = $userMod->LoginUser($username,$password);
     if($loggedIn == true){
         header("location:  myFiles.php");

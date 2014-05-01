@@ -98,11 +98,19 @@
     	?>
     </div>
     <div class="leftButtonPanel">
-        <ul>
-            <li><a class="navButton" href="applet.html" target="_blank">Edit in workspace</a></li>
-            <li><a class="navButton" href="" >View in workspace</a></li>
+		<form action="GraphicalInterface.php" method="post">
+			<input type="Hidden" name="owner" value="user"/>
+			<input type="Hidden" name="filename" value="test1"/>
+			<input type="Submit" value="Edit In Workspace" class="navButton"/>
+		    
+		</form>
+	
+	
+        <!--<ul>
+            <li><a class="navButton" href="GraphicalInterface.html" target="_blank">Edit in workspace</a></li>
+            <!--<li><a class="navButton" href="" >View in workspace</a></li>
             <li><a class="navButton" href="" >Delete File</a></li>
-        </ul>
+        </ul>-->
     </div>
 
 

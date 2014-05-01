@@ -1,4 +1,5 @@
 <?php
+
 require('UserModule.php');
 require('DatabaseModule.php');
     $loginBar;

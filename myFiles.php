@@ -8,12 +8,44 @@
     include 'fileModule.php';
 ?>
 
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+		/*
+		*	This click event marks/unmarks the select all
+		*	checkbox when its button container has been
+		*	clicked then it marks/unmarks all the checkboxes
+		*	in the table. 
+		*/
+		var checkAllBtn = $("#toggleBtn");
+		var selectAllcheckbox = $("#selectAll");
+		var checkboxes = $(".userCheckbox");
+		
+		checkAllBtn.click(function()
+		{
+			if (selectAllcheckbox.is(':checked'))
+			{
+				selectAllcheckbox.prop("checked", false);
+				checkboxes.prop("checked", false);
+			}
+			
+			else
+			{
+				selectAllcheckbox.prop("checked", true);
+				checkboxes.prop("checked", true);
+			}
+		});
+	});
+	
+</script>
+
 <div class="container">
     <br />
-	<div id="fileMenuOptions">
+	<div id="fileOptions">
 		<form action="GraphicalInterface.php" method="post">
 			<input type="Hidden" name="owner" value="user"/>
 			<input type="Hidden" name="filename" value="test1"/>
+			<button id="toggleBtn" type="button" ><input id="selectAll" type="checkbox" /></button>
 			<button id="uploadBtn" type="button" >Upload New File</button>
 			<button id="editBtn" type="Submit" >Edit In Workspace</button>
 		</form>
@@ -45,7 +77,7 @@
     			$lastUpdate = $row['lastUpdate'];
     			
     			echo "<tr>";
-    			echo "<td><input type='checkbox' id='$fileName'></td>
+    			echo "<td><input type='checkbox' class='userCheckbox' id='$fileName'></td>
     				  <td>$fileName</td>
     				  <td>$public</td>
     				  <td>$lastUpdate</td>";

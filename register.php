@@ -1,7 +1,7 @@
 <?php 
 
-include 'header.php';
-include_once dirname(__FILE__).'/secureimage/securimage.php';
+	include 'header.php';
+	include_once dirname(__FILE__).'/secureimage/securimage.php';
 
 
     $securimage = new Securimage();
@@ -124,50 +124,18 @@ include_once dirname(__FILE__).'/secureimage/securimage.php';
             
         }); 
     </script>
-    <style>
-    .regHeader{
-        margin-left: auto; 
-        margin-right: auto; 
-        width:300px; 
-        background-color: #E65C00; 
-        padding: 10px;
-        text-align: center;
-        position: relative;
-    }
-    .regHeader:before {
-        content:"";
-        position:absolute;
-        top:0;
-        right:0;
-        border-width:0 30px 30px 0;
-        border-style:solid;
-        border-color:#F6F6F6 #F6F6F6 #E65C00 #E65C00;
-        background:#E65C00;
-        -webkit-box-shadow:0 1px 1px rgba(0,0,0,0.3), -1px 1px 1px rgba(0,0,0,0.2);
-        -moz-box-shadow:0 1px 1px rgba(0,0,0,0.3), -1px 1px 1px rgba(0,0,0,0.2);
-        box-shadow:0 1px 1px rgba(0,0,0,0.3), -1px 1px 1px rgba(0,0,0,0.2);
-        display:block; 
-        width:0;
-    }
-    input[type=text], input[type=password]{
-        border-radius: 3px;
-        height: 25px;
-        border: 1px solid white;
-        background-color: #FAFAFA;
-    }
-
-</style>
+	
 <div class="container">
 
     <br />
     <form name="RegForm" method="post" action="">
         <div class="regHeader">
-            <div style="text-align:left; padding:5px; color: white; font-family: Impact, Charcoal, sans-serif; ">Register Here !<hr /></div>
+            <div id="RegisterHeading">Register Here !<hr /></div>
             
             <p>
                     <input type="text" id="username" size="35" name="username" placeholder="Username" value="<?php checkIsset($username) ?>" />
             </p>
-            <div style="color:#0000FF">
+            <div class="registerErrorText">
                 <p><?php if(isset($usernameError) && is_string($usernameError)){echo $usernameError;} ?></p>
             </div>
             <p>
@@ -176,13 +144,13 @@ include_once dirname(__FILE__).'/secureimage/securimage.php';
             <p>
                     <input type="password" id="passwordAgain" size="35" name="passwordAgain" placeholder="Password Again" value="<?php checkIsset($passwordAgain) ?>" />
             </p>
-            <div style="color:#0000FF">
+            <div class="registerErrorText">
                 <p><?php if(isset($passwordError) && is_string($passwordError)){echo $passwordError;} ?></p>
             </div>
             <p>
                     <input type="text" id="email" size="35" name="email" placeholder="Email Address" value="<?php checkIsset($email) ?>" />
             </p>
-            <div style="color:#0000FF">
+            <div class="registerErrorText">
                 <p><?php if(isset($emailError) && is_string ($emailError)){echo $emailError;} ?></p>
             </div>
             <p>
@@ -191,14 +159,14 @@ include_once dirname(__FILE__).'/secureimage/securimage.php';
             <p>
                     <input type="text" name="lastName" size="35" placeholder="Last Name" value="<?php checkIsset($lastName) ?>" />
             </p>
-            <div style="color:#0000FF">
+            <div class="registerErrorText">
                 <p><?php if(isset($nameError) && is_string ($nameError)){echo $nameError;} ?></p>
             </div>
             <br />
             <table align="center">
                 <tr>
                     <td>
-                        <img id="captcha" style="border: 1px solid #2F343B" src="secureimage/securimage_show.php" alt="CAPTCHA Image" />
+                        <img id="captcha" src="secureimage/securimage_show.php" alt="CAPTCHA Image" />
                     </td>
                     <td>
                         <a id="refreshLink" href="#"><img src="secureimage/images/Refresh Icon.jpg" alt="Refresh Image"/></a>
@@ -210,7 +178,7 @@ include_once dirname(__FILE__).'/secureimage/securimage.php';
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="color:red">
+                    <td class="captchaErrorMsg" colspan="2" >
                         <?php checkIsset($catpchaError) ?>
                     </td>
                 </tr>

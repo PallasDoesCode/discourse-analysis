@@ -1,8 +1,6 @@
 <?php
 	require('UserModule.php');
 	require('DatabaseModule.php');
-	require('UserModule.php');
-	require('DatabaseModule.php');
 	
     $loginBar;
     $loginError = "";
@@ -38,10 +36,13 @@
 	date_default_timezone_set("US/Central"); 
 ?>
 
-<html>
-<head>
+<!DOCTYPE html>
+<html lang="en">
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Discourse Analysis - Welcome!</title>
-    <link rel="stylesheet" href="stylesheet.css" type="text/css" />
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 </head>
@@ -51,7 +52,6 @@
         <div id="menu">
             <ul id="navigation">
                 <li><a class="navButton" href="home.php">Home</a></li>
-                <li><a class="navButton" href="upload.php">Upload to Workspace</a></li>
                 <li><a class="navButton" href="myFiles.php">My Files</a></li>
                 <li>
                     <a class="navButton" href="adminuser.php">Administrative Options</a>
@@ -73,14 +73,14 @@
         <div class="triangle-r"></div>
     </div>
     <div class="loginBar">
-        <form style="padding-bottom: -2px"name="logout" id="logout" action="login.php" method="post">
+        <form name="logout" id="logout" action="login.php" method="post">
             <input type="hidden" name="action" value="logout"></input>
         <?php   
             echo $loginBar;
         ?>
             <br />
         </form>
-        <div style="text-align: left; padding-left: 10px; color:red; font-weight: bold">
+        <div class="loginErrorMsg">
             <?php 
                 echo $loginError;
             ?>

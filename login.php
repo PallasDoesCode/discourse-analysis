@@ -25,7 +25,7 @@
 ?>	
 <div class="container">
     <br />
-     <div style="color:red; font-weight:bold; padding-left: 10px;"
+     <div id="loginMsg">
          <?php
             if(strlen($message) > 0){
                 echo $message;

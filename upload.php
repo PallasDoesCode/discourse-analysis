@@ -1,44 +1,38 @@
 <?php
-    include 'header.php';
-    //if the user is not logged in then it will redirect them to the login page
-    if(!$userMod->IsUserLoggedIn()){
-        header("location: login.php?action=loginError");
-    }
+	include 'header.php';
 ?>
 
-<div class="container">
-	<div id="upload">
+	<div id="container">
 		<center><h2>Please choose your file to upload</h2></center>
-		<table id="uploadTable">
-		<tr>
-			<td>
-				<form id="uploadarea" action="fileUpload.php" method="post" enctype="multipart/form-data">
-					<table>
-						<tr>
-							<td>File Name: </td><td><input type="text" name="filename" required><br><br></td>
-						</tr>
-						<tr>
-							<td>File Location: </td><td><input type="file" name="fileaddress" size="40" required><br><br></td>
-						</tr>
-						<tr>
-							<td>Make this file public? </td><td><input type="checkbox" name="public"><br><br></td>
-						</tr>
-						<tr>
-							<td>Use default conjunction list? </td><td><input type="checkbox" name="useDefault" checked><br><br></td>
-						</tr>
-						<tr>
-							<td>Is your text file formatted? </td><td><input type="checkbox" name="isFormatted"><br><br></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td><center><input type="submit" name="submit"></center></td>
-						</tr>
-					</table>
-				</form>
-			</td>
-		</tr>
+		<form id="uploadForm" action="fileUpload.php" method="post" enctype="multipart/form-data">
+			<label for="projectName">Project Name:</label>
+			<input type="text" name="projectName" size="40" placeholder="Project Name" required>
+			
+			<br><br>
+			
+			<label for="fileaddress">File Location:</label>
+			<input type="file" name="fileaddress" size="40" required>
+			
+			<br><br>
+			
+			<label for="public">Make this file public?</label>
+			<input type="checkbox" name="public" class="pull-right">
+			
+			<br><br>
+			
+			<label for="useDefault">Use default conjunction list?</label>
+			<input type="checkbox" name="useDefault" class="pull-right" checked>
+			
+			<br><br>
+			
+			<label for="isFormatted">Is your text file formatted?</label>
+			<input type="checkbox" name="isFormatted" class="pull-right">
+			
+			<br><br>
+			
+			<center><button type="submit" name="submit">Submit Query</button></center>
+		</form>
 	</div>
-</div>
 
 <?php
 	include 'footer.php';

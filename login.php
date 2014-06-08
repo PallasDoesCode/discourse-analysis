@@ -5,12 +5,12 @@
 	$message = "";
 	$username;
 	$password;
-
+	
 	if (isset($_POST['username']) && isset($_POST['password']))
 	{
 		$username = $_POST['username'];
-		$password = $_POST['password'];		
-		$loggedIn = $userMod->LoginUser($username,$password);
+		$password = $_POST['password'];
+		$loggedIn = $loginModel->LoginUser($username, $password);
 		
 		if($loggedIn == true)
 		{

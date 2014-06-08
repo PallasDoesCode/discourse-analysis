@@ -1,18 +1,18 @@
 <?php
-	require('UserModule.php');
+	require('LoginModel.php');
 	require('DatabaseModule.php');
 	
     $loginBar;
     $loginError = "";
     $dbMod = new DatabaseModule();
     $connection = $dbMod->connect();
-    $userMod = new UserModule($connection);
+    $loginModel = new LoginModel($connection);
     
     if(isset($_POST['action']))
 	{
         if ($_POST['action'] == "logout")
 		{
-            $userMod->LogoutUser();
+            $loginModel->LogoutUser();
         }
     }
     if((isset($_GET['action'])))
@@ -23,9 +23,9 @@
         }
     }
     
-    if($userMod->IsUserLoggedIn())
+    if($loginModel->IsUserLoggedIn())
 	{
-        $loginBar = "<span style='padding: 5px;'><b>Welcome, ". $userMod->GetUserName()." ! <a href='#' onclick='document.logout.submit();'>(logout)</a></b></span>";
+        $loginBar = "<span style='padding: 5px;'><b>Welcome, " . $loginModel->getUsername() . " ! <a href='#' onclick='document.logout.submit();'>(logout)</a></b></span>";
     }
 	
     else
@@ -53,13 +53,19 @@
             <ul id="navigation">
                 <li><a class="navButton" href="home.php">Home</a></li>
                 <li><a class="navButton" href="myFiles.php">My Files</a></li>
-                <li>
-                    <a class="navButton" href="adminuser.php">Administrative Options</a>
-                    <ul>
-                        <li><a class="navButton" href="adminuser.php">File Options</a></li>
-                        <li><a class="navButton" href="adminuser.php">User Options</a></li>
-                    </ul>
-                </li>
+				<?php
+					if($loginModel->IsUserLoggedIn() && $loginModel->IsAdmin())
+					{
+						echo "<li>
+								<a class='navButton' href='adminuser.php'>Administrative Options</a>
+								<ul>
+									<li><a class='navButton' href='adminuser.php'>File Options</a></li>
+									<li><a class='navButton' href='adminuser.php'>User Options</a></li>
+								</ul>
+							  </li>
+						";
+					}					
+				?>
                 <li>
                     <a class="navButton" href="">Login / Register</a>
                     <ul>

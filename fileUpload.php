@@ -1,20 +1,23 @@
 <?php
 	include 'header.php';
 	include 'parser.php';
-	//This file will accept the file from "upload.php" to upload to the database
-	function getFile($input, $defaultValue) {
-		if(isset($_FILES[$input]) && $_FILES[$input]['size'] > 0) {
+	//	This file will accept the file from "upload.php" to upload to the database
+	function getFile($input, $defaultValue)
+	{
+		if(isset($_FILES[$input]) && $_FILES[$input]['size'] > 0)
+		{
 			$contents = file_get_contents($_FILES[$input]['tmp_name']);
 			return $contents;
 		}
-		else {
+		else
+		{
 			return $defaultValue;
 		}
 	}
 	
 	$parser = new Parser();
 	
-	$fileName = $_REQUEST['filename'];
+	$fileName = $_REQUEST['fileName'];
 
 	$fileContents = getFile('fileaddress', "Noooo");
 
@@ -23,23 +26,27 @@
 
 	$userName = $userMod->getUserName();
 	
-	if($formattedOption) {
+	if($formattedOption)
+	{
 		$parsedText = $parser->parseFormattedText($fileContents);
 	}
-	else {
+	else
+	{
 		$parsedText = $parser->parseUnformattedText($fileContents);
 	}
 
-	//use the fileModule.php to upload files
+	//	Use the fileModule.php to upload files
 	include 'fileModule.php';
 	
 	$fileMod = new FileModule($connection); //$connection comes from the header.php
 	echo "<div class='container'>";
 	
-	if($fileMod->upload($userName, $fileName, $parsedText, $publicOption)) {
+	if($fileMod->upload($userName, $fileName, $parsedText, $publicOption))
+	{
 		echo "<p>Your upload was successful!</p>";
 	}
-	else {
+	else
+	{
 		echo "<p>Upload was unsuccessful</p>";
 	}
 	echo "</div>";

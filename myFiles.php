@@ -1,43 +1,12 @@
 <?php 
     include 'header.php';
     //if the user is not logged in then it will redirect them to the login page
-    if(!$userMod->IsUserLoggedIn())
+    if(!$loginModel->IsUserLoggedIn())
 	{
         header("location: login.php?action=loginError");
     }
-    include 'fileModule.php';
+    include 'fileModule.php';	
 ?>
-
-<script type="text/javascript">
-	$(document).ready(function()
-	{
-		/*
-		*	This click event marks/unmarks the select all
-		*	checkbox when its button container has been
-		*	clicked then it marks/unmarks all the checkboxes
-		*	in the table. 
-		*/
-		var checkAllBtn = $("#toggleBtn");
-		var selectAllcheckbox = $("#selectAll");
-		var checkboxes = $(".userCheckbox");
-		
-		checkAllBtn.click(function()
-		{
-			if (selectAllcheckbox.is(':checked'))
-			{
-				selectAllcheckbox.prop("checked", false);
-				checkboxes.prop("checked", false);
-			}
-			
-			else
-			{
-				selectAllcheckbox.prop("checked", true);
-				checkboxes.prop("checked", true);
-			}
-		});
-	});
-	
-</script>
 
 <div class="container">
     <br />
@@ -57,7 +26,7 @@
     	<?php
     		//get files from database here and put them into a table
     		$fileMod = new FileModule($connection);
-    		$userName = $userMod->getUserName();
+    		$userName = $loginModel->getUserName();
     		$fileArray = $fileMod->getFilesInfo($userName);
     	
     		echo "<table id='myFileTable'>
@@ -67,12 +36,18 @@
     						<th>Public</th>
     						<th>Last Update</th>
     					</tr>";
-    		for($i=0; $i<count($fileArray); $i++) { //loop through every row
+    		for($i = 0; $i < count($fileArray); $i++) { //loop through every row
     			$row = $fileArray[$i];
-    			$fileName = $row['fileName'];
+    			$fileName = $row['projectName'];
     			
-    			if ($row['public']) { 	$public = "Yes";}
-    			else { 					$public = "No";}
+    			if ($row['public'])
+				{ 
+					$public = "Yes";
+				}
+    			else
+				{
+					$public = "No";
+				}
     			
     			$lastUpdate = $row['lastUpdate'];
     			

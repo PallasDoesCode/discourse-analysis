@@ -13,17 +13,21 @@
 		}
 		
 		//upload a file based on username
-		function upload($userName, $fileName, $file, $public) {
-			if(!$this->fileExists($userName, $fileName)) {
+		function upload($userName, $fileName, $file, $public)
+		{
+			if(!$this->fileExists($userName, $fileName))
+			{
 				$datetime = date("Y-m-d H:i:s");
 				$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?, ?)");
 				$stmt->bind_param("sssss", $userName, $fileName, $file, $public, $datetime);
-				if(!$stmt->execute()) {
+				if(!$stmt->execute())
+				{
 					echo($stmt->error);
 					$stmt->close();
 					return false;
 				}
-				else {
+				else
+				{
 					$stmt->close();
 				}
 				return true;
@@ -41,19 +45,22 @@
 				  whereas $filesArray[0]["lastUpdate"] returns the first row's lastUpdate
 				  field
 		*/
-		function getFilesInfo($userName) {
+		function getFilesInfo($userName)
+		{
 			//file name, public, last updated
-			$stmt = $this->dbConnection->prepare("SELECT fileName, public, lastUpdate
+			$stmt = $this->dbConnection->prepare("SELECT fileName, projectName, public, lastUpdate
 			                                      FROM files
 			                                      WHERE owner = ?");
 			$stmt->bind_param("s", $userName);
 			$stmt->execute();
-			$stmt->bind_result($fileName, $public, $lastUpdate);
+			$stmt->bind_result($fileName, $projectName, $public, $lastUpdate);
 			$filesArray = array();
-			for($i = 0; $stmt->fetch(); $i++) {
+			for($i = 0; $stmt->fetch(); $i++)
+			{
 				$filesArray[$i] = array( "fileName" => $fileName,
-				                        "public" => $public,
-				                        "lastUpdate" => $lastUpdate );
+										 "projectName" => $projectName,
+				                         "public" => $public,
+				                         "lastUpdate" => $lastUpdate );
 			}
 			$stmt->close();
 			return $filesArray;
@@ -70,15 +77,16 @@
 				  field
 		*/
 		function getPublicFilesInfo() {
-			$stmt = $this->dbConnection->prepare("SELECT owner, fileName, lastUpdate
+			$stmt = $this->dbConnection->prepare("SELECT owner, fileName, projectName, lastUpdate
 			                                      FROM files
 			                                      WHERE public = 1");
 		    $stmt->execute();
-		    $stmt->bind_result($owner, $fileName, $lastUpdate);
+		    $stmt->bind_result($owner, $fileName, $projectName, $lastUpdate);
 		    $filesArray = array();
 		    for($i = 0; $stmt->fetch(); $i++) {
 		    	$filesArray[i] = array( "owner" => $owner,
 		    	                        "fileName" => $fileName,
+										"projectName" => $projectName,
 		    	                        "lastUpdate" => $lastUpdate);
 		    }
 		    $stmt->close();

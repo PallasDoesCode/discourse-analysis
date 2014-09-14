@@ -1,6 +1,7 @@
 <?php
-	include 'header.php';
-	include 'parser.php';
+	include('header.php');
+	include('parser.php');
+
 	//	This file will accept the file from "upload.php" to upload to the database
 	function getFile($input, $defaultValue)
 	{
@@ -17,14 +18,13 @@
 	
 	$parser = new Parser();
 	
-	$fileName = $_REQUEST['fileName'];
-
+	$fileName = $_REQUEST['projectName'];
 	$fileContents = getFile('fileaddress', "Noooo");
 
 	$formattedOption = isset($_REQUEST['isFormatted']);
 	$publicOption = (int)isset($_REQUEST['public']);
 
-	$userName = $userMod->getUserName();
+	$userName = $loginModel->getUserName();
 	
 	if($formattedOption)
 	{

@@ -7,7 +7,7 @@
  *
  **/
  
-require('./lib/PasswordHash.php');
+include_once('./lib/PasswordHash.php');
  
 class UserModule
 {

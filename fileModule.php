@@ -5,8 +5,6 @@
 	{
 		private $dbConnection;
 		
-
-		
 		function FileModule($connection)
 		{
 			$this->dbConnection = $connection; //use the connection that was given to me
@@ -22,12 +20,15 @@
 				$stmt->bind_param("sssss", $userName, $fileName, $file, $public, $datetime);
 				if(!$stmt->execute())
 				{
+					echo "<br />";
+					echo "Section 1 - Error 1 - ";
 					echo($stmt->error);
 					$stmt->close();
 					return false;
 				}
 				else
 				{
+					echo "Section 2 - The upload was successful.";
 					$stmt->close();
 				}
 				return true;

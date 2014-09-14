@@ -99,11 +99,11 @@
 		{
 			if(!filter_var($email, FILTER_VALIDATE_EMAIL))
 			{
-				return "The email provided is not valid";
+				return "The e-mail address provided is not valid.";
 			}
 			elseif(!strcmp($email ,$confirmEmail) == 0)
 			{
-				return "The emails provided do not match.";
+				return "The email addresses provided do not match.";
 			}
 			else
 			{

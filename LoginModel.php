@@ -156,9 +156,16 @@ class LoginModel
 		$starttime = $_SESSION['starttime'];
 		$endtime = $_SESSION['endtime'];
 		
-		
-		
-		
+		if (isset($_SESSION['starttime']) && isset($_SESSION['endtime']))
+		{
+			if ($stmt = $this->dbConnect->prepare(""))
+			{
+				$stmt->bind_param("ii", $_SESSION['starttime'], $_SESSION['endtime']);
+				$stmt->execute();
+				$stmt->close();
+			}
+			
+		}
 	}
 }
 ?>

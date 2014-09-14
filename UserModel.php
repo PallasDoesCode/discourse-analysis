@@ -302,20 +302,19 @@ class UserModel
 				
 				## Note for Future Users : The query is incorrect ##
 				
-				if($getSession = $this->dbConnect->prepare("SELECT startTime FROM session WHERE userName = ? ORDER BY startTime ASC"))
+				if($getSession = $this->dbConnect->prepare("SELECT endtime FROM session WHERE userName = ? ORDER BY endtime ASC"))
 				{
 						$getSession->bind_param("i", $r_uname);
 						$getSession->execute();
-						$getSession->bind_result($lastSession);
-						
+						$lastSession = $getSession->get_result();
+						//bind_result($lastSession);
 						$getSession->close();
-						echo $lastSession;
 				}
 				
 				else
 				{
 					// We have reached the end of the result set (i.e. we've went through all the users that met the query criteria)
-					echo 'Query is wrong: No data left in the result set.<br />';
+					echo 'There is no data left in the result set.<br />';
 				}
 				
 				$tempRow['Session'] = $lastSession;

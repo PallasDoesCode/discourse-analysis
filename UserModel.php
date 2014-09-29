@@ -42,7 +42,7 @@ class UserModel
 				$stmt->close();
 				if($usernameCount == 0)
 				{
-					return "Error: There is no username in the database with that name";
+					return "Error: I'm sorry, but that username does not exist.";
 				}
 			}
 			// Checks temp user table and the user table for copys of users that already exist.
@@ -55,7 +55,7 @@ class UserModel
 				$stmt->close();
 				if($usernameCount > 0)
 				{
-					return "Error: The new username already exist.";
+					return "Error: I'm sorry, but there is already a user with that username.";
 				}
 			}
 			// Updates the username
@@ -71,7 +71,7 @@ class UserModel
 		}
 		else 
 		{
-			return "Error: Username is too short";
+			return "Error: I'm sorry, but the username you entered was too short.";
 		}
 	}
 	
@@ -96,7 +96,7 @@ class UserModel
 			$stmt->close();
 			if ( $usernameCount == 0 )
 			{
-				return "Error: There is no username in the database with that name";
+				return "Error: I'm sorry, but that username does not exist.";
 			}
 			else
 			{
@@ -135,7 +135,7 @@ class UserModel
 			
 			if ( $usernameCount == 0 )
 			{
-				return "Error: THere is no username in the database with that name";
+				return "Error: I'm sorry, but that username does not exist.";
 			}
 			else 
 			{
@@ -184,7 +184,7 @@ class UserModel
 			
 			if ( $usernameCount == 0 )
 			{
-				return "Error: There is no username in the database with the name";
+				return "Error: I'm sorry, but that username does not exist.";
 			}
 			else 
 			{
@@ -272,19 +272,23 @@ class UserModel
 	 */
 	function QueryUserInfo($startRange, $endRange, $sortBy, $order)
 	{
+		// Ensures that we never request more users than what's listed
+		// in the database and that we never request less than 0 users.
 		$maxUsers = $this->TotalNumberOfUsers();
 		if ( $endRange > $maxUsers )
 		{
 			$endRange = $maxUsers;
 		}
+
 		if ($startRange < 0)
 		{
 			$startRange = 0;
 		}
+
 		if ($stmt = $this->dbConnect->prepare("SELECT username, email, name FROM usersinfo LIMIT ? , ? "))
 		{
 		
-			$stmt->bind_param("ii", $startRange, $endRange);
+			$stmt->bind_param("ss", $startRange, $endRange);
 			$stmt->execute();
 			$stmt->bind_result($r_uname, $r_email, $r_name);
 			
@@ -298,26 +302,52 @@ class UserModel
 				$tempRow['name'] = $r_name;
 				
 				
-				$lastSession = '';
-				
 				## Note for Future Users : The query is incorrect ##
 				
+				// This is used to get the date of when the user last logged in.
 				if($getSession = $this->dbConnect->prepare("SELECT endtime FROM session WHERE userName = ? ORDER BY endtime ASC"))
 				{
-						$getSession->bind_param("i", $r_uname);
-						$getSession->execute();
-						$lastSession = $getSession->get_result();
-						//bind_result($lastSession);
-						$getSession->close();
+					$getSession->bind_param("s", $r_uname);
+					$getSession->execute();
+					$lastSession = $getSession->get_result();
+					$getSession->close();
 				}
 				
 				else
 				{
-					// We have reached the end of the result set (i.e. we've went through all the users that met the query criteria)
-					echo 'There is no data left in the result set.<br />';
+					$lastSession = "Not available";
+
+					//echo mysqli_error($this->dbConnect) . "<br />";
 				}
 				
 				$tempRow['Session'] = $lastSession;
+
+				// Count how many files the user has uploaded into the database
+				$numberOfFiles = 0;
+				$getNumberOfFiles = $this->dbConnect->stmt_init();
+
+				if ($this->dbConnect->prepare("SELECT COUNT(*) FROM files WHERE owner = ?"))
+				{
+					$getNumberOfFiles->bind_param("s", $r_uname);
+					$getNumberOfFiles->execute();
+					$numberOfFiles = $getNumberOfFiles->get_result();
+					$getNumberOfFiles->close();
+
+					echo "User " . r_uname . "has uploaded " . $numberOfFiles . " files.";
+				}
+
+				else
+				{
+					/*
+					*   At the moment this is just being used to determine if the query is working correctly.
+					*	Turns out that the query above is never running. It's failing the if statement and automatically
+					*	setting the variable uisng the line below.
+					*/
+					echo mysqli_error($this->dbConnect) . "<br />";
+					$numberOfFiles = "Not available";
+				}
+
+				$tempRow['NumFilesUploaded'] = $numberOfFiles;
 				
 				$row[] = $tempRow;				
 			}
@@ -325,7 +355,9 @@ class UserModel
 			$stmt->close();
 			return $row;
 		}
-		else {
+
+		else
+		{
 			return "Error: SQL Query Failed";
 		}
 	}
@@ -382,8 +414,6 @@ class AdminFileModule
 	{
 	
 	}
-	
-	
 }
 
 ?>

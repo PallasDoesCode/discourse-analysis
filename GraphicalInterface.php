@@ -137,27 +137,28 @@
 
 </head>
 <body>
-	<div  class = "a window"; class="draggable" class="ui-widget-content">
-	Chapter:<textarea <textarea class = "a Chapter"; ></textarea>
-	<textarea class = "a textarea"; ></textarea>	
-	<input type="submit" value="Submit"/> 
-	<strong>A</strong>
+	<div id="workspace">
+		<div  class="a window"; class="draggable" class="ui-widget-content">
+		Chapter:<textarea <textarea class = "a Chapter"; ></textarea>
+		<textarea class = "a textarea"; ></textarea>	
+		<input type="submit" value="Submit"/> 
+		<strong>A</strong>
+		</div>
+		
+		<div  class="b window"; class="draggable" class="ui-widget-content">
+		Chapter:<textarea <textarea class = "b Chapter"; ></textarea>
+		<textarea class = "b textarea"; ></textarea>	
+		<input type="submit" value="Submit"/> 
+		<strong>B</strong>
+		</div>
+		
+		<div  class="c window"; class="draggable" class="ui-widget-content">
+		Chapter:<textarea class = "c Chapter"; ></textarea>
+		<textarea class="c textarea"; ></textarea>	
+		<input type="submit" value="Submit"/> 
+		<strong>C</strong>
+		</div>
 	</div>
-	
-	<div  class = "b window"; class="draggable" class="ui-widget-content">
-	Chapter:<textarea <textarea class = "b Chapter"; ></textarea>
-	<textarea class = "b textarea"; ></textarea>	
-	<input type="submit" value="Submit"/> 
-	<strong>B</strong>
-	</div>
-	
-	<div  class = "c window"; class="draggable" class="ui-widget-content">
-	Chapter:<textarea class = "c Chapter"; ></textarea>
-	<textarea class = "c textarea"; ></textarea>	
-	<input type="submit" value="Submit"/> 
-	<strong>C</strong>
-	</div>
-	
 </body>
 </html>
 

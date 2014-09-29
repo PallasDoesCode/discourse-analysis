@@ -11,24 +11,22 @@
 		}
 		
 		//upload a file based on username
-		function upload($userName, $fileName, $file, $public)
+		function upload($userName, $projectName, $fileName, $file, $public)
 		{
 			if(!$this->fileExists($userName, $fileName))
 			{
 				$datetime = date("Y-m-d H:i:s");
-				$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?, ?)");
-				$stmt->bind_param("sssss", $userName, $fileName, $file, $public, $datetime);
+				$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?, ?, ?)");
+				$stmt->bind_param("ssssss", $userName, $projectName, $fileName, $file, $public, $datetime);
 				if(!$stmt->execute())
 				{
 					echo "<br />";
-					echo "Section 1 - Error 1 - ";
 					echo($stmt->error);
 					$stmt->close();
 					return false;
 				}
 				else
 				{
-					echo "Section 2 - The upload was successful.";
 					$stmt->close();
 				}
 				return true;
@@ -143,20 +141,26 @@
 		}
 		
 		//internal function, check if filename exists under the username
-		function fileExists($userName, $fileName) {
+		function fileExists($userName, $fileName)
+		{
 			if($stmt = $this->dbConnection->prepare("SELECT COUNT(fileName)
-													FROM files
-													WHERE owner = ? AND fileName = ?"));
+													 FROM files
+													 WHERE owner = ? AND fileName = ?"));
 			$stmt->bind_param("ss", $userName, $fileName);
 			$stmt->execute();
 			$stmt->bind_result($fileCount);
 			$stmt->fetch();
 			$stmt->close();
-			if ($fileCount != 0) { //the file must exist
+
+			if ($fileCount != 0) // The file must exist
+			{
 				return true;
 			}
-			else return false;	
+			
+			else
+			{
+				return false;	
+			}
 		}
 	}
-
 ?>

@@ -1,5 +1,6 @@
 body
-{ 
+{
+    
 }
 
 .loginBar
@@ -35,7 +36,6 @@ body
     width:80%;
     background: #F5D0A9;
     position: relative;
-    width:83%;
     background: #e51616;
     box-shadow: 0 2px 0 rgba(0,0,0,.3);
     background-image: -moz-linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,0));
@@ -383,7 +383,7 @@ p
 
 .loginForm .field 
 {
-	position: releative;
+	position: relative;
 }
 
 .loginForm input[type=text],
@@ -596,4 +596,12 @@ input[type=text], input[type=password]
 table > tbody > tr:nth-child(even) > td
 {
 	background-color: #D6D6D6;
+}
+
+#workspace
+{
+    width: 80%;
+    height: 600px;
+    overflow: auto;
+    margin: 0px auto;
 }

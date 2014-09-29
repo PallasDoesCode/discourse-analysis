@@ -18,8 +18,9 @@
 	
 	$parser = new Parser();
 	
-	$fileName = $_REQUEST['projectName'];
-	$fileContents = getFile('fileaddress', "Noooo");
+	$projectName = $_REQUEST['projectName'];
+	$fileName = "This needs to be changed later."; // This needs to be updated to get the actual file name from the file address.
+	$fileContents = getFile('fileaddress', "No");
 
 	$formattedOption = isset($_REQUEST['isFormatted']);
 	$publicOption = (int)isset($_REQUEST['public']);
@@ -41,13 +42,13 @@
 	$fileMod = new FileModule($connection); //$connection comes from the header.php
 	echo "<div class='container'>";
 	
-	if($fileMod->upload($userName, $fileName, $parsedText, $publicOption))
+	if($fileMod->upload($userName, $projectName, $fileName, $parsedText, $publicOption))
 	{
 		echo "<p>Your upload was successful!</p>";
 	}
 	else
 	{
-		echo "<p>Upload was unsuccessful</p>";
+		echo "<p>Your upload was unsuccessful!</p>";
 	}
 	echo "</div>";
 	

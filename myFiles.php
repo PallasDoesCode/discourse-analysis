@@ -32,13 +32,15 @@
     		echo "<table id='myFileTable'>
     					<tr>
     						<th></th>
-    						<th>File Name</th>
+    						<th>Project Name</th>
     						<th>Public</th>
     						<th>Last Update</th>
     					</tr>";
-    		for($i = 0; $i < count($fileArray); $i++) { //loop through every row
+    		for($i = 0; $i < count($fileArray); $i++) // Loop through every row
+            { 
     			$row = $fileArray[$i];
-    			$fileName = $row['projectName'];
+    			$projectName = $row['projectName'];
+                $fileName = $row['fileName'];
     			
     			if ($row['public'])
 				{ 
@@ -53,7 +55,7 @@
     			
     			echo "<tr>";
     			echo "<td><input type='checkbox' class='userCheckbox' id='$fileName'></td>
-    				  <td>$fileName</td>
+    				  <td>$projectName</td>
     				  <td>$public</td>
     				  <td>$lastUpdate</td>";
     		 	echo "</tr>";

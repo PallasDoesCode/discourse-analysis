@@ -285,6 +285,37 @@ class UserModel
 			$startRange = 0;
 		}
 
+		$query = "SELECT ui.username, ui.email, ui.name, s.endtime, COUNT(f.owner)
+						 FROM usersInfo ui LEFT OUTER JOIN session s
+						 ON ui.username = s.username LEFT OUTER JOIN files f
+						 ON ui.username = f.owner
+						 GROUP BY ui.username";
+		if ($stmt = $this->dbConnect->prepare($query))
+		{
+			//$stmt->bind_param("ss", $r_uname, $startRange, $endRange);
+			$stmt->execute();
+			$stmt->bind_result($r_uname, $r_email, $r_name, $r_endtime, $r_numOfFiles);
+
+			$row = array();
+
+			while ($stmt->fetch())
+			{
+				$tempRow['username'] = $r_uname;
+				$tempRow['email'] = $r_email;
+				$tempRow['name'] = $r_name;
+				$tempRow['session'] = $r_endtime;
+				$tempRow['numberOfFiles'] = $r_numOfFiles;
+
+
+				$row[] = $tempRow;
+			}
+
+			$stmt->close();
+
+			return $row;
+		}
+
+		/*
 		if ($stmt = $this->dbConnect->prepare("SELECT username, email, name FROM usersinfo LIMIT ? , ? "))
 		{
 		
@@ -309,7 +340,8 @@ class UserModel
 				{
 					$getSession->bind_param("s", $r_uname);
 					$getSession->execute();
-					$lastSession = $getSession->get_result();
+					$getSession->bind_result($lastSession);
+					$getSession->fetch();				
 					$getSession->close();
 				}
 				
@@ -323,16 +355,17 @@ class UserModel
 				$tempRow['Session'] = $lastSession;
 
 				// Count how many files the user has uploaded into the database
-				$numberOfFiles = 0;
+				$numberOfFiles = null;
 				$getNumberOfFiles = $this->dbConnect->stmt_init();
 
-				if ($this->dbConnect->prepare("SELECT COUNT(*) FROM files WHERE owner = ?"))
+				if ($getNumberOfFiles->prepare("SELECT COUNT(*) FROM files WHERE owner = ?"))
 				{
 					$getNumberOfFiles->bind_param("s", $r_uname);
 					$getNumberOfFiles->execute();
-					$numberOfFiles = $getNumberOfFiles->get_result();
+					$getNumberOfFiles->store_result();
+					$getNumberOfFiles->bind_result($numberOfFiles);
+					$getNumberOfFiles->fetch();
 					$getNumberOfFiles->close();
-
 					echo "User " . r_uname . "has uploaded " . $numberOfFiles . " files.";
 				}
 
@@ -343,6 +376,7 @@ class UserModel
 					*	Turns out that the query above is never running. It's failing the if statement and automatically
 					*	setting the variable uisng the line below.
 					*/
+					/*
 					echo mysqli_error($this->dbConnect) . "<br />";
 					$numberOfFiles = "Not available";
 				}
@@ -356,17 +390,18 @@ class UserModel
 			return $row;
 		}
 
+		*/
+
 		else
 		{
 			return "Error: SQL Query Failed";
 		}
 	}
 
-	/**
-	 * Emails the specified email address of the change
-	 *
-	 *
+	/*
+	 *	Emails the specified email address of the change
 	 */
+
 	function SendNotification($subject, $message, $email)
 	{
 		$sentmail = mail($email, $subject, $message);

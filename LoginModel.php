@@ -70,7 +70,7 @@ class LoginModel
 				$starttime = new DateTime('now' , $CST_timezone);
 				$starttime = $starttime->format('Y-m-d H:i:s');
 				$_SESSION['starttime'] = $starttime;
-				
+
 				return true;
 			}
 		}
@@ -85,7 +85,15 @@ class LoginModel
 	 **/
 	function LogoutUser()
 	{
+		$CST_timezone = new DateTimeZone('America/Chicago');
+		$endtime = new DateTime('now' , $CST_timezone);
+		$endtime = $endtime->format('Y-m-d H:i:s');
+		$_SESSION['endtime'] = $endtime;
+		
+		$this->SendSessionDataToDatabase();
+		
 		$loggedOut = true;
+
 		if(isset($_SESSION['username']))
 		{
 			unset ($_SESSION['username']);
@@ -94,13 +102,7 @@ class LoginModel
 		{
 			$loggedOut = false;
 		}
-		
-		$CST_timezone = new DateTimeZone('America/Chicago');
-		$endtime = new DateTime('now' , $CST_timezone);
-		$endtime = $endtime->format('Y-m-d H:i:s');
-		$_SESSION['endtime'] = $endtime;
-		
-		$this->SendSessionDataToDatabase();
+
 		return $loggedOut;
 	}
 	
@@ -155,16 +157,19 @@ class LoginModel
 		// Add both the start time and the end time to the session table
 		$starttime = $_SESSION['starttime'];
 		$endtime = $_SESSION['endtime'];
-		
+		$username = $_SESSION['username'];
+
 		if (isset($_SESSION['starttime']) && isset($_SESSION['endtime']))
 		{
-			if ($stmt = $this->dbConnect->prepare(""))
+			if($stmt = $this->dbConnect->prepare("INSERT INTO session ( username, startTime, endtime ) VALUES(?, ?, ?)"))
 			{
-				$stmt->bind_param("ii", $_SESSION['starttime'], $_SESSION['endtime']);
+				$stmt->bind_param("sss", $username, $starttime, $endtime);
 				$stmt->execute();
 				$stmt->close();
 			}
-			
+
+			unset ($_SESSION['starttime']);
+			unset ($_SESSION['endtime']);
 		}
 	}
 }

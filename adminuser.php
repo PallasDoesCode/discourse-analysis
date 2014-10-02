@@ -60,8 +60,8 @@
 					echo '<td class="userDetailsCell" width=200><a href="#" onclick="window.open( \'editUserEmail.php?uname=' . $user['username'] . '\', \'_blank\', \'width=200, height=200, resizable=no\'  )" > ' . $user['email'] . '</a></td>';
 					echo '<td class="userDetailsCell" width=200><a href="#" onclick="window.open( \'editUserRName.php?uname=' . $user['username'] . '\', \'_blank\', \'width=200, height=200, resizable=no\'  )" > ' . $user['name'] . '</a></td>';
 					echo '<td class="userDetailsCell" width=200><button type="pwchange" onclick="window.open( \'editUserPassword.php?uname=' . $user['username'].'\', \'_blank\', \'width=200, height=200, resizable=no\'  )">Change Password</button></td>'; 
-					echo '<td class="userDetailsCell" width=200>' . $user['Session'] . '</td>';
-					echo '<td class="userDetailsCell" width=200>' . $user['NumFilesUploaded'] . '</td>';
+					echo '<td class="userDetailsCell" width=200>' . $user['session'] . '</td>';
+					echo '<td class="userDetailsCell" width=200>' . $user['numberOfFiles'] . '</td>';
 					echo '</tr>';
 				}			
 			}

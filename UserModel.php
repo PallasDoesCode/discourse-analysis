@@ -285,14 +285,16 @@ class UserModel
 			$startRange = 0;
 		}
 
+		// Using a single query we will get all of the data that will be displayed
+		// in the table on the user administration page (adminuser.php)
 		$query = "SELECT ui.username, ui.email, ui.name, s.endtime, COUNT(f.owner)
 						 FROM usersInfo ui LEFT OUTER JOIN session s
 						 ON ui.username = s.username LEFT OUTER JOIN files f
 						 ON ui.username = f.owner
 						 GROUP BY ui.username";
+
 		if ($stmt = $this->dbConnect->prepare($query))
 		{
-			//$stmt->bind_param("ss", $r_uname, $startRange, $endRange);
 			$stmt->execute();
 			$stmt->bind_result($r_uname, $r_email, $r_name, $r_endtime, $r_numOfFiles);
 
@@ -314,83 +316,6 @@ class UserModel
 
 			return $row;
 		}
-
-		/*
-		if ($stmt = $this->dbConnect->prepare("SELECT username, email, name FROM usersinfo LIMIT ? , ? "))
-		{
-		
-			$stmt->bind_param("ss", $startRange, $endRange);
-			$stmt->execute();
-			$stmt->bind_result($r_uname, $r_email, $r_name);
-			
-			$row = array();
-			
-			while( $stmt->fetch() )
-			{
-			
-				$tempRow['username'] = $r_uname;
-				$tempRow['email'] = $r_email;
-				$tempRow['name'] = $r_name;
-				
-				
-				## Note for Future Users : The query is incorrect ##
-				
-				// This is used to get the date of when the user last logged in.
-				if($getSession = $this->dbConnect->prepare("SELECT endtime FROM session WHERE userName = ? ORDER BY endtime ASC"))
-				{
-					$getSession->bind_param("s", $r_uname);
-					$getSession->execute();
-					$getSession->bind_result($lastSession);
-					$getSession->fetch();				
-					$getSession->close();
-				}
-				
-				else
-				{
-					$lastSession = "Not available";
-
-					//echo mysqli_error($this->dbConnect) . "<br />";
-				}
-				
-				$tempRow['Session'] = $lastSession;
-
-				// Count how many files the user has uploaded into the database
-				$numberOfFiles = null;
-				$getNumberOfFiles = $this->dbConnect->stmt_init();
-
-				if ($getNumberOfFiles->prepare("SELECT COUNT(*) FROM files WHERE owner = ?"))
-				{
-					$getNumberOfFiles->bind_param("s", $r_uname);
-					$getNumberOfFiles->execute();
-					$getNumberOfFiles->store_result();
-					$getNumberOfFiles->bind_result($numberOfFiles);
-					$getNumberOfFiles->fetch();
-					$getNumberOfFiles->close();
-					echo "User " . r_uname . "has uploaded " . $numberOfFiles . " files.";
-				}
-
-				else
-				{
-					/*
-					*   At the moment this is just being used to determine if the query is working correctly.
-					*	Turns out that the query above is never running. It's failing the if statement and automatically
-					*	setting the variable uisng the line below.
-					*/
-					/*
-					echo mysqli_error($this->dbConnect) . "<br />";
-					$numberOfFiles = "Not available";
-				}
-
-				$tempRow['NumFilesUploaded'] = $numberOfFiles;
-				
-				$row[] = $tempRow;				
-			}
-			
-			$stmt->close();
-			return $row;
-		}
-
-		*/
 
 		else
 		{

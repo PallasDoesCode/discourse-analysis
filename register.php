@@ -18,22 +18,27 @@
     {
         $firstName = $_POST['firstName'];
     }
+
     if(isset($_POST['lastName']))
     {
         $lastName = $_POST['lastName'];
     }
+
     if(isset($_POST['username']))
     {
         $username = $_POST['username'];
     }
+
     if(isset($_POST['password']))
     {
         $password = $_POST['password'];
     }
+
     if(isset($_POST['passwordAgain']))
     {
         $passwordAgain = $_POST['passwordAgain'];
     }
+
     if(isset($_POST['email']))
     {
         $email = $_POST['email'];
@@ -43,14 +48,17 @@
     {
         $nameError = $regMod->InputName($_POST['firstName'] . " " . $_POST['lastName']);
     }
+
     if(isset($_POST['username']))
     {
         $usernameError = $regMod->InputUsername($_POST['username']);
     }
+
     if(isset($_POST['password']) || isset($_POST['passwordAgain']))
     {
         $passwordError = $regMod->InputPassword($_POST['password'], $_POST['passwordAgain']);
     }
+
     if(isset($_POST['email']))
     {
         $emailError = $regMod->InputEmail($_POST['email'],$_POST['email']);
@@ -66,6 +74,7 @@
                 //TODO redirect to registration sucessful page
             }
         }
+
         else
         {
             $catpchaError = "The code did not match. Try Again";
@@ -73,10 +82,13 @@
     }
     
     function checkIsset($str){
-        if (isset($str)){
+        if (isset($str))
+        {
             echo $str;
         }
-        else{
+
+        else
+        {
             return "";
         }
     }
@@ -94,9 +106,11 @@
 					{
                         $("#username").after("<span><img src='Images/red-x.gif' alt='X'/></span>");
                     }
+
                     formError[0] = true;
                     return false;
                 }
+
                 if($("#password").val() != $("#passwordAgain").val() || $("#password").val() == "" || $("#passwordAgain").val() == "")
 				{
                     if(!formError[1])
@@ -104,24 +118,28 @@
                         $("#password").after("<span><img src='Images/red-x.gif' alt='X'/></span>");
                         $("#passwordAgain").after("<span><img src='Images/red-x.gif' alt='X'/><div style='color:red'>Passwords must match</div></span>");
                     }
+
                     formError[1] = true;
                     return false;
                 }
+
                 if($('#email').val() == "")
 				{
-                    if(!formError[2]){
+                    if(!formError[2])
+                    {
                         $("#email").after("<span><img src='Images/red-x.gif' alt='X'/></span>");
                     }
+
                     formError[2] = true;
                     return false;
                 }
             });
+
             $('#refreshLink').click(function()
 			{
                 $('#captcha').attr("src","secureimage/securimage_show.php?num=" + Math.floor(Math.random()*11));
                 return false;
             })
-            
         }); 
     </script>
 	

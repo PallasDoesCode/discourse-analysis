@@ -7,8 +7,6 @@
  *
  **/
  
-require('./lib/PasswordHash.php');
- 
 class LoginModel
 {
 	var $dbConnect;
@@ -48,19 +46,12 @@ class LoginModel
 			$stmt->bind_result($hashedPassword);
 			$stmt->fetch();
 			$stmt->close();			
-			$pwdHasher = new PasswordHash(8, FALSE);
-			$hashString = $pwdHasher->HashPassword($password);
-			
-			// Tests to determine if hashing is the issue with the login problem.
-			/*
-				$hashString = $pwdHasher->HashPassword($password);
-				echo "The password entered is " . $password . "<br />";
-				echo "The hashed string is " . $hashString . "<br />";
-				echo "The hashed password to compare against is " . $hashedPassword;
-			*/
-			
-			//if($pwdHasher->CheckPassword($password, $hashedPassword))
-			if($pwdHasher->CheckPassword($hashString, $hashedPassword));
+
+			//	PHP's built-in cryptography function password_verify detects the hashing
+			//  method used to hash the password stored in the database then using that
+			//  same method it hashes the password the user entered then compares them
+			//  against one another
+			if(password_verify($password, $hashedPassword))
 			{
 				$_SESSION['username'] = $userName;
 				

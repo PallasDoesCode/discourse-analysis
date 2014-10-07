@@ -1,6 +1,4 @@
 <?php
-	include_once ('./lib/PasswordHash.php');
-
 	/**
 	 *
 	 *
@@ -85,9 +83,11 @@
 			}
 			else
 			{
-				$pwdHasher = new PasswordHash(8, FALSE);
-				$password = $pwdHasher->HashPassword($password);
+				// I'm using PHP's built-in cryptography function password_hash to
+				// has the user's password before storing it in the database.
+				$password = password_hash($password, PASSWORD_DEFAULT);
 				$this->password = $password;
+
 				return true;
 			}
 		}

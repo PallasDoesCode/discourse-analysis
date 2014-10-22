@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 14, 2014 at 05:19 AM
+-- Generation Time: Oct 22, 2014 at 11:01 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -19,48 +19,126 @@ SET time_zone = "+00:00";
 --
 -- Database: `discourseanalysis`
 --
-CREATE DATABASE IF NOT EXISTS `discourseanalysis` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `discourseanalysis`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `conjunctions`
+--
+
+CREATE TABLE IF NOT EXISTS `conjunctions` (
+  `conjunction` varchar(25) NOT NULL,
+  `listName` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `conjunctions`
+--
+
+INSERT INTO `conjunctions` (`conjunction`, `listName`) VALUES
+('Default Conjunction List', 'ACCORDINGLY'),
+('Default Conjunction List', 'ALSO'),
+('Default Conjunction List', 'ALTHOUGH'),
+('Default Conjunction List', 'AND'),
+('Default Conjunction List', 'AS'),
+('Default Conjunction List', 'AS A RESULT'),
+('Default Conjunction List', 'AS LONG AS'),
+('Default Conjunction List', 'AS SOON AS'),
+('Default Conjunction List', 'AT THE SAME TIME AS'),
+('Default Conjunction List', 'BECAUSE'),
+('Default Conjunction List', 'BUT'),
+('Default Conjunction List', 'BY THAT MEANS'),
+('Default Conjunction List', 'BY THIS MEANS'),
+('Default Conjunction List', 'CONSEQUENTLY'),
+('Default Conjunction List', 'CONVERSELY'),
+('Default Conjunction List', 'EITHER'),
+('Default Conjunction List', 'ELSE'),
+('Default Conjunction List', 'EVEN IF'),
+('Default Conjunction List', 'EVEN THOUGH'),
+('Default Conjunction List', 'EXCEPT IF'),
+('Default Conjunction List', 'EXCEPT THAT'),
+('Default Conjunction List', 'FOR'),
+('Default Conjunction List', 'FOR THE PURPOSE THAT'),
+('Default Conjunction List', 'FOR THIS REASON'),
+('Default Conjunction List', 'HENCE'),
+('Default Conjunction List', 'IF'),
+('Default Conjunction List', 'IN AS MUCH AS'),
+('Default Conjunction List', 'IN ORDER THAT'),
+('Default Conjunction List', 'IN THAT MANNER'),
+('Default Conjunction List', 'IN THIS MANNER'),
+('Default Conjunction List', 'INASMUCH AS'),
+('Default Conjunction List', 'INDEED'),
+('Default Conjunction List', 'INSTEAD'),
+('Default Conjunction List', 'JUST AS'),
+('Default Conjunction List', 'LEST'),
+('Default Conjunction List', 'LIKEWISE'),
+('Default Conjunction List', 'MOREOVER'),
+('Default Conjunction List', 'NEITHER'),
+('Default Conjunction List', 'NEVERTHELESS'),
+('Default Conjunction List', 'NOR'),
+('Default Conjunction List', 'NOTWITHSTANDING'),
+('Default Conjunction List', 'NOW'),
+('Default Conjunction List', 'ON THE CONTRARY'),
+('Default Conjunction List', 'ON THE OTHER HAND'),
+('Default Conjunction List', 'ONLY'),
+('Default Conjunction List', 'ONLY IF'),
+('Default Conjunction List', 'OR'),
+('Default Conjunction List', 'OR ELSE'),
+('Default Conjunction List', 'OTHERWISE'),
+('Default Conjunction List', 'SINCE'),
+('Default Conjunction List', 'SO'),
+('Default Conjunction List', 'SO THAT'),
+('Default Conjunction List', 'STILL'),
+('Default Conjunction List', 'SUCH THAT'),
+('Default Conjunction List', 'THAN'),
+('Default Conjunction List', 'THAT'),
+('Default Conjunction List', 'THEN'),
+('Default Conjunction List', 'THEREFORE'),
+('Default Conjunction List', 'THOUGH'),
+('Default Conjunction List', 'THUS'),
+('Default Conjunction List', 'TILL'),
+('Default Conjunction List', 'TO THE END THAT'),
+('Default Conjunction List', 'UNLESS'),
+('Default Conjunction List', 'UNTIL'),
+('Default Conjunction List', 'WHEN'),
+('Default Conjunction List', 'WHENEVER'),
+('Default Conjunction List', 'WHERE'),
+('Default Conjunction List', 'WHEREVER'),
+('Default Conjunction List', 'WHETHER'),
+('Default Conjunction List', 'WHILE'),
+('Default Conjunction List', 'X'),
+('Default Conjunction List', 'YET');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `files`
 --
--- Creation: Sep 14, 2014 at 03:18 AM
---
 
-DROP TABLE IF EXISTS `files`;
 CREATE TABLE IF NOT EXISTS `files` (
   `owner` varchar(40) NOT NULL,
   `projectName` varchar(35) NOT NULL,
   `fileName` varchar(35) NOT NULL,
-  `fileContents` longtext NOT NULL,
+  `storedFileName` varchar(50) NOT NULL,
   `public` tinyint(1) NOT NULL DEFAULT '0',
   `lastUpdate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELATIONS FOR TABLE `files`:
---   `owner`
---       `usersinfo` -> `username`
---
-
---
 -- Dumping data for table `files`
 --
 
-INSERT INTO `files` (`owner`, `projectName`, `fileName`, `fileContents`, `public`, `lastUpdate`) VALUES('admin', '', 'Luke - Short & Parsed', '<pconj>WHEN</pconj>\n<pconj>WHENEVER</pconj>\n<pconj>WHILE</pconj>\n<pconj>AS</pconj>\n<pconj>AS LONG AS</pconj>\n<pconj>AS SOON AS</pconj>\n<pconj>SINCE</pconj>\n<pconj>UNTIL</pconj>\n<pconj>JUST AS</pconj>\n<pconj>AT THE SAME TIME AS</pconj>\n<pconj>WHERE</pconj>\n<pconj>WHEREVER</pconj>\n<pconj>THEREFORE</pconj>\n<pconj>AS A RESULT</pconj>\n<pconj>FOR THIS REASON</pconj>\n<pconj>CONSEQUENTLY</pconj>\n<pconj>HENCE</pconj>\n<pconj>ACCORDINGLY</pconj>\n<pconj>THUS</pconj>\n<pconj>SO</pconj>\n<pconj>BECAUSE</pconj>\n<pconj>FOR</pconj>\n<pconj>SINCE</pconj>\n<pconj>IN AS MUCH AS</pconj>\n<pconj>IN ORDER THAT</pconj>\n<pconj>SO THAT</pconj>\n<pconj>THAT</pconj>\n<pconj>TO THE END THAT</pconj>\n<pconj>FOR THE PURPOSE THAT</pconj>\n<pconj>LEST</pconj>\n<pconj>THUS</pconj>\n<pconj>IN THIS MANNER</pconj>\n<pconj>IN THAT MANNER</pconj>\n<pconj>BY THIS MEANS</pconj>\n<pconj>BY THAT MEANS</pconj>\n<pconj>SUCH THAT</pconj>\n<pconj>IF</pconj>\n<pconj>ONLY IF</pconj>\n<pconj>UNLESS</pconj>\n<pconj>EXCEPT THAT</pconj>\n<pconj>EXCEPT IF</pconj>\n<pconj>ALTHOUGH</pconj>\n<pconj>THOUGH</pconj>\n<pconj>EVEN THOUGH</pconj>\n<pconj>EVEN IF</pconj>\n<pconj>X</pconj>\n<pconj>AND</pconj>\n<pconj>NOW</pconj>\n<pconj>BUT</pconj>\n<pconj>ALSO</pconj>\n<pconj>OR</pconj>\n<pconj>WHETHER</pconj>\n<pconj>TILL</pconj>\n<pconj>THEN</pconj>\n<pconj>NEVERTHELESS</pconj>\n<pconj>YET</pconj>\n<pconj>STILL</pconj>\n<pconj>ONLY</pconj>\n<pconj>ON THE OTHER HAND</pconj>\n<pconj>CONVERSELY</pconj>\n<pconj>ON THE CONTRARY</pconj>\n<pconj>INSTEAD</pconj>\n<pconj>NOTWITHSTANDING</pconj>\n<pconj>NOR</pconj>\n<pconj>LIKEWISE</pconj>\n<pconj>EITHER</pconj>\n<pconj>ELSE</pconj>\n<pconj>OR ELSE</pconj>\n<pconj>MOREOVER</pconj>\n<pconj>NEITHER</pconj>\n<pconj>THAN</pconj>\n<pconj>INDEED</pconj>\n<pconj>OTHERWISE</pconj>\n<pconj>INASMUCH AS</pconj>\n\n<?xml version="1.0"?>\n<book><clause><conj>X</conj><text chapter="" verse="">&lt;?xml version="1.0" ?&gt;</text></clause><clause><conj>X</conj><text chapter="" verse=""/></clause><clause><conj>X</conj><text chapter="" verse="">&lt;book bookName="Luke 1"&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;conj&gt;X&lt;/conj&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter="1" verse="1"&gt; it seemed good to me &lt;pconj&gt;also,&lt;/pconj&gt;&lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;/clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;conj&gt;X&lt;/conj&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter="1" verse="1"&gt; having had perfect understanding of all things from the very first&lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;/clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;conj&gt;x&lt;/conj&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter="1" verse="1"&gt; to write you an orderly account, [most] excellent Theophilius&lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;/clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;conj&gt;and&lt;/conj&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter= "1" verse= "1"&gt;&lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;/clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;conj&gt;that&lt;/conj&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter="1" verse="4"&gt; you may know the certainty of those things in which you were instructed&lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;/clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;conj&gt;X&lt;/conj&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter="1" verse="5"&gt; There was in the days of Herod, the king of Judea &lt;pconj&gt;and&lt;/pconj&gt; a certain priest named Zacharias&lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;/clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;conj&gt;X&lt;/conj&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter="1" verse="5"&gt; his wife[was] of the daughters of Aaron&lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;/clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;conj&gt;and&lt;/conj&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter="1" verse="5"&gt; her name [was] Elizabeth.&lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;/clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;conj&gt;So&lt;/conj&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter="1" verse="8"&gt; it was,&lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;/clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;conj&gt;that&lt;/conj&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter="1" verse="8"&gt; while he was serving &lt;pconj&gt;as&lt;/pconj&gt; priest &lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter="1" verse="9"&gt; before God in the order of his division,&lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;/clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;conj&gt;and&lt;/conj&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter="1" verse="10"&gt; the whole multitude of the people was praying outside at the hour of incense&lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;/clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;conj&gt;but&lt;/conj&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter="1" verse="10"&gt;&lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;/clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;conj&gt;therefore&lt;/conj&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">		&lt;text chapter="1" verse="10"&gt; it was done.&lt;/text&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">	&lt;/clause&gt;</text></clause><clause><conj>X</conj><text chapter="" verse="">&lt;/book&gt;</text></clause></book>\n', 0, '2014-09-13 22:14:03');
+INSERT INTO `files` (`owner`, `projectName`, `fileName`, `storedFileName`, `public`, `lastUpdate`) VALUES
+('admin', 'Luke - Full & Not Parsed', 'Luke (Full).txt', '1726454456b7d19ecb919490765.txt', 0, '2014-10-20 15:07:25'),
+('admin', 'Luke - Full & Parsed', 'Luke (Full) Parsed.xml', '98765446df6614542184843041.txt', 0, '2014-10-21 17:34:14'),
+('user', 'Luke - Short & Parsed', 'Luke (Short) Parsed.txt', '136295446e62cdb6ef585089036.txt', 0, '2014-10-21 18:03:08');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `permission`
 --
--- Creation: Sep 14, 2014 at 02:22 AM
---
 
-DROP TABLE IF EXISTS `permission`;
 CREATE TABLE IF NOT EXISTS `permission` (
   `admin` tinyint(1) NOT NULL DEFAULT '0',
   `username` varchar(40) NOT NULL,
@@ -76,30 +154,54 @@ CREATE TABLE IF NOT EXISTS `permission` (
 --
 -- Table structure for table `session`
 --
--- Creation: Sep 14, 2014 at 02:22 AM
---
 
-DROP TABLE IF EXISTS `session`;
 CREATE TABLE IF NOT EXISTS `session` (
   `username` varchar(40) NOT NULL,
   `startTime` datetime NOT NULL,
   `endtime` datetime NOT NULL,
-  `sessionID` int(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+`sessionID` int(15) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+
+--
+-- Dumping data for table `session`
+--
+
+INSERT INTO `session` (`username`, `startTime`, `endtime`, `sessionID`) VALUES
+('admin', '2014-10-04 21:39:33', '2014-10-04 21:39:37', 1),
+('user', '2014-10-04 21:39:45', '2014-10-04 21:39:47', 2),
+('admin', '2014-10-04 21:46:12', '2014-10-04 21:46:15', 3),
+('admin', '2014-10-04 21:47:11', '2014-10-04 21:47:14', 4),
+('admin', '2014-10-20 14:33:38', '2014-10-20 22:11:41', 5),
+('admin', '2014-10-20 22:11:52', '2014-10-20 22:12:12', 6),
+('admin', '2014-10-20 22:12:28', '2014-10-20 22:16:14', 7),
+('admin', '2014-10-20 22:16:18', '2014-10-20 22:16:28', 8),
+('user', '2014-10-20 22:16:34', '2014-10-20 22:19:05', 9),
+('admin', '2014-10-20 22:19:22', '2014-10-20 22:19:44', 10),
+('user', '2014-10-20 22:20:13', '2014-10-20 22:20:22', 11),
+('admin', '2014-10-20 22:39:30', '2014-10-20 22:39:44', 12),
+('admin', '2014-10-20 22:39:51', '2014-10-20 22:48:46', 13),
+('admin', '2014-10-20 22:51:25', '2014-10-20 22:53:18', 14),
+('admin', '2014-10-20 22:54:58', '2014-10-20 22:55:01', 15),
+('admin', '2014-10-20 22:57:42', '2014-10-20 23:05:37', 16),
+('admin', '2014-10-20 23:05:42', '2014-10-20 23:05:57', 17),
+('admin', '2014-10-20 23:06:00', '2014-10-20 23:06:03', 18),
+('user', '2014-10-20 23:06:06', '2014-10-20 23:06:15', 19),
+('admin', '2014-10-20 23:06:19', '2014-10-20 23:06:40', 20),
+('admin', '2014-10-21 17:31:54', '2014-10-21 17:54:59', 21),
+('admin', '2014-10-21 17:55:04', '2014-10-21 17:55:08', 22),
+('admin', '2014-10-21 17:55:13', '2014-10-21 18:02:45', 23),
+('user', '2014-10-21 18:02:51', '2014-10-21 18:03:13', 24);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `tempusersinfo`
 --
--- Creation: Sep 14, 2014 at 02:22 AM
---
 
-DROP TABLE IF EXISTS `tempusersinfo`;
 CREATE TABLE IF NOT EXISTS `tempusersinfo` (
   `confirm_code` varchar(65) NOT NULL,
   `username` varchar(40) NOT NULL,
-  `password` varchar(60) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `email` varchar(75) NOT NULL,
   `name` varchar(50) NOT NULL,
   `admin` tinyint(1) NOT NULL DEFAULT '0'
@@ -110,15 +212,13 @@ CREATE TABLE IF NOT EXISTS `tempusersinfo` (
 --
 -- Table structure for table `usersinfo`
 --
--- Creation: Sep 14, 2014 at 02:22 AM
---
 
-DROP TABLE IF EXISTS `usersinfo`;
 CREATE TABLE IF NOT EXISTS `usersinfo` (
   `username` varchar(40) NOT NULL,
-  `password` varchar(60) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `email` varchar(75) NOT NULL,
   `name` varchar(50) NOT NULL,
+  `firstName` varchar(25) NOT NULL,
   `admin` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -126,18 +226,25 @@ CREATE TABLE IF NOT EXISTS `usersinfo` (
 -- Dumping data for table `usersinfo`
 --
 
-INSERT INTO `usersinfo` (`username`, `password`, `email`, `name`, `admin`) VALUES('admin', 'pass', 'admin@email.com', 'Administrator', 1);
-INSERT INTO `usersinfo` (`username`, `password`, `email`, `name`, `admin`) VALUES('user', 'pass', 'user@gmail.com', 'Regular User', 1);
+INSERT INTO `usersinfo` (`username`, `password`, `email`, `name`, `firstName`, `admin`) VALUES
+('admin', '$2y$10$/gMa82nHTsYaqCKjvXvmhuVqylwoLLaH6UBLVMuBBPGIDGAf6glxu', 'admin@email.com', 'Administrator', 'Administrator', 1),
+('user', '$2y$10$/gMa82nHTsYaqCKjvXvmhuVqylwoLLaH6UBLVMuBBPGIDGAf6glxu', 'user@gmail.com', 'John Doe', 'John', 0);
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `conjunctions`
+--
+ALTER TABLE `conjunctions`
+ ADD PRIMARY KEY (`conjunction`,`listName`);
+
+--
 -- Indexes for table `files`
 --
 ALTER TABLE `files`
- ADD PRIMARY KEY (`owner`,`fileName`), ADD KEY `fk_owner` (`owner`);
+ ADD PRIMARY KEY (`owner`,`projectName`), ADD KEY `fk_owner` (`owner`);
 
 --
 -- Indexes for table `permission`
@@ -163,6 +270,15 @@ ALTER TABLE `tempusersinfo`
 ALTER TABLE `usersinfo`
  ADD PRIMARY KEY (`username`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `session`
+--
+ALTER TABLE `session`
+MODIFY `sessionID` int(15) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
 --
 -- Constraints for dumped tables
 --

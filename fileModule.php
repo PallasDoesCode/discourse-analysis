@@ -10,26 +10,51 @@
 			$this->dbConnection = $connection; //use the connection that was given to me
 		}
 		
-		//upload a file based on username
-		function upload($userName, $projectName, $fileName, $file, $public)
+		// Upload a file based on username
+		function upload($userName, $projectName, $fileName, $public, $tempFileName)
 		{
-			if(!$this->fileExists($userName, $fileName))
+			$target_dir = "uploads/";
+			
+
+			if (!is_dir($target_dir))
 			{
-				$datetime = date("Y-m-d H:i:s");
-				$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?, ?, ?)");
-				$stmt->bind_param("ssssss", $userName, $projectName, $fileName, $file, $public, $datetime);
-				if(!$stmt->execute())
+				mkdir($target_dir);
+			}
+
+			// Generate a pseudo-random ID to be used as the uploaded file name.
+			// This prevents two users from uplaoding different files with the same name.
+			$id = uniqid(rand(), true);
+			$id = str_replace(".", "", $id);
+
+			// This is a temporary solution used to get the name of the file to be stored.
+			// Once the code has be created to parse any unformatted files and we know that
+			// all files are formatted before calling this function then we will just get the
+			// extension of the formatted file and use that.
+			$fileExt = ".txt";
+
+			$storedFileName = $id . $fileExt;
+			$target_dir = $target_dir . $storedFileName;
+
+			if(!$this->fileExists($userName, $projectName))
+			{
+				if (move_uploaded_file($tempFileName, $target_dir))
 				{
-					echo "<br />";
-					echo($stmt->error);
-					$stmt->close();
-					return false;
+					$datetime = date('Y-m-d H:i:s');
+					$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?, ?, ?)");
+					$stmt->bind_param("ssssss", $userName, $projectName, $fileName, $storedFileName, $public, $datetime);
+					if(!$stmt->execute())
+					{
+						echo "<br />";
+						echo($stmt->error);
+						$stmt->close();
+						return false;
+					}
+					else
+					{
+						$stmt->close();
+					}
+					return true;
 				}
-				else
-				{
-					$stmt->close();
-				}
-				return true;
 			}
 			return false;
 		}
@@ -49,7 +74,8 @@
 			//file name, public, last updated
 			$stmt = $this->dbConnection->prepare("SELECT fileName, projectName, public, lastUpdate
 			                                      FROM files
-			                                      WHERE owner = ?");
+			                                      WHERE owner = ?
+			                                      ORDER BY lastUpdate ASC");
 			$stmt->bind_param("s", $userName);
 			$stmt->execute();
 			$stmt->bind_result($fileName, $projectName, $public, $lastUpdate);
@@ -141,12 +167,12 @@
 		}
 		
 		//internal function, check if filename exists under the username
-		function fileExists($userName, $fileName)
+		function fileExists($userName, $projectName)
 		{
-			if($stmt = $this->dbConnection->prepare("SELECT COUNT(fileName)
+			if($stmt = $this->dbConnection->prepare("SELECT COUNT(projectName)
 													 FROM files
-													 WHERE owner = ? AND fileName = ?"));
-			$stmt->bind_param("ss", $userName, $fileName);
+													 WHERE owner = ? AND projectName = ?"));
+			$stmt->bind_param("ss", $userName, $projectName);
 			$stmt->execute();
 			$stmt->bind_result($fileCount);
 			$stmt->fetch();

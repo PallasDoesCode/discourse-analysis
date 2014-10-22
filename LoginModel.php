@@ -39,11 +39,11 @@ class LoginModel
 	 **/
 	function LoginUser($userName, $password)
 	{
-		if($stmt = $this->dbConnect->prepare("SELECT password FROM usersinfo WHERE username=?"))
+		if($stmt = $this->dbConnect->prepare("SELECT firstName, password FROM usersinfo WHERE username = ?"))
 		{
 			$stmt->bind_param("s", $userName);
 			$stmt->execute();
-			$stmt->bind_result($hashedPassword);
+			$stmt->bind_result($firstName, $hashedPassword);
 			$stmt->fetch();
 			$stmt->close();			
 
@@ -54,6 +54,7 @@ class LoginModel
 			if(password_verify($password, $hashedPassword))
 			{
 				$_SESSION['username'] = $userName;
+				$_SESSION['firstName'] = $firstName;
 				
 				// Get the current time and date to be stored in the database.
 				// This information is used to tell when a user last logged in.
@@ -112,10 +113,10 @@ class LoginModel
 	*	Returns the name of the user or an empty string if the user is not logged in.
 	*/
 	
-	function GetUsersRealName()
+	function GetUsersFirstName()
 	{
-		if(isset($_SESSION['name']))
-			return $_SESSION['name'];
+		if(isset($_SESSION['firstName']))
+			return $_SESSION['firstName'];
 		else
 			return "";
 	}

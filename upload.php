@@ -1,8 +1,14 @@
 <?php
 	include 'header.php';
+
+	if(!$loginModel->IsUserLoggedIn())
+	{
+        header("location: login.php?action=loginError");
+    }
 ?>
 
 	<div id="container">
+		<br /><br /><br /><br />
 		<center><h2>Please choose your file to upload</h2></center>
 		<form id="uploadForm" action="fileUpload.php" method="post" enctype="multipart/form-data">
 			<label for="projectName">Project Name:</label>

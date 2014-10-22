@@ -22,6 +22,14 @@
 		}
 	}
 
+	if((isset($_GET['action'])))
+	{
+        if($_GET['action'] == "loginError")
+		{
+            $message = "<p>You must be logged in to access that page.</p>";
+        }
+    }
+
 ?>	
 <div class="container">
     <br />

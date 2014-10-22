@@ -23,7 +23,7 @@
 		/*
 		    - There is no format required for the parsing of unformatted text
 		    
-		    - The applet will display the entirety of the inputted text file in a single
+		    - The application will display the entirety of the inputted text file in a single
 		      node, where the user can then choose his or her own breaks, logical or not.
 		*/
 		function parseUnformattedText($inputText, $bookName = "") {

@@ -19,30 +19,22 @@
 	$parser = new Parser();
 	
 	$projectName = $_REQUEST['projectName'];
-	$fileName = "This needs to be changed later."; // This needs to be updated to get the actual file name from the file address.
-	$fileContents = getFile('fileaddress', "No");
+	$fileName = basename($_FILES['fileaddress']['name']);
+	$fileContents = "Not available.";
+	$tempFileName = $_FILES['fileaddress']['tmp_name'];
 
 	$formattedOption = isset($_REQUEST['isFormatted']);
 	$publicOption = (int)isset($_REQUEST['public']);
 
 	$userName = $loginModel->getUserName();
-	
-	if($formattedOption)
-	{
-		$parsedText = $parser->parseFormattedText($fileContents);
-	}
-	else
-	{
-		$parsedText = $parser->parseUnformattedText($fileContents);
-	}
 
 	//	Use the fileModule.php to upload files
 	include 'fileModule.php';
 	
-	$fileMod = new FileModule($connection); //$connection comes from the header.php
+	$fileMod = new FileModule($connection); // $connection comes from the header.php
 	echo "<div class='container'>";
 	
-	if($fileMod->upload($userName, $projectName, $fileName, $parsedText, $publicOption))
+	if($fileMod->upload($userName, $projectName, $fileName, $publicOption, $tempFileName))
 	{
 		echo "<p>Your upload was successful!</p>";
 	}

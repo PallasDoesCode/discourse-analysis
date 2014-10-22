@@ -3,24 +3,6 @@ body
     
 }
 
-.loginBar
-{
-    width: 81%;
-    text-align: right;
-    background-color: #F6F6F6;
-    margin-left: auto;
-    margin-right: auto;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    top: -15px;
-    
-}
-
-.login-bar > form
-{
-	padding-bottom: -2px
-}
-
 #header
 {
     width: 100%;
@@ -141,14 +123,6 @@ body
     background-color: grey;
 }
 
-.loginErrorMsg
-{
-	text-align: left;
-	padding-left: 10px;
-	color:red;
-	font-weight: bold;
-}
-
 .container
 {
     width:80%;
@@ -202,7 +176,7 @@ p
 
 .navButton
 {
-    width:175px;
+    width:225px;
     font-weight:bold;
     color:#000000;
     vertical-align: central;
@@ -225,7 +199,6 @@ p
     font-family:'Helvetica Neue',Arial,sans-serif;
     font-size:16px;
     font-weight:700;
-    width: 175px;
     padding:4px 16px;
     border: 1px solid black;
 }
@@ -442,20 +415,31 @@ p
 
 #userOptions, #fileOptions
 {
-	margin: 0px 0px 0px 50px;
+	margin: 10px 0px 0px 50px;
 }
 
-#userOptions > button, #toggleBtn
+#add, #delete, #toggleBtn
 {
 	background-color: #E7E7E7;
 	width: 70px;
-	max-width: 70px;
 	height: 25px;
 	max-height: 25px;
 	border: 0px;
 	padding: 0px;
 	border: 1px solid #D3D3D3;
 	border-radius: 2px;
+}
+
+#edit
+{
+    background-color: #E7E7E7;
+    width: 140px;
+    height: 25px;
+    max-height: 25px;
+    border: 0px;
+    padding: 0px;
+    border: 1px solid #D3D3D3;
+    border-radius: 2px;
 }
 
 #uploadBtn, #editBtn

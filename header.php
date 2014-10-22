@@ -22,16 +22,6 @@
             $loginError = "You must be logged in to access that page";
         }
     }
-    
-    if($loginModel->IsUserLoggedIn())
-	{
-        $loginBar = "<span style='padding: 5px;'><b>Welcome, " . $loginModel->getUsername() . " ! <a href='#' onclick='document.logout.submit();'>(logout)</a></b></span>";
-    }
-	
-    else
-	{
-        $loginBar = "";
-    }
 	
 	date_default_timezone_set("US/Central"); 
 ?>
@@ -56,39 +46,40 @@
 				<?php
 					if($loginModel->IsUserLoggedIn() && $loginModel->IsAdmin())
 					{
-						echo "<li>
-								<a class='navButton' href='adminuser.php'>Administrative Options</a>
+						echo '<li>
+								<a class="navButton" href="">Administrative Options</a>
 								<ul>
-									<li><a class='navButton' href='adminuser.php'>File Options</a></li>
-									<li><a class='navButton' href='adminuser.php'>User Options</a></li>
+									<li><a class="navButton" href="adminuser.php">User Options</a></li>
 								</ul>
 							  </li>
-						";
+						';
 					}					
-				?>
-                <li>
-                    <a class="navButton" href="">Login / Register</a>
-                    <ul>
-                        <li><a class="navButton" href="login.php">Login</a></li>
-                        <li><a class="navButton" href="register.php">Register</a></li>
-                    </ul>
-                </li>
+				
+                    if (!($loginModel->IsUserLoggedIn()))
+                    {
+                        echo '<li>
+                                <a class="navButton" href="">Login / Register</a>
+                                <ul>
+                                    <li><a class="navButton" href="login.php">Login</a></li>
+                                    <li><a class="navButton" href="register.php">Register</a></li>
+                              </li>
+                        ';
+                    }
+
+                    else
+                    {
+                        echo '<li>
+                                <a class="navButton">Welcome, ' . $loginModel->GetUsersFirstName() . '!</a>
+                                <ul>
+                                    <li><a class="navButton" href="">Account (Coming Soon)</a></li>
+                                    <li><a class="navButton" href="logout.php">Logout</a></li>
+                                </ul>
+                              </li>
+                        ';
+                    }
+                ?>
             </ul>
         </div>
         <div class="triangle-l"></div>
         <div class="triangle-r"></div>
-    </div>
-    <div class="loginBar">
-        <form name="logout" id="logout" action="login.php" method="post">
-            <input type="hidden" name="action" value="logout"></input>
-        <?php   
-            echo $loginBar;
-        ?>
-            <br />
-        </form>
-        <div class="loginErrorMsg">
-            <?php 
-                echo $loginError;
-            ?>
-        </div>
     </div>

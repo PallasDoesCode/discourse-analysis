@@ -289,7 +289,7 @@ class UserModel
 		// in the table on the user administration page (adminuser.php)
 		$query = "SELECT ui.username, ui.email, ui.name, s.endtime, COUNT(f.owner)
 				  FROM usersInfo ui LEFT OUTER JOIN session s
-				  ON ui.username = s.username LEFT OUTER JOIN files f
+				  ON ui.username = s.username INNER JOIN files f
 				  ON ui.username = f.owner
 				  GROUP BY ui.username";
 

@@ -41,7 +41,7 @@
 			<th class="columnHeading">Full Name</th>
 			<th class="columnHeading">Last Logged In</th>
 			<th class="columnHeading"># of Files Uploaded</th>
-			<th class="columnHeading">Permission</th>
+			<th class="columnHeading">Permission to Share</th>
 		</tr>
 		
 		<?php

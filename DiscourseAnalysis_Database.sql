@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2014 at 11:01 PM
+-- Generation Time: Oct 24, 2014 at 12:46 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `discourseanalysis`
 --
+CREATE DATABASE IF NOT EXISTS `discourseanalysis` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `discourseanalysis`;
 
 -- --------------------------------------------------------
 
@@ -26,6 +28,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `conjunctions`
 --
 
+DROP TABLE IF EXISTS `conjunctions`;
 CREATE TABLE IF NOT EXISTS `conjunctions` (
   `conjunction` varchar(25) NOT NULL,
   `listName` varchar(50) NOT NULL
@@ -115,6 +118,7 @@ INSERT INTO `conjunctions` (`conjunction`, `listName`) VALUES
 -- Table structure for table `files`
 --
 
+DROP TABLE IF EXISTS `files`;
 CREATE TABLE IF NOT EXISTS `files` (
   `owner` varchar(40) NOT NULL,
   `projectName` varchar(35) NOT NULL,
@@ -123,6 +127,12 @@ CREATE TABLE IF NOT EXISTS `files` (
   `public` tinyint(1) NOT NULL DEFAULT '0',
   `lastUpdate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONS FOR TABLE `files`:
+--   `owner`
+--       `usersinfo` -> `username`
+--
 
 --
 -- Dumping data for table `files`
@@ -139,6 +149,7 @@ INSERT INTO `files` (`owner`, `projectName`, `fileName`, `storedFileName`, `publ
 -- Table structure for table `permission`
 --
 
+DROP TABLE IF EXISTS `permission`;
 CREATE TABLE IF NOT EXISTS `permission` (
   `admin` tinyint(1) NOT NULL DEFAULT '0',
   `username` varchar(40) NOT NULL,
@@ -155,42 +166,27 @@ CREATE TABLE IF NOT EXISTS `permission` (
 -- Table structure for table `session`
 --
 
+DROP TABLE IF EXISTS `session`;
 CREATE TABLE IF NOT EXISTS `session` (
   `username` varchar(40) NOT NULL,
   `startTime` datetime NOT NULL,
   `endtime` datetime NOT NULL,
 `sessionID` int(15) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
 
 --
 -- Dumping data for table `session`
 --
 
 INSERT INTO `session` (`username`, `startTime`, `endtime`, `sessionID`) VALUES
-('admin', '2014-10-04 21:39:33', '2014-10-04 21:39:37', 1),
-('user', '2014-10-04 21:39:45', '2014-10-04 21:39:47', 2),
-('admin', '2014-10-04 21:46:12', '2014-10-04 21:46:15', 3),
-('admin', '2014-10-04 21:47:11', '2014-10-04 21:47:14', 4),
-('admin', '2014-10-20 14:33:38', '2014-10-20 22:11:41', 5),
-('admin', '2014-10-20 22:11:52', '2014-10-20 22:12:12', 6),
-('admin', '2014-10-20 22:12:28', '2014-10-20 22:16:14', 7),
-('admin', '2014-10-20 22:16:18', '2014-10-20 22:16:28', 8),
-('user', '2014-10-20 22:16:34', '2014-10-20 22:19:05', 9),
-('admin', '2014-10-20 22:19:22', '2014-10-20 22:19:44', 10),
-('user', '2014-10-20 22:20:13', '2014-10-20 22:20:22', 11),
-('admin', '2014-10-20 22:39:30', '2014-10-20 22:39:44', 12),
-('admin', '2014-10-20 22:39:51', '2014-10-20 22:48:46', 13),
-('admin', '2014-10-20 22:51:25', '2014-10-20 22:53:18', 14),
-('admin', '2014-10-20 22:54:58', '2014-10-20 22:55:01', 15),
-('admin', '2014-10-20 22:57:42', '2014-10-20 23:05:37', 16),
-('admin', '2014-10-20 23:05:42', '2014-10-20 23:05:57', 17),
-('admin', '2014-10-20 23:06:00', '2014-10-20 23:06:03', 18),
-('user', '2014-10-20 23:06:06', '2014-10-20 23:06:15', 19),
-('admin', '2014-10-20 23:06:19', '2014-10-20 23:06:40', 20),
-('admin', '2014-10-21 17:31:54', '2014-10-21 17:54:59', 21),
-('admin', '2014-10-21 17:55:04', '2014-10-21 17:55:08', 22),
-('admin', '2014-10-21 17:55:13', '2014-10-21 18:02:45', 23),
-('user', '2014-10-21 18:02:51', '2014-10-21 18:03:13', 24);
+('user', '2014-10-04 21:39:45', '2014-10-04 21:39:47', 1),
+('user', '2014-10-20 22:16:34', '2014-10-20 22:19:05', 2),
+('admin', '2014-10-20 22:19:22', '2014-10-20 22:19:44', 3),
+('user', '2014-10-20 22:20:13', '2014-10-20 22:20:22', 4),
+('user', '2014-10-20 23:06:06', '2014-10-20 23:06:15', 5),
+('user', '2014-10-21 18:02:51', '2014-10-21 18:03:13', 6),
+('admin', '2014-10-23 17:35:18', '2014-10-23 17:38:24', 7),
+('admin', '2014-10-23 17:38:53', '2014-10-23 17:40:55', 8);
 
 -- --------------------------------------------------------
 
@@ -198,6 +194,7 @@ INSERT INTO `session` (`username`, `startTime`, `endtime`, `sessionID`) VALUES
 -- Table structure for table `tempusersinfo`
 --
 
+DROP TABLE IF EXISTS `tempusersinfo`;
 CREATE TABLE IF NOT EXISTS `tempusersinfo` (
   `confirm_code` varchar(65) NOT NULL,
   `username` varchar(40) NOT NULL,
@@ -213,6 +210,7 @@ CREATE TABLE IF NOT EXISTS `tempusersinfo` (
 -- Table structure for table `usersinfo`
 --
 
+DROP TABLE IF EXISTS `usersinfo`;
 CREATE TABLE IF NOT EXISTS `usersinfo` (
   `username` varchar(40) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -278,7 +276,7 @@ ALTER TABLE `usersinfo`
 -- AUTO_INCREMENT for table `session`
 --
 ALTER TABLE `session`
-MODIFY `sessionID` int(15) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
+MODIFY `sessionID` int(15) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
 --
 -- Constraints for dumped tables
 --

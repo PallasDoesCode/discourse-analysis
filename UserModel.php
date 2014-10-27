@@ -270,7 +270,7 @@ class UserModel
 	 * @return returns the list of users
 	 *
 	 */
-	function QueryUserInfo($startRange, $endRange, $sortBy, $order)
+	function QueryUserInfo($startRange, $endRange)
 	{
 		// Ensures that we never request more users than what's listed
 		// in the database and that we never request less than 0 users.
@@ -287,16 +287,16 @@ class UserModel
 
 		// Using a single query we will get all of the data that will be displayed
 		// in the table on the user administration page (adminuser.php)
-		$query = "SELECT ui.username, ui.email, ui.name, s.endtime, COUNT(f.owner)
+		$query = "SELECT ui.username, ui.email, ui.name, s.startTime, s.endtime, COUNT(f.owner)
 				  FROM usersInfo ui LEFT OUTER JOIN session s
-				  ON ui.username = s.username INNER JOIN files f
+				  ON ui.username = s.username LEFT OUTER JOIN files f
 				  ON ui.username = f.owner
 				  GROUP BY ui.username";
 
 		if ($stmt = $this->dbConnect->prepare($query))
 		{
 			$stmt->execute();
-			$stmt->bind_result($r_uname, $r_email, $r_name, $r_endtime, $r_numOfFiles);
+			$stmt->bind_result($r_uname, $r_email, $r_name, $r_startTime, $r_endtime, $r_numOfFiles);
 
 			$row = array();
 
@@ -305,9 +305,9 @@ class UserModel
 				$tempRow['username'] = $r_uname;
 				$tempRow['email'] = $r_email;
 				$tempRow['name'] = $r_name;
-				$tempRow['session'] = $r_endtime;
+				$tempRow['sessionStart'] = $r_startTime;
+				$tempRow['sessionEnd'] = $r_endtime;
 				$tempRow['numberOfFiles'] = $r_numOfFiles;
-
 
 				$row[] = $tempRow;
 			}

@@ -63,6 +63,8 @@ class LoginModel
 				$starttime = $starttime->format('Y-m-d H:i:s');
 				$_SESSION['starttime'] = $starttime;
 
+				$this->ChangeStatusToOnline($userName);
+
 				return true;
 			}
 		}
@@ -97,7 +99,39 @@ class LoginModel
 
 		return $loggedOut;
 	}
-	
+
+	/*
+	 *	Changes a users status signifying that they are currently logged in to the system
+	 */
+	function ChangeStatusToOnline($usernameToUpdate)
+	{
+		$onlineStatus = 1;
+
+		if($stmt = $this->dbConnect->prepare("UPDATE usersInfo SET isOnline = ? WHERE username = ?"))
+		{
+			$stmt->bind_param("ss", $onlineStatus, $usernameToUpdate);
+			$stmt->execute();
+			$stmt->close();	
+		}
+
+	}
+
+	/*
+	 *	Changes a users status signifying that they are not logged in to the system at this time
+	 */
+	function ChangeStatusToOffline($usernameToUpdate)
+	{
+		$onlineStatus = 0;
+
+		if($stmt = $this->dbConnect->prepare("UPDATE usersInfo SET isOnline = ? WHERE username = ?"))
+		{
+			$stmt->bind_param("ss", $onlineStatus, $usernameToUpdate);
+			$stmt->execute();
+			$stmt->close();	
+		}
+	}
+
+
 	/**
 	 * Returns a users username or an empty string if the user is not logged in.
 	 **/
@@ -159,6 +193,15 @@ class LoginModel
 				$stmt->execute();
 				$stmt->close();
 			}
+
+			if($stmt = $this->dbConnect->prepare("UPDATE usersInfo SET lastLogin = ? WHERE username = ?"))
+			{
+				$stmt->bind_param("ss", $endtime, $username);
+				$stmt->execute();
+				$stmt->close();
+			}
+
+			$this->ChangeStatusToOffline($username);
 
 			unset ($_SESSION['starttime']);
 			unset ($_SESSION['endtime']);

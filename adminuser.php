@@ -51,9 +51,14 @@
 			{
 				foreach ( $requestedUsers as $user )
 				{
-					if ($user['sessionStart'] == null)
+					if ($user['isOnline'] == 1)
 					{
-						$user['sessionEnd'] = "Never";
+						$user['lastLogin'] = "Online Now!";
+					}
+
+					else if ($user['lastLogin'] == null)
+					{
+						$user['lastLogin'] = "Never";
 					}
 
 					echo '<tr class="tcontent">';
@@ -61,7 +66,7 @@
 					echo '<td class="userDetailsCell" width=200>' . $user['username'] . '</td>';
 					echo '<td class="userDetailsCell" width=200>' . $user['email'] . '</td>';
 					echo '<td class="userDetailsCell" width=200>' . $user['name'] . '</td>';
-					echo '<td class="userDetailsCell" width=200>' . $user['sessionEnd'] . '</td>';
+					echo '<td class="userDetailsCell" width=200>' . $user['lastLogin'] . '</td>';
 					echo '<td class="userDetailsCell" width=200>' . $user['numberOfFiles'] . '</td>';
 					echo '</tr>';
 				}			

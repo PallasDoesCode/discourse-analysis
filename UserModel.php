@@ -287,16 +287,15 @@ class UserModel
 
 		// Using a single query we will get all of the data that will be displayed
 		// in the table on the user administration page (adminuser.php)
-		$query = "SELECT ui.username, ui.email, ui.name, s.startTime, s.endtime, COUNT(f.owner)
-				  FROM usersInfo ui LEFT OUTER JOIN session s
-				  ON ui.username = s.username LEFT OUTER JOIN files f
+		$query = "SELECT ui.username, ui.email, ui.name, ui.isOnline, ui.lastLogin, COUNT(f.owner)
+				  FROM usersInfo ui LEFT OUTER JOIN files f
 				  ON ui.username = f.owner
 				  GROUP BY ui.username";
 
 		if ($stmt = $this->dbConnect->prepare($query))
 		{
 			$stmt->execute();
-			$stmt->bind_result($r_uname, $r_email, $r_name, $r_startTime, $r_endtime, $r_numOfFiles);
+			$stmt->bind_result($r_uname, $r_email, $r_name, $r_isOnline, $r_lastLogin, $r_numOfFiles);
 
 			$row = array();
 
@@ -305,8 +304,8 @@ class UserModel
 				$tempRow['username'] = $r_uname;
 				$tempRow['email'] = $r_email;
 				$tempRow['name'] = $r_name;
-				$tempRow['sessionStart'] = $r_startTime;
-				$tempRow['sessionEnd'] = $r_endtime;
+				$tempRow['isOnline'] = $r_isOnline;
+				$tempRow['lastLogin'] = $r_lastLogin;
 				$tempRow['numberOfFiles'] = $r_numOfFiles;
 
 				$row[] = $tempRow;

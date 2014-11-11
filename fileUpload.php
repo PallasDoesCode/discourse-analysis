@@ -20,8 +20,8 @@
 	
 	$projectName = $_REQUEST['projectName'];
 	$fileName = basename($_FILES['fileaddress']['name']);
-	$fileContents = "Not available.";
 	$tempFileName = $_FILES['fileaddress']['tmp_name'];
+	$fileContents = file_get_contents($tempFileName);
 
 	$formattedOption = isset($_REQUEST['isFormatted']);
 	$publicOption = (int)isset($_REQUEST['public']);
@@ -33,10 +33,28 @@
 	
 	$fileMod = new FileModule($connection); // $connection comes from the header.php
 	echo "<div class='container'>";
+
+	$xmlFileName = realpath($tempFileName);
+	if ($formattedOption)
+	{
+		$xml = $parser->parseFormattedText($fileContents);
+
+		$parsedFileName = pathinfo($fileName, PATHINFO_FILENAME) . ".xml";
+		file_put_contents($parsedFileName, $xml);
+	}
+
+	else
+	{
+		$xml = $parser->parseUnformattedText($fileContents);
+
+		$parsedFileName = pathinfo($fileName, PATHINFO_FILENAME) . ".xml";
+		file_put_contents($parsedFileName, $xml);
+	}
 	
-	if($fileMod->upload($userName, $projectName, $fileName, $publicOption, $tempFileName))
+	if($fileMod->upload($userName, $projectName, $fileName, $publicOption, $parsedFileName))
 	{
 		echo "<p>Your upload was successful!</p>";
+
 	}
 	else
 	{

@@ -71,7 +71,7 @@
                         echo '<li>
                                 <a class="navButton">Welcome, ' . $loginModel->GetUsersFirstName() . '!</a>
                                 <ul>
-                                    <li><a class="navButton" href="">Account (Coming Soon)</a></li>
+                                    <li><a class="navButton" href="settings.php">Account (Coming Soon)</a></li>
                                     <li><a class="navButton" href="logout.php">Logout</a></li>
                                 </ul>
                               </li>

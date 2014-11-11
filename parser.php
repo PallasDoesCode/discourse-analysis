@@ -1,13 +1,14 @@
 <?php
-	
+	//require_once('FirePHPCore/FirePHP.class.php');
+	//$firephp = FirePHP::getInstance(true);
+	//require_once('FirePHPCore/fb.php');
+	 
+	//$firephp->setEnabled(false);  // or FB::()
 	
 	class Parser
 	{
 		private $pconjList;
 		private $defaultPconjList = array('WHEN','WHENEVER','WHILE','AS','AS LONG AS','AS SOON AS','SINCE','UNTIL','JUST AS','AT THE SAME TIME AS','WHERE','WHEREVER','THEREFORE','AS A RESULT','FOR THIS REASON','CONSEQUENTLY','HENCE','ACCORDINGLY','THUS','SO','BECAUSE','FOR','SINCE','IN AS MUCH AS','IN ORDER THAT','SO THAT','THAT','TO THE END THAT','FOR THE PURPOSE THAT','LEST','THUS','IN THIS MANNER','IN THAT MANNER','BY THIS MEANS','BY THAT MEANS','SUCH THAT','IF','ONLY IF','UNLESS','EXCEPT THAT','EXCEPT IF' ,'ALTHOUGH','THOUGH','EVEN THOUGH','EVEN IF','X','AND','NOW','BUT','ALSO','OR','WHETHER','TILL','THEN','NEVERTHELESS','YET','STILL','ONLY','ON THE OTHER HAND','CONVERSELY','ON THE CONTRARY','INSTEAD','NOTWITHSTANDING','NOR','LIKEWISE','EITHER','ELSE','OR ELSE','MOREOVER','NEITHER','THAN','INDEED','OTHERWISE','INASMUCH AS');
-
-				
-				
 
 		function Parser($listOfPconj = "useDefault") { //this uses a default parameter -> it does not have to be used
 												// ex. $myParser = new Parser(); OR $myParser = new Parser($myArray);
@@ -27,7 +28,7 @@
 		      node, where the user can then choose his or her own breaks, logical or not.
 		*/
 		function parseUnformattedText($inputText, $bookName = "") {
-			//create book, clause, text nodes
+			// Create book, clause, text nodes
 			$book = new SimpleXmlElement("<book></book>");
 			$book->addAttribute("bookName", $bookName);
 			
@@ -36,18 +37,20 @@
 			$clause = $book->addChild("clause");
 			
 			$trimmedText = $this->trimNewLines($inputText);
-			$trimmedText = $this->trimSpaces($inputText);
+			$trimmedText = $this->trimCarriageReturns($trimmedText);
+			$trimmedText = $this->trimSpaces($trimmedText);
 			$text = $clause->addChild("text", $trimmedText);
 			$this->addChapterVerse($text, "", "");
 			
-			//make list of pconj's for beginning of file
+			// Make list of pconj's for beginning of file
 			$pconjs = $this->getPconjList();
 			
-			//convert the xml to string
+			// Convert the xml to string
 			$xml = $book->asXml();			
 			
-			//combine the list of pconj's and xml string
-			$xml = "$pconjs\n$xml";
+			// Combine the list of pconj's and xml string
+			$xml = "$pconjs \n $xml";
+
 			return $xml;
 		}
 		
@@ -114,83 +117,82 @@
 		*/
 		function parseFormattedText($inputText, $bookName = "") {
 			
-			//Trim the carriage return characters in the input text
+			// Trim the carriage return characters in the input text
 			$inputText = $this->trimCarriageReturns($inputText);
 			
-			//Get the line of $inputText
+			// Get the line of $inputText
 			$inputTextArray = explode("\n", $inputText);
 			
-			//Create root node
+			// Create root node
 			$book = new SimpleXmlElement("<book></book>");
 			
 			$conjunctionAvailable = False;
 			$currentChapter = "";
 			$currentVerse = "";
-			$currentClause = null;
+			$currentClause = "";
 			
-			
-			for($i = 0; $i < count($inputTextArray); $i++) {
-			
+			for($i = 0; $i < count($inputTextArray); $i++)
+			{
 				$line = $inputTextArray[$i];
 				$line = $this->trimSpaces($line);
 				
-			
-				//1:1 X
-				if($this->newChapterVerse($line) == 1 && !$conjunctionAvailable) {
-					//store chapter, verse, and conj into variables
+				// 1:1 and 1:1 X (1:1 Work in Progress)
+				//Fb::log("newChapterVerse: " . $this->newChapterVerse($line) == 1);
+				if($this->newChapterVerse($line) == 1 && !$conjunctionAvailable)
+				{
+					// Store chapter, verse, and conj into variables
 					$chapterVerseConj = $this->getChapterVerseConj($line);
 					$chapter = $chapterVerseConj['chapter'];
 					$verse = $chapterVerseConj['verse'];
 					$conj = $chapterVerseConj['conj'];
 					
-					//set the chapter and verse to the current chapter and verse
+					// Set the chapter and verse to the current chapter and verse
 					$currentChapter = $chapter;
 					$currentVerse = $verse;
 					
-					//create a new clause for the conj
+					// Create a new clause for the conj
 					$currentClause = $book->addChild("clause");
 					
-					//add conj to current clause
+					// Add conj to current clause
 					$currentClause->addChild("conj", $conj);
 					
 					$conjunctionAvailable = True;
-			
 				}
 			
-				//X
+				// X
 				else if($this->isLineConjunction($line) && !$conjunctionAvailable) {
 			
-					//add <conj> and </conj> tags into new clause
-					
+					// Add <conj> and </conj> tags into new clause
 					$currentClause = $book->addChild("clause");
 					
-					//add conj to current clause
+					// Add conj to current clause
 					$currentClause->addChild("conj", $line);
 					
 					$conjunctionAvailable = True;
 			
 				}
 			
-				//clause
-				else {
-					if(!$conjunctionAvailable) {
-						//if there is no conjunction available, insert conj X in new clause
+				// Clause
+				else
+				{
+					if(!$conjunctionAvailable)
+					{
+						// If there is no conjunction available, insert conj X in new clause
 						$currentClause = $book->addChild("clause");
 						$currentClause->addChild("conj", "X");
 					}
 				
-					//add text to the current clause
+					// Add text to the current clause
 					$text = $currentClause->addChild("text", $line);
-					//set chapter and verse to the current chapter and verse
+					// Set chapter and verse to the current chapter and verse
 					$this->addChapterVerse($text, $currentChapter, $currentVerse);
 					
 					$conjunctionAvailable = False;
-			
 				}
 				
 			}
 			
-			//after looping through the file, get the xml string
+			// After looping through the file, get the xml string
 			$xml = $book->asXml();
 			$pconjs = $this->getPconjList();
 			
@@ -235,11 +237,11 @@
 		
 		//This function splits the given line into 3 variables: $chapter, $verse, $conj
 		//Returns an associative array for chapter, verse, and conj
-		function getChapterVerseConj($line) {
-		
+		function getChapterVerseConj($line)
+		{
 			$colonPos = strpos($line, ":");
-			if ($colonPos !== false) {
-				
+			if ($colonPos !== false)
+			{				
 				/*
 					Split the inputted $line into an array using the space character [\s]
 					as the delimiter, giving you the chapter and verse in position 0 and
@@ -254,87 +256,86 @@
 					conjunction, implode it to a single string.
 				*/
 				
-				$lineArray = preg_split('[\s]', $line);
-				$conjArray = array_slice($lineArray, 1);
-				$conj = implode(" ", $conjArray);
+				$lineArray = preg_split("[\s]", $line);	// returns "1:1", "X"
 
-				
 				/*
 					Explode the string at lineArray position 0 (which holds the
 					chapter/verse, using the colon character as the delimiter; store the
 					array result in $chapterVerse, which gives you the chapter at position
 					0 and the verse at position 1
 				*/
-				
-				$chapterVerse = explode(':', $lineArray[0]);
-				if (!isset($chapterVerse[1])) {
-					$verse = null;
-				}
-				else {
-					$verse = $chapterVerse[1];
-				}
-				return array("chapter"=>$chapterVerse[0],
-							"verse"=>$verse,
-							"conj"=>$conj);
+
+				$chapterVerse = $lineArray[0]; // returns "1:1"
+				$chapterVerse = explode(":", $chapterVerse); // returns "1", "1"
+				$chapter = $chapterVerse[0];
+				$verse = $chapterVerse[1];
+
+				/*
+					Slice the remaining text from the line (which hold the conjunctions in
+					an array) putting it into a new array in the process. Then implode this
+					new array putting it back together (in case there is more than one
+					conjunction on this line).
+				*/
+
+				$conjArray = array_slice($lineArray, 1);
+				$conj = implode(" ", $conjArray); // combine each word of the conjunction into one string separated by a space
+
+				return array("chapter"=>$chapter, // returns "1"
+							"verse"=>$verse, // returns "1"
+							"conj"=>$conj); // returns "X" or other conjunction(s)
 			}
-			else {
+
+			else
+			{
 				return false; //colon did not exist
 			}
 		
 		}
 		
 		//adds chapter and verse to the simpleXmlElement
-		function addChapterVerse($node, $chapter, $verse) {
+		function addChapterVerse($node, $chapter, $verse)
+		{
 			$node->addAttribute("chapter", $chapter);
 			$node->addAttribute("verse", $verse);
 		}
 		
 		//make the list of pconj's for the beginning of file
 		//returns a string of pconj's in xml format
-		function getPconjList() {
-			
+		function getPconjList()
+		{
 			$pconjXml = '<pconj>';
 			$xmlInside = implode("</pconj>\n<pconj>", $this->pconjList);
 			$pconjXml = "$pconjXml$xmlInside</pconj>\n";
-			return $pconjXml;
-			
+			return $pconjXml;	
 		}
 		
 		//removes all new line characters [\n]
-		function trimNewLines($text) {
-		
+		function trimNewLines($text)
+		{
 			$textOut = str_replace("\r", "\n", $text);
 			$textOut = str_replace("\n", " ", $text);
-			return $textOut;
-			
+			return $textOut;	
 		}
 		
 		//remove all \r carriage returns
-		function trimCarriageReturns($text) {
-		
+		function trimCarriageReturns($text)
+		{
 			$textOut = str_replace("\r", "\n", $text);
 			$textOut = str_replace("\n\n", "\n", $textOut);
 			return $textOut;
-		
 		}
 		
 		//trim multiple consecutive spaces down to 1
-		function trimSpaces($text) {
-		
+		function trimSpaces($text)
+		{
 			$position = strpos($text, "  ");
-			while($position !== false) {
-			
+			while($position !== false)
+			{
 				$text = str_replace("  ", " ", $text);
 				$position = strpos($text, "  ");
-			
 			}
 			
 			return $text;
-		
 		}
-		
-	
 	}
-
-
 ?>

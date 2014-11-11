@@ -12,8 +12,8 @@
     <br />
 	<div id="fileOptions">
 		<form action="GraphicalInterface.php" method="post">
-			<input type="Hidden" name="owner" value="user"/>
-			<input type="Hidden" name="filename" value="test1"/>
+			<input type="Hidden" name="owner" />
+			<input type="Hidden" name="filename" />
 			<button id="toggleBtn" type="button" ><input id="selectAll" type="checkbox" /></button>
 			<button id="uploadBtn" type="button" >Upload New File</button>
 			<button id="editBtn" type="Submit" >Edit In Workspace</button>

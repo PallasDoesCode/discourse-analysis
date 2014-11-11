@@ -379,7 +379,7 @@ p
 	z-index: 2;
 }
 
-#uploadForm
+#uploadForm, #settingsForm
 {
 	background: #E3CDA4;
 	border-style: solid;
@@ -389,6 +389,17 @@ p
 	margin: 60px auto 30px;
 	padding: 10px;
 	position: relative;	
+}
+
+#settingsForm input
+{
+
+}
+
+#settingsForm label
+{
+    display: inline-block;
+    width: 130px;
 }
 
 .pull-right

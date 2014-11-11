@@ -11,7 +11,7 @@
 		}
 		
 		// Upload a file based on username
-		function upload($userName, $projectName, $fileName, $public, $tempFileName)
+		function upload($userName, $projectName, $fileName, $public, $xmlFileName)
 		{
 			$target_dir = "uploads/";
 			
@@ -30,15 +30,16 @@
 			// Once the code has be created to parse any unformatted files and we know that
 			// all files are formatted before calling this function then we will just get the
 			// extension of the formatted file and use that.
-			$fileExt = ".txt";
+			$fileExt = pathinfo($xmlFileName, PATHINFO_EXTENSION);
 
-			$storedFileName = $id . $fileExt;
+			$storedFileName = $id . "." . $fileExt;
 			$target_dir = $target_dir . $storedFileName;
 
 			if(!$this->fileExists($userName, $projectName))
 			{
-				if (move_uploaded_file($tempFileName, $target_dir))
+				if (copy($xmlFileName, $target_dir))
 				{
+					unlink($xmlFileName);
 					$datetime = date('Y-m-d H:i:s');
 					$stmt = $this->dbConnection->prepare("INSERT INTO files VALUES(?, ?, ?, ?, ?, ?)");
 					$stmt->bind_param("ssssss", $userName, $projectName, $fileName, $storedFileName, $public, $datetime);

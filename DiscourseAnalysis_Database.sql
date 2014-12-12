@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2014 at 03:03 AM
+-- Generation Time: Dec 12, 2014 at 03:10 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `session` (
   `sessionID` int(15) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`sessionID`),
   KEY `fk_username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -211,6 +211,16 @@ INSERT INTO `usersinfo` (`username`, `password`, `email`, `name`, `firstName`, `
 ('admin', '$2y$10$/gMa82nHTsYaqCKjvXvmhuVqylwoLLaH6UBLVMuBBPGIDGAf6glxu', 'admin@email.com', 'Administrator', 'Administrator', 1, 1, 1, '2014-11-11 11:03:45'),
 ('jdoe', '$2y$10$/gMa82nHTsYaqCKjvXvmhuVqylwoLLaH6UBLVMuBBPGIDGAf6glxu', 'jdoe@email.com', 'Jane Doe', 'Jane', 0, 0, 0, '2014-11-11 11:05:01'),
 ('user', '$2y$10$/gMa82nHTsYaqCKjvXvmhuVqylwoLLaH6UBLVMuBBPGIDGAf6glxu', 'user@gmail.com', 'John Doe', 'John', 0, 0, 0, '2014-11-10 22:56:41');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `files`
+--
+ALTER TABLE `files`
+  ADD CONSTRAINT `fk_owner` FOREIGN KEY (`owner`) REFERENCES `usersinfo` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

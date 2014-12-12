@@ -41,7 +41,7 @@
 			<th class="columnHeading">Full Name</th>
 			<th class="columnHeading">Last Logged In</th>
 			<th class="columnHeading"># of Files Uploaded</th>
-			<th class="columnHeading">Permission to Share</th>
+			<th class="columnHeading">Approved User</th>
 		</tr>
 		
 		<?php
@@ -61,6 +61,16 @@
 						$user['lastLogin'] = "Never";
 					}
 
+					if ($user['isApprovedUser'] == 1)
+					{
+						$user['isApprovedUser'] = "Yes";
+					}
+
+					else
+					{
+						$user['isApprovedUser'] = "No";
+					}
+
 					echo '<tr class="tcontent">';
 					echo '<td><input type="checkbox" class="userCheckbox" /></td>';
 					echo '<td class="userDetailsCell" width=200>' . $user['username'] . '</td>';
@@ -68,6 +78,7 @@
 					echo '<td class="userDetailsCell" width=200>' . $user['name'] . '</td>';
 					echo '<td class="userDetailsCell" width=200>' . $user['lastLogin'] . '</td>';
 					echo '<td class="userDetailsCell" width=200>' . $user['numberOfFiles'] . '</td>';
+					echo '<td class="userDetailsCell" width=200>' . $user['isApprovedUser'] . '</td';
 					echo '</tr>';
 				}			
 			}

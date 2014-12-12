@@ -21,17 +21,17 @@
 			
 			<br><br>
 			
-			<label for="public">Make this file public?</label>
+			<label for="public">Check to make this file public</label>
 			<input type="checkbox" name="public" class="pull-right">
 			
 			<br><br>
 			
-			<label for="useDefault">Use default conjunction list?</label>
+			<label for="useDefault">Check to use the default conjunction list</label>
 			<input type="checkbox" name="useDefault" class="pull-right" checked>
 			
 			<br><br>
 			
-			<label for="isFormatted">Is your text file formatted?</label>
+			<label for="isFormatted">Check if text file is formatted</label>
 			<input type="checkbox" name="isFormatted" class="pull-right">
 			
 			<br><br>

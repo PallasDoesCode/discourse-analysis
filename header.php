@@ -47,10 +47,7 @@
 					if($loginModel->IsUserLoggedIn() && $loginModel->IsAdmin())
 					{
 						echo '<li>
-								<a class="navButton" href="">Administrative Options</a>
-								<ul>
-									<li><a class="navButton" href="adminuser.php">User Options</a></li>
-								</ul>
+								<a class="navButton" href="adminuser.php">Administrative Options</a>
 							  </li>
 						';
 					}					

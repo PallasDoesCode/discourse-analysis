@@ -1,10 +1,5 @@
 <?php
-	//require_once('FirePHPCore/FirePHP.class.php');
-	//$firephp = FirePHP::getInstance(true);
-	//require_once('FirePHPCore/fb.php');
-	 
-	//$firephp->setEnabled(false);  // or FB::()
-	
+
 	class Parser
 	{
 		private $pconjList;
@@ -135,10 +130,32 @@
 			{
 				$line = $inputTextArray[$i];
 				$line = $this->trimSpaces($line);
-				
-				// 1:1 and 1:1 X (1:1 Work in Progress)
-				//Fb::log("newChapterVerse: " . $this->newChapterVerse($line) == 1);
-				if($this->newChapterVerse($line) == 1 && !$conjunctionAvailable)
+
+
+				// Clause
+				if (!($this->isLineNewChapterVerse($line)) && (!($this->isLineConjunction($line))))
+				{
+					$currentClause = $book->addChild("clause");
+					//$currentClause->addChild("conj", "X");
+
+					// Add text to the current clause
+					$text = $currentClause->addChild("text", $line);
+					// Set chapter and verse to the current chapter and verse
+					$this->addChapterVerse($text, $currentChapter, $currentVerse);
+				}
+
+				// Conjunctions
+				else if ($this->isLineConjunction($line))
+				{
+					// Add <conj> and </conj> tags into new clause
+					$currentClause = $book->addChild("clause");
+					
+					// Add conj to current clause
+					$currentClause->addChild("conj", $line);
+				}
+
+				// Chapter:Verse (1:1) or Chapter:Verse Conj (1:1 X)
+				else
 				{
 					// Store chapter, verse, and conj into variables
 					$chapterVerseConj = $this->getChapterVerseConj($line);
@@ -155,41 +172,10 @@
 					
 					// Add conj to current clause
 					$currentClause->addChild("conj", $conj);
-					
-					$conjunctionAvailable = True;
-				}
-			
-				// X
-				else if($this->isLineConjunction($line) && !$conjunctionAvailable) {
-			
-					// Add <conj> and </conj> tags into new clause
-					$currentClause = $book->addChild("clause");
-					
-					// Add conj to current clause
-					$currentClause->addChild("conj", $line);
-					
-					$conjunctionAvailable = True;
-			
-				}
-			
-				// Clause
-				else
-				{
-					if(!$conjunctionAvailable)
-					{
-						// If there is no conjunction available, insert conj X in new clause
-						$currentClause = $book->addChild("clause");
-						$currentClause->addChild("conj", "X");
-					}
-				
-					// Add text to the current clause
-					$text = $currentClause->addChild("text", $line);
-					// Set chapter and verse to the current chapter and verse
+
+					$text = $currentClause->addChild("text", " ");
 					$this->addChapterVerse($text, $currentChapter, $currentVerse);
-					
-					$conjunctionAvailable = False;
-				}
-				
+				}			
 			}
 			
 			// After looping through the file, get the xml string
@@ -209,7 +195,7 @@
 		}
 		
 		//Parses the line passed to it to determine if it is the start of a new chapter or verse
-		function newChapterVerse($line) {
+		function isLineNewChapterVerse($line) {
 		
 			$chapterVerseConj = $this->getChapterVerseConj($line);
 			$chapterCheck = $this->validChapterVerse($chapterVerseConj['chapter']);
@@ -279,6 +265,11 @@
 
 				$conjArray = array_slice($lineArray, 1);
 				$conj = implode(" ", $conjArray); // combine each word of the conjunction into one string separated by a space
+
+				if (!isset($conj) || $conj == null)
+				{
+					$conj = "X";
+				}
 
 				return array("chapter"=>$chapter, // returns "1"
 							"verse"=>$verse, // returns "1"

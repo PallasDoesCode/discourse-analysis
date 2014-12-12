@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.7.1
+-- version 4.1.12
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2014 at 05:48 PM
--- Server version: 5.6.20
--- PHP Version: 5.5.15
+-- Generation Time: Dec 12, 2014 at 03:03 AM
+-- Server version: 5.6.16
+-- PHP Version: 5.5.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `discourseanalysis`
 --
+CREATE DATABASE IF NOT EXISTS `discourseanalysis` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `discourseanalysis`;
 
 -- --------------------------------------------------------
 
@@ -26,16 +28,18 @@ SET time_zone = "+00:00";
 -- Table structure for table `conjunctions`
 --
 
+DROP TABLE IF EXISTS `conjunctions`;
 CREATE TABLE IF NOT EXISTS `conjunctions` (
-  `conjunction` varchar(25) NOT NULL,
-  `listName` varchar(50) NOT NULL
+  `listName` varchar(50) NOT NULL,
+  `conjunction` varchar(50) NOT NULL,
+  PRIMARY KEY (`listName`,`conjunction`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `conjunctions`
 --
 
-INSERT INTO `conjunctions` (`conjunction`, `listName`) VALUES
+INSERT INTO `conjunctions` (`listName`, `conjunction`) VALUES
 ('Default Conjunction List', 'ACCORDINGLY'),
 ('Default Conjunction List', 'ALSO'),
 ('Default Conjunction List', 'ALTHOUGH'),
@@ -115,23 +119,17 @@ INSERT INTO `conjunctions` (`conjunction`, `listName`) VALUES
 -- Table structure for table `files`
 --
 
+DROP TABLE IF EXISTS `files`;
 CREATE TABLE IF NOT EXISTS `files` (
-  `owner` varchar(40) NOT NULL,
+  `owner` varchar(25) NOT NULL,
   `projectName` varchar(35) NOT NULL,
   `fileName` varchar(35) NOT NULL,
   `storedFileName` varchar(50) NOT NULL,
   `public` tinyint(1) NOT NULL DEFAULT '0',
-  `lastUpdate` datetime NOT NULL
+  `lastUpdate` datetime NOT NULL,
+  PRIMARY KEY (`owner`,`projectName`),
+  KEY `fk_owner` (`owner`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `files`
---
-
-INSERT INTO `files` (`owner`, `projectName`, `fileName`, `storedFileName`, `public`, `lastUpdate`) VALUES
-('admin', 'Luke - Full & Not Parsed', 'Luke (Full).txt', '1726454456b7d19ecb919490765.txt', 0, '2014-10-20 15:07:25'),
-('admin', 'Luke - Full & Parsed', 'Luke (Full) Parsed.xml', '98765446df6614542184843041.txt', 0, '2014-10-21 17:34:14'),
-('user', 'Luke - Short & Parsed', 'Luke (Short) Parsed.txt', '136295446e62cdb6ef585089036.txt', 0, '2014-10-21 18:03:08');
 
 -- --------------------------------------------------------
 
@@ -139,14 +137,17 @@ INSERT INTO `files` (`owner`, `projectName`, `fileName`, `storedFileName`, `publ
 -- Table structure for table `permission`
 --
 
+DROP TABLE IF EXISTS `permission`;
 CREATE TABLE IF NOT EXISTS `permission` (
   `admin` tinyint(1) NOT NULL DEFAULT '0',
-  `username` varchar(40) NOT NULL,
+  `username` varchar(25) NOT NULL,
   `fileName` varchar(50) NOT NULL,
   `edit` tinyint(1) NOT NULL,
   `read` tinyint(1) NOT NULL,
   `delete` tinyint(1) NOT NULL,
-  `add` tinyint(1) NOT NULL
+  `add` tinyint(1) NOT NULL,
+  PRIMARY KEY (`username`,`fileName`),
+  KEY `fk_filename` (`fileName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -155,37 +156,15 @@ CREATE TABLE IF NOT EXISTS `permission` (
 -- Table structure for table `session`
 --
 
+DROP TABLE IF EXISTS `session`;
 CREATE TABLE IF NOT EXISTS `session` (
-  `username` varchar(40) NOT NULL,
+  `username` varchar(25) NOT NULL,
   `startTime` datetime NOT NULL,
   `endtime` datetime NOT NULL,
-`sessionID` int(15) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
-
---
--- Dumping data for table `session`
---
-
-INSERT INTO `session` (`username`, `startTime`, `endtime`, `sessionID`) VALUES
-('user', '2014-10-04 21:39:45', '2014-10-04 21:39:47', 1),
-('user', '2014-10-20 22:16:34', '2014-10-20 22:19:05', 2),
-('admin', '2014-10-20 22:19:22', '2014-10-20 22:19:44', 3),
-('admin', '2014-10-23 17:35:18', '2014-10-23 17:38:24', 4),
-('admin', '2014-10-23 17:38:53', '2014-10-23 17:40:55', 5),
-('admin', '2014-11-10 22:46:55', '2014-11-10 22:48:06', 29),
-('user', '2014-11-10 22:50:36', '2014-11-10 22:50:39', 30),
-('user', '2014-11-10 22:51:21', '2014-11-10 22:51:29', 31),
-('admin', '2014-11-10 22:51:32', '2014-11-10 22:51:35', 32),
-('admin', '2014-11-10 22:52:18', '2014-11-10 22:52:21', 33),
-('admin', '2014-11-10 22:52:24', '2014-11-10 22:52:27', 34),
-('user', '2014-11-10 22:52:32', '2014-11-10 22:52:34', 35),
-('admin', '2014-11-10 22:54:53', '2014-11-10 22:54:58', 36),
-('admin', '2014-11-10 22:54:53', '2014-11-10 22:55:49', 37),
-('user', '2014-11-10 22:55:57', '2014-11-10 22:55:59', 38),
-('admin', '2014-11-10 22:56:09', '2014-11-10 22:56:22', 39),
-('user', '2014-11-10 22:56:34', '2014-11-10 22:56:41', 40),
-('jdoe', '2014-11-10 22:57:00', '2014-11-10 22:57:07', 41),
-('admin', '2014-11-10 22:59:01', '2014-11-10 22:59:08', 42);
+  `sessionID` int(15) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`sessionID`),
+  KEY `fk_username` (`username`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
 
 -- --------------------------------------------------------
 
@@ -193,13 +172,15 @@ INSERT INTO `session` (`username`, `startTime`, `endtime`, `sessionID`) VALUES
 -- Table structure for table `tempusersinfo`
 --
 
+DROP TABLE IF EXISTS `tempusersinfo`;
 CREATE TABLE IF NOT EXISTS `tempusersinfo` (
   `confirm_code` varchar(65) NOT NULL,
-  `username` varchar(40) NOT NULL,
+  `username` varchar(25) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(75) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `admin` tinyint(1) NOT NULL DEFAULT '0'
+  `name` varchar(60) NOT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -208,84 +189,28 @@ CREATE TABLE IF NOT EXISTS `tempusersinfo` (
 -- Table structure for table `usersinfo`
 --
 
+DROP TABLE IF EXISTS `usersinfo`;
 CREATE TABLE IF NOT EXISTS `usersinfo` (
-  `username` varchar(40) NOT NULL,
+  `username` varchar(25) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(75) NOT NULL,
-  `name` varchar(50) NOT NULL,
+  `name` varchar(60) NOT NULL,
   `firstName` varchar(25) NOT NULL,
   `admin` tinyint(1) NOT NULL DEFAULT '0',
+  `isApprovedUser` tinyint(1) NOT NULL,
   `isOnline` tinyint(1) NOT NULL,
-  `lastLogin` datetime DEFAULT NULL
+  `lastLogin` datetime DEFAULT NULL,
+  PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usersinfo`
 --
 
-INSERT INTO `usersinfo` (`username`, `password`, `email`, `name`, `firstName`, `admin`, `isOnline`, `lastLogin`) VALUES
-('admin', '$2y$10$/gMa82nHTsYaqCKjvXvmhuVqylwoLLaH6UBLVMuBBPGIDGAf6glxu', 'admin@email.com', 'Administrator', 'Administrator', 1, 1, '2014-11-10 22:59:08'),
-('jdoe', '$2y$10$/gMa82nHTsYaqCKjvXvmhuVqylwoLLaH6UBLVMuBBPGIDGAf6glxu', 'jdoe@email.com', 'Jane Doe', 'Jane', 0, 0, NULL),
-('user', '$2y$10$/gMa82nHTsYaqCKjvXvmhuVqylwoLLaH6UBLVMuBBPGIDGAf6glxu', 'user@gmail.com', 'John Doe', 'John', 0, 0, '2014-11-10 22:56:41');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `conjunctions`
---
-ALTER TABLE `conjunctions`
- ADD PRIMARY KEY (`conjunction`,`listName`);
-
---
--- Indexes for table `files`
---
-ALTER TABLE `files`
- ADD PRIMARY KEY (`owner`,`projectName`), ADD KEY `fk_owner` (`owner`);
-
---
--- Indexes for table `permission`
---
-ALTER TABLE `permission`
- ADD PRIMARY KEY (`username`,`fileName`), ADD KEY `fk_filename` (`fileName`);
-
---
--- Indexes for table `session`
---
-ALTER TABLE `session`
- ADD PRIMARY KEY (`sessionID`), ADD KEY `fk_username` (`username`);
-
---
--- Indexes for table `tempusersinfo`
---
-ALTER TABLE `tempusersinfo`
- ADD PRIMARY KEY (`username`);
-
---
--- Indexes for table `usersinfo`
---
-ALTER TABLE `usersinfo`
- ADD PRIMARY KEY (`username`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `session`
---
-ALTER TABLE `session`
-MODIFY `sessionID` int(15) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=43;
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `files`
---
-ALTER TABLE `files`
-ADD CONSTRAINT `fk_owner` FOREIGN KEY (`owner`) REFERENCES `usersinfo` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+INSERT INTO `usersinfo` (`username`, `password`, `email`, `name`, `firstName`, `admin`, `isApprovedUser`, `isOnline`, `lastLogin`) VALUES
+('admin', '$2y$10$/gMa82nHTsYaqCKjvXvmhuVqylwoLLaH6UBLVMuBBPGIDGAf6glxu', 'admin@email.com', 'Administrator', 'Administrator', 1, 1, 1, '2014-11-11 11:03:45'),
+('jdoe', '$2y$10$/gMa82nHTsYaqCKjvXvmhuVqylwoLLaH6UBLVMuBBPGIDGAf6glxu', 'jdoe@email.com', 'Jane Doe', 'Jane', 0, 0, 0, '2014-11-11 11:05:01'),
+('user', '$2y$10$/gMa82nHTsYaqCKjvXvmhuVqylwoLLaH6UBLVMuBBPGIDGAf6glxu', 'user@gmail.com', 'John Doe', 'John', 0, 0, 0, '2014-11-10 22:56:41');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

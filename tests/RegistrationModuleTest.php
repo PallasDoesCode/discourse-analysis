@@ -14,7 +14,7 @@ class RegistrationModuleTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *  @covers RegistrationModuel::InputName
+     *  @covers RegistrationModule::InputName
      */
      public function NameTest()
      {
@@ -22,7 +22,7 @@ class RegistrationModuleTest extends PHPUnit_Framework_TestCase
      }
 
      /**
-      * @covers RegistrationModuel::InputUsername
+      * @covers RegistrationModule::InputUsername
       */
      public function UsernameTest()
      {
@@ -30,7 +30,7 @@ class RegistrationModuleTest extends PHPUnit_Framework_TestCase
      }
 
      /*
-      * @covers RegistrationModuel::InputPassword
+      * @covers RegistrationModule::InputPassword
       */
      public function PasswordTest()
      {
@@ -38,7 +38,7 @@ class RegistrationModuleTest extends PHPUnit_Framework_TestCase
      }
 
      /*
-      *  @covers RegistrationModuel::InputEmail
+      *  @covers RegistrationModule::InputEmail
       */
     public function EmailTest()
     {
@@ -46,7 +46,7 @@ class RegistrationModuleTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *  @covers RegistrationModuel::RequestConfirmation
+     *  @covers RegistrationModule::RequestConfirmation
      */
     public function AccountCreationTest()
     {
@@ -57,7 +57,7 @@ class RegistrationModuleTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *  @covers RegistrationModuel::ConfirmUser
+     *  @covers RegistrationModule::ConfirmUser
      */
 
      public function ConfirmAccountCreationTest()

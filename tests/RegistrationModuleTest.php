@@ -18,7 +18,7 @@ class RegistrationModuleTest extends PHPUnit_Framework_TestCase
      */
      public function NameTest()
      {
-
+         $this->assertRegExp('/asdf/', 'asdf');
      }
 
      /**
@@ -26,7 +26,7 @@ class RegistrationModuleTest extends PHPUnit_Framework_TestCase
       */
      public function UsernameTest()
      {
-
+         $this->assertRegExp('/asdf/', 'asdf');
      }
 
      /*
@@ -34,7 +34,7 @@ class RegistrationModuleTest extends PHPUnit_Framework_TestCase
       */
      public function PasswordTest()
      {
-
+         $this->assertRegExp('/asdf/', 'asdf');
      }
 
      /*
@@ -42,7 +42,7 @@ class RegistrationModuleTest extends PHPUnit_Framework_TestCase
       */
     public function EmailTest()
     {
-
+        $this->assertRegExp('/asdf/', 'asdf');
     }
 
     /**

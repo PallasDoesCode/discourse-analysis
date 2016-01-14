@@ -1,7 +1,7 @@
 #CS499 Discourse Analysis Project
 
 [![Build Status](https://travis-ci.org/RandomlyKnighted/discourse-analysis.svg?branch=master)](https://travis-ci.org/RandomlyKnighted/discourse-analysis)
-[![Coverage Status](https://coveralls.io/repos/RandomlyKnighted/discourse-analysis/badge.svg?branch=master&service=github)](https://coveralls.io/github/RandomlyKnighted/discourse-analysis?branch=master)
+[![Test Coverage](https://codeclimate.com/github/RandomlyKnighted/discourse-analysis/badges/coverage.svg)](https://codeclimate.com/github/RandomlyKnighted/discourse-analysis/coverage)
 
 > ###Project Description
 

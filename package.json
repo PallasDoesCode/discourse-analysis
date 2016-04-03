@@ -1,0 +1,28 @@
+{
+  "name": "discourse-analysis",
+  "version": "0.4.0",
+  "description": "This project uses Discourse Analysis methods to help the user conduct a thorough study of the Bible.",
+  "main": "home.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RandomlyKnighted/discourse-analysis.git"
+  },
+  "keywords": [
+    "discourse",
+    "analysis",
+    "Bible"
+  ],
+  "author": "Tyler Hughes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RandomlyKnighted/discourse-analysis/issues"
+  },
+  "homepage": "https://github.com/RandomlyKnighted/discourse-analysis#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-php": "^1.5.1"
+  }
+}

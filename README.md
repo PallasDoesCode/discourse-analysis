@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/RandomlyKnighted/discourse-analysis.svg?branch=master)](https://travis-ci.org/RandomlyKnighted/discourse-analysis)
 [![Test Coverage](https://codeclimate.com/github/RandomlyKnighted/discourse-analysis/badges/coverage.svg)](https://codeclimate.com/github/RandomlyKnighted/discourse-analysis/coverage)
 
+[![Gitter](https://badges.gitter.im/RandomlyKnighted/discourse-analysis.svg)](https://gitter.im/RandomlyKnighted/discourse-analysis?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 > ###Project Description
